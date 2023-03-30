@@ -1,12 +1,31 @@
 package com.example.music_service;
 
-public class Song
-{
-    public String path;
+public class Song {
+    private String path;
 
-    public String title;
-    public String artist;
-//    public String cover;
+    private String title;
+    private String artist;
+
+    private int id;
+    // public String cover;
+
+    public Song(String path, int id) {
+        this.id = id;
+        this.path = path;
+
+        title = Convert.getTitleFromPath(path);
+        artist = SongsProps.authors.get(SongsProps.songs.indexOf(path));
+
+        //cover = SongsInfo.AllCovers[SongsInfo.AllSongs.IndexOf(Path)];
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPath() {
         return path;
@@ -32,47 +51,4 @@ public class Song
         this.artist = artist;
     }
 
-    public Song(String path)
-    {
-        path = path;
-
-        title = GetTitleFromPath(path);
-
-        artist = "Maroon 5";
-        //cover = SongsInfo.AllCovers[SongsInfo.AllSongs.IndexOf(Path)];
-    }
-
-    // convert 'ashes_of_dreams.mp3' to 'Ashes Of Dreams'
-    public static String GetTitleFromPath(String title)
-    {
-        int index = title.indexOf('.');
-        if (index >= 0)
-            title = title.substring(0, index);
-
-        String result = "";
-
-        char prevChar = ' ';
-        for (int i = 0; i < title.length(); i++)
-        {
-            if (Character.isWhitespace(prevChar)) // first iteration
-            {
-                prevChar = title.charAt(i);
-                result += Character.toUpperCase(title.charAt(i));
-                continue;
-            }
-            if (prevChar == '_')
-            {
-                result += Character.toUpperCase(title.charAt(i));
-                prevChar = title.charAt(i);
-                continue;
-            }
-
-            if (title.charAt(i) != '_') result += title.charAt(i);
-            else result += ' ';
-
-            prevChar = title.charAt(i);
-        }
-
-        return result;
-    }
 }
