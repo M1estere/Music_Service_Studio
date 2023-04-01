@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.model.globals;
 
 import java.util.ArrayList;
 

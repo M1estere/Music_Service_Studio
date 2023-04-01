@@ -1,9 +1,12 @@
-package com.example.music_service;
+package com.example.music_service.model;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
+
+import com.example.music_service.model.globals.Globs;
+import com.example.music_service.model.globals.SongsProps;
 
 import java.util.ArrayList;
 
@@ -14,42 +17,37 @@ public class Player {
 
     private static Context context;
 
-    private static int currentTrackNumber = 0;
     private static int currentTrackID;
 
     private static boolean playing = true;
 
-    public static void setContext(Context cont) {
-        context = cont;
-    }
-
     public static void startTrack() {
-        int index = SongsProps.songs.indexOf(songTitles.get(currentTrackNumber));
+        int index = SongsProps.songs.indexOf(songTitles.get(Globs.currentTrackNumber));
         currentTrackID = SongsProps.ids.get(index);
 
         musicPlayer = MediaPlayer.create(context, currentTrackID);
         playSong();
     }
 
+    public static int previousSong() {
+        if (getProgress() >= 0.2f) {
+            selectTrack(Globs.currentTrackNumber);
+            return Globs.currentTrackNumber;
+        }
+
+        if (Globs.currentTrackNumber == 0) selectTrack(Globs.currentTrackNumber);
+        else {
+            Globs.currentTrackNumber -= 1;
+            selectTrack(Globs.currentTrackNumber);
+        }
+
+        return Globs.currentTrackNumber;
+    }
+
     public static void playSong() {
         musicPlayer.start();
 
         playing = true;
-    }
-
-    public static int previousSong() {
-        if (getProgress() >= 0.2f) {
-            selectTrack(currentTrackNumber);
-            return currentTrackNumber;
-        }
-
-        if (currentTrackNumber == 0) selectTrack(currentTrackNumber);
-        else {
-            currentTrackNumber -= 1;
-            selectTrack(currentTrackNumber);
-        }
-
-        return currentTrackNumber;
     }
 
     public static void pause() {
@@ -59,23 +57,24 @@ public class Player {
     }
 
     public static int nextSong() {
-        if (currentTrackNumber == songTitles.size() - 1) currentTrackNumber = -1;
+        if (Globs.currentTrackNumber == songTitles.size() - 1) Globs.currentTrackNumber = -1;
 
-        currentTrackNumber++;
+        Globs.currentTrackNumber++;
 
-        selectTrack(currentTrackNumber);
+        selectTrack(Globs.currentTrackNumber);
 
-        return currentTrackNumber;
+        return Globs.currentTrackNumber;
     }
 
     public static void selectTrack(int index) {
         boolean oldState = playing;
 
-        currentTrackNumber = index;
+        Globs.currentTrackNumber = index;
         if (musicPlayer != null) musicPlayer.stop();
 
         startTrack();
         musicPlayer.start();
+
         if (oldState == false) musicPlayer.pause();
     }
 
@@ -83,8 +82,20 @@ public class Player {
         songTitles.clear();
         songTitles = (ArrayList<String>) titles.clone();
 
-        currentTrackNumber = 0;
-        selectTrack(currentTrackNumber);
+        Globs.currentTrackNumber = 0;
+        selectTrack(Globs.currentTrackNumber);
+    }
+
+    public static void updateQueue(ArrayList<String> titles) {
+        songTitles.clear();
+        songTitles = (ArrayList<String>) titles.clone();
+
+        Globs.currentTrackNumber = 0;
+        selectTrack(Globs.currentTrackNumber);
+    }
+
+    public static void setContext(Context cont) {
+        context = cont;
     }
 
     public static ArrayList<String> getSongs() {

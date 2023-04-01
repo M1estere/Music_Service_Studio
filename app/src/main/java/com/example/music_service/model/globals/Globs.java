@@ -1,10 +1,20 @@
-package com.example.music_service;
+package com.example.music_service.model.globals;
 
+import com.example.music_service.R;
+import com.example.music_service.model.Song;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Globs {
 
+    public static final String TAG = "Music Service";
+
     public static Random random = new Random();
+
+    public static ArrayList<Song> currentSongs = new ArrayList<>();
+
+    public static int currentTrackNumber = 0;
 
     public static void fillAllSongs() {
         addSong(R.raw.alive, "alive.mp3", "Warbly Jets", "warbly.png");

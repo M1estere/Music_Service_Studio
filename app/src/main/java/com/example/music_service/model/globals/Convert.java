@@ -1,6 +1,4 @@
-package com.example.music_service;
-
-import java.util.concurrent.TimeUnit;
+package com.example.music_service.model.globals;
 
 public class Convert {
 
@@ -50,9 +48,7 @@ public class Convert {
         int seconds = (int) (mSeconds / 1000) % 60;
         int minutes = (int) ((mSeconds / (1000 * 60)) % 60);
 
-        String result = String.format("%02d:%02d", minutes, seconds);
-
-        return result;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
 }

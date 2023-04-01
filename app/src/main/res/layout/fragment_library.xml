@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,12 +28,13 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/discover_txt"
             android:layout_marginTop="15dp"
-            android:id="@+id/best_daily_region">
+            android:id="@+id/best_daily_region"
+            android:backgroundTint="@android:color/transparent">
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="200dp"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/library_frame"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -49,6 +50,7 @@
             android:layout_below="@id/best_daily_region"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,4 +59,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</ScrollView>

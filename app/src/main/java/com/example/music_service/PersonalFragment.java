@@ -1,19 +1,22 @@
 package com.example.music_service;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PersonalFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PersonalFragment extends Fragment {
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+public class PersonalFragment extends Fragment implements TabLayoutMediator.TabConfigurationStrategy {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,15 +31,8 @@ public class PersonalFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PersonalFragment.
-     */
     // TODO: Rename and change types and number of parameters
+    @NonNull
     public static PersonalFragment newInstance(String param1, String param2) {
         PersonalFragment fragment = new PersonalFragment();
         Bundle args = new Bundle();
@@ -56,9 +52,61 @@ public class PersonalFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_personal, container, false);
+    }
+
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private MyViewPageAdapter myViewPageAdapter;
+
+    private CardView accountButton;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        tabLayout = view.findViewById(R.id.nav_bar);
+        viewPager2 = view.findViewById(R.id.frame_content);
+        myViewPageAdapter = new MyViewPageAdapter(getActivity());
+        viewPager2.setAdapter(myViewPageAdapter);
+
+        accountButton = view.findViewById(R.id.account_button);
+
+        accountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        new TabLayoutMediator(tabLayout, viewPager2, this).attach();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private String[] tabsTitles = new String[]{"Playlists", "Songs", "Albums"};
+
+    @Override
+    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+        tab.setText(tabsTitles[position]);
     }
 }

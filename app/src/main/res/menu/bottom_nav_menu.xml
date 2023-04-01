@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home"
+    <item
+        android:id="@+id/home_button"
         android:icon="@drawable/ic_launcher_background"
-        android:id="@+id/home_button" />
-    <item android:title="Library"
+        android:title="Home" />
+    <item
+        android:id="@+id/library_button"
         android:icon="@drawable/ic_launcher_background"
-        android:id="@+id/library_button"/>
-    <item android:title="Personal"
+        android:title="Library" />
+    <item
+        android:id="@+id/personal_button"
         android:icon="@drawable/ic_launcher_background"
-        android:id="@+id/personal_button"/>
+        android:title="Personal" />
 </menu>

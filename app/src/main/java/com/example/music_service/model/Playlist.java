@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.model;
 
 import java.util.ArrayList;
 
@@ -16,12 +16,20 @@ public class Playlist {
         songIDs = new ArrayList<>();
     }
 
+    public void addSong(String title, int id) {
+        songTitles.add(title);
+        songIDs.add(id);
+    }
+
     public ArrayList<String> getSongTitles() {
         return songTitles;
     }
 
-    public void addSong(String title, int id) {
-        songTitles.add(title);
-        songIDs.add(id);
+    public int getSongsAmount() {
+        return songTitles.size();
+    }
+
+    public String getPlaylistName() {
+        return playlistName;
     }
 }

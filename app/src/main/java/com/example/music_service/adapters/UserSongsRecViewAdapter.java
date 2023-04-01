@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,21 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.R;
+import com.example.music_service.model.Song;
+
 import java.util.ArrayList;
 
-public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapter.ViewHolder> {
+public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecViewAdapter.ViewHolder> {
 
     private final Context context;
+
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public QueueRecViewAdapter(Context context) {
+    public UserSongsRecViewAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.queue_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_song_item, parent, false);
 
         return new ViewHolder(view);
     }
@@ -39,7 +43,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, songs.get(position).getTitle() + " chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "shit chosen", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -59,16 +63,14 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
         private final TextView trackNameTxt;
         private final TextView authorNameTxt;
-        private final TextView durationTxt;
 
         private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            trackNameTxt = itemView.findViewById(R.id.track_title_txt);
-            authorNameTxt = itemView.findViewById(R.id.author_txt);
-            durationTxt = itemView.findViewById(R.id.track_length);
+            trackNameTxt = itemView.findViewById(R.id.track_title);
+            authorNameTxt = itemView.findViewById(R.id.track_author);
 
             parent = itemView.findViewById(R.id.parent);
         }

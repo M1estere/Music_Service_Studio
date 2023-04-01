@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#020017">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.music_service.QueueActivityViewModel" />
+    </data>
 
     <RelativeLayout
-        android:id="@+id/up_region"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="#020017">
 
-        <LinearLayout
-            android:id="@+id/up_bar"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/up_region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/up_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/button_back"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/white"
+                    android:onClick="@{()-> viewModel.backToPlayer()}"
+                    android:text="" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/song_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Queue"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/queue_rec_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp">
-
-            <Button
-                android:id="@+id/button_back"
-                android:layout_width="45dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:text="" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/song_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Queue"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:layout_below="@id/up_region"
+            android:layout_marginTop="25dp" />
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/queue_rec_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/up_region" />
-
-</RelativeLayout>
+</layout>

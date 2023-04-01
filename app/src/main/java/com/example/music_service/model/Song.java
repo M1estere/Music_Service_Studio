@@ -1,4 +1,7 @@
-package com.example.music_service;
+package com.example.music_service.model;
+
+import com.example.music_service.model.globals.Convert;
+import com.example.music_service.model.globals.SongsProps;
 
 public class Song {
     private String path;
@@ -15,8 +18,6 @@ public class Song {
 
         title = Convert.getTitleFromPath(path);
         artist = SongsProps.authors.get(SongsProps.songs.indexOf(path));
-
-        //cover = SongsInfo.AllCovers[SongsInfo.AllSongs.IndexOf(Path)];
     }
 
     public int getId() {

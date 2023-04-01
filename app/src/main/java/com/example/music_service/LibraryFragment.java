@@ -2,11 +2,22 @@ package com.example.music_service;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.music_service.adapters.ArtistsRecViewAdapter;
+import com.example.music_service.model.globals.SongsProps;
+import com.example.music_service.model.Author;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +57,10 @@ public class LibraryFragment extends Fragment {
         return fragment;
     }
 
+    private ArrayList<Author> authors = new ArrayList<>();
+
+    private RecyclerView authorsRecView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,5 +75,45 @@ public class LibraryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_library, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fillAuthorsList();
+        sortAuthors();
+
+        authorsRecView = view.findViewById(R.id.artists_rec_view);
+
+        ArtistsRecViewAdapter adapter = new ArtistsRecViewAdapter(getActivity());
+        adapter.setAuthors(authors);
+
+        authorsRecView.setAdapter(adapter);
+        authorsRecView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private void fillAuthorsList() {
+        ArrayList<String> checked = new ArrayList<>();
+
+        for (String author : SongsProps.authors) {
+            if (checked.contains(author)) continue;
+
+            checked.add(author);
+
+            authors.add(new Author(author));
+        }
+    }
+
+    private void sortAuthors() {
+        ArrayList<String> tempAuthors = new ArrayList<String>();
+        for (Author author : authors)
+            tempAuthors.add(author.getAuthorName());
+
+        Collections.sort(tempAuthors);
+        authors.clear();
+
+        for (String name : tempAuthors)
+            authors.add(new Author(name));
     }
 }
