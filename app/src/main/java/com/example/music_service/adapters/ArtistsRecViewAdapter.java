@@ -36,6 +36,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.artistName.setText(artists.get(position).getAuthorName());
+        holder.artistName.setSelected(true);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 

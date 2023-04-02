@@ -2,26 +2,22 @@ package com.example.music_service;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.music_service.databinding.ActivityMainBinding;
-import com.example.music_service.model.globals.Globs;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private CardView miniPlayer;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,12 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         replaceFragment(new HomeFragment());
 
-        if (Globs.currentSongs == null) miniPlayer.setVisibility(View.GONE);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this, false);
+        MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this, true);
 
-        binding.setPlayerViewModel(musicPlayerViewModel);
+        binding.setViewModel(musicPlayerViewModel);
 
         binding.navBar.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {

@@ -1,9 +1,18 @@
 package com.example.music_service;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -14,8 +23,16 @@ import com.example.music_service.model.globals.SongsProps;
 import com.example.music_service.model.Player;
 import com.example.music_service.model.Playlist;
 import com.example.music_service.model.Song;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MusicPlayerViewModel extends BaseObservable {
+
+    private View mainPlayer;
+
+    private SlidingUpPanelLayout slider;
+
+    private TextView mainSongTitle;
+    private TextView miniSongTitle;
 
     private Activity activity;
 
@@ -29,6 +46,8 @@ public class MusicPlayerViewModel extends BaseObservable {
     private int progress;
 
     private SeekBar progressBar;
+
+    private boolean isSeeking = false;
 
     @Bindable
     public int getProgress() {
@@ -79,6 +98,12 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         final boolean Set = true;
 
+        mainSongTitle = activity.findViewById(R.id.song_title);
+        mainSongTitle.setSelected(true);
+
+        miniSongTitle = activity.findViewById(R.id.title_txt);
+        miniSongTitle.setSelected(true);
+
         progressBar = activity.findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -92,21 +117,23 @@ public class MusicPlayerViewModel extends BaseObservable {
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
+                    isSeeking = true;
                     return;
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     Player.goTo(progress * 1000);
+                    isSeeking = false;
+                    updateUI();
                     return;
                 }
             });
         }
 
-        if (refill == true) {
-            Globs.fillAllSongs();
-            initSongs();
-        }
+        Globs.fillAllSongs();
+        Player.setMusicPlayer(this);
+        initSongs();
 
         new Thread() {
             public void run() {
@@ -116,18 +143,31 @@ public class MusicPlayerViewModel extends BaseObservable {
 
                             @Override
                             public void run() {
-                                setCurrentProgress(Convert.GetTimeFromSeconds(Player.getCurrentPos()));
+
                                 if (Player.isPlay() == true) {
-                                    setProgress(Player.getCurrentPos() / 1000);
-
+                                    if (isSeeking == false) {
+                                        setProgress(Player.getCurrentPos() / 1000);
+                                        setCurrentProgress(Convert.GetTimeFromSeconds(Player.getCurrentPos()));
+                                    } else {
+                                        setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
+                                        );
+                                    }
                                     checkProgression();
-
-                                    updateUI();
+                                } else {
+                                    if (isSeeking == true)
+                                        setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) -progressBar.getMax()) ) * 1000 )
+                                        );
+                                    else
+                                        setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
+                                        );
                                 }
                             }
                         });
 
-                        Thread.sleep(300);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -135,7 +175,47 @@ public class MusicPlayerViewModel extends BaseObservable {
             }
         }.start();
 
+        mainPlayer = activity.findViewById(R.id.main_player);
+
+        slider = activity.findViewById(R.id.sliding_layout);
+        slider.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                View miniPlayerView = activity.findViewById(R.id.mini_player);
+                miniPlayerView.setAlpha(1 - (slideOffset * 2));
+
+                mainPlayer.setAlpha( Math.abs((1 - slideOffset) - 1) );
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannel();
+            activity.startService(new Intent(activity.getBaseContext(), OnClearFromRecentService.class));
+        }
+
+        CreateNotification.setViewModel(this);
+        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
+                Globs.currentTrackNumber, Globs.currentSongs.size() - 1);
+
         updateUI();
+    }
+
+    private NotificationManager notificationManager;
+    private void createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CreateNotification.CHANNEL_ID,
+                    "Music Service", NotificationManager.IMPORTANCE_LOW);
+
+            notificationManager = activity.getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 
     @Bindable
@@ -180,14 +260,20 @@ public class MusicPlayerViewModel extends BaseObservable {
     public void changePlayingState() {
         if (Player.isPlay()) pauseSong();
         else playSong();
+
+        updateUI();
     }
 
-    private void playSong() {
+    public void playSong() {
         Player.playSong();
+
+        updateUI();
     }
 
-    private void pauseSong() {
+    public void pauseSong() {
         Player.pause();
+
+        updateUI();
     }
 
     public void queuePage() {
@@ -195,16 +281,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         activity.startActivity(intent);
     }
 
-    public void homePage() {
-        Intent intent = new Intent(activity, MainActivity.class);
-        activity.startActivity(intent);
-    }
-
-    public void backToPlayer() {
-        activity.onBackPressed();
-    }
-
-    private void updateUI() {
+    public void updateUI() {
         Globs.currentSongs.clear();
 
         for (String title : Player.getSongs())
@@ -217,6 +294,11 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         int max = Player.getDuration() / 1000;
         setMaxProgress(max);
+
+        CreateNotification.destroyNotification();
+        CreateNotification.setViewModel(this);
+        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
+                Globs.currentTrackNumber, Globs.currentSongs.size() - 1);
     }
 
     public void changeRepeatingState() {

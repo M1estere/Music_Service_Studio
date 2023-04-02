@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
 
+import com.example.music_service.MusicPlayerViewModel;
 import com.example.music_service.model.globals.Globs;
 import com.example.music_service.model.globals.SongsProps;
 
@@ -21,12 +22,25 @@ public class Player {
 
     private static boolean playing = true;
 
+    private static MusicPlayerViewModel musicPlayerViewModel;
+    public static void setMusicPlayer(MusicPlayerViewModel m) {
+        musicPlayerViewModel = m;
+    }
+
     public static void startTrack() {
         int index = SongsProps.songs.indexOf(songTitles.get(Globs.currentTrackNumber));
         currentTrackID = SongsProps.ids.get(index);
 
+        if (musicPlayer != null) {
+            musicPlayer.reset();
+            musicPlayer.release();
+        }
         musicPlayer = MediaPlayer.create(context, currentTrackID);
         playSong();
+    }
+
+    public static MediaPlayer getMusicPlayer() {
+        return musicPlayer;
     }
 
     public static int previousSong() {
@@ -76,6 +90,8 @@ public class Player {
         musicPlayer.start();
 
         if (oldState == false) musicPlayer.pause();
+
+        musicPlayerViewModel.updateUI();
     }
 
     public static void setQueue(@NonNull ArrayList<String> titles) {
@@ -84,6 +100,8 @@ public class Player {
 
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
+
+        musicPlayerViewModel.updateUI();
     }
 
     public static void updateQueue(ArrayList<String> titles) {
@@ -92,6 +110,8 @@ public class Player {
 
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
+
+        musicPlayerViewModel.updateUI();
     }
 
     public static void setContext(Context cont) {
@@ -111,7 +131,7 @@ public class Player {
     }
 
     public static int getDuration() {
-        return musicPlayer.getDuration();
+        return musicPlayer.getDuration() - 1000;
     }
 
     public static int getCurrentPos() {

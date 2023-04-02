@@ -15,7 +15,7 @@ public class PlaylistSystem {
         for (int i = 0; i < amount; i++) {
             section.add(new Playlist("Top 2023" + Globs.random.nextInt(500)));
 
-            PlaylistSystem.fillOnePlaylist(startPct, section.get(i));
+            fillOnePlaylist(startPct, section.get(i));
         }
     }
 
@@ -25,7 +25,7 @@ public class PlaylistSystem {
         ArrayList<String> titles = new ArrayList<>();
         titles = (ArrayList<String>) SongsProps.songs.clone();
 
-        int startSongsAmount = (int) ((titles.size() / 100) * startSongsPercentage);
+        int startSongsAmount = (int) (titles.size() * startSongsPercentage);
 
         int length = Globs.random.nextInt(titles.size() - startSongsAmount) + startSongsAmount;
 
