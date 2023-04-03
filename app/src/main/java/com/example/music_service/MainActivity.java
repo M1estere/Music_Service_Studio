@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         final boolean Set = true;
 
         replaceFragment(new HomeFragment());
-
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this, true);

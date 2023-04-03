@@ -121,6 +121,7 @@ public class CreateNotification {
 
                     System.out.println("Moved");
                     Player.goTo((int) (pos));
+                    viewModel.updateUI();
                     viewModel.setProgress((int) (pos / 1000));
                 }
             });
