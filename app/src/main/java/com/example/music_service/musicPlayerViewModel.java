@@ -181,6 +181,11 @@ public class MusicPlayerViewModel extends BaseObservable {
         slider.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
+                View navBar = activity.findViewById(R.id.nav_bar);
+
+                System.out.printf("Height: %d\n", navBar.getHeight());
+                navBar.animate().translationY(navBar.getHeight() - (1 - slideOffset) * navBar.getHeight()).setDuration(100);
+
                 View miniPlayerView = activity.findViewById(R.id.mini_player);
                 miniPlayerView.setAlpha(1 - (slideOffset * 2));
 
@@ -189,7 +194,13 @@ public class MusicPlayerViewModel extends BaseObservable {
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-
+//                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+//                    View navBar = activity.findViewById(R.id.nav_bar);
+//                    navBar.setVisibility(View.GONE);
+//                } else if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+//                    View navBar = activity.findViewById(R.id.nav_bar);
+//                    navBar.setVisibility(View.VISIBLE);
+//                }
             }
         });
 
