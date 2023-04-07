@@ -4,24 +4,26 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
 import com.example.music_service.adapters.QueueRecViewAdapter;
+import com.example.music_service.model.globals.Convert;
 import com.example.music_service.model.globals.Globs;
 import com.example.music_service.model.globals.SongsProps;
 import com.example.music_service.model.Player;
 import com.example.music_service.model.Song;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class QueueActivityViewModel extends BaseObservable {
 
     private Activity mainActivity;
 
-    private ArrayList<Song> songs = new ArrayList<>();
     private RecyclerView queueRecView;
 
     public QueueActivityViewModel(@NonNull Activity activity) {
@@ -29,14 +31,40 @@ public class QueueActivityViewModel extends BaseObservable {
 
         queueRecView = activity.findViewById(R.id.queue_rec_view);
 
-        for (String title : Player.getSongs())
-            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
-
         QueueRecViewAdapter adapter = new QueueRecViewAdapter(activity, this);
-        adapter.setSongs(songs);
+        adapter.setSongs(Globs.currentSongs);
 
         queueRecView.setAdapter(adapter);
         queueRecView.setLayoutManager(new LinearLayoutManager(activity));
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
+                ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+
+                int toPosition = target.getAdapterPosition();
+                int old = Globs.currentTrackNumber;
+
+                String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
+                Collections.swap(Globs.currentSongs, fromPosition, toPosition);
+                adapter.notifyItemMoved(fromPosition, toPosition);
+
+                Globs.currentTrackNumber = findSong(currentTitle);
+
+                System.out.printf("swapped, was: %d, now: %d\n", old, Globs.currentTrackNumber);
+
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(queueRecView);
     }
 
     public void chooseTrack(String title) {
@@ -53,8 +81,8 @@ public class QueueActivityViewModel extends BaseObservable {
 
     private int findSong(String title) {
         int songIndex = 0;
-        for (int i = 0; i < songs.size(); i++)
-            if (Objects.equals(songs.get(i).getTitle(), title)) songIndex = i;
+        for (int i = 0; i < Globs.currentSongs.size(); i++)
+            if (Objects.equals(Globs.currentSongs.get(i).getTitle(), title)) songIndex = i;
 
         return songIndex;
     }
@@ -62,11 +90,4 @@ public class QueueActivityViewModel extends BaseObservable {
     public void backToPlayer() {
         mainActivity.onBackPressed();
     }
-
-    private void createSong(String title, int id) {
-        Song songToAdd = new Song(title, id);
-
-        songs.add(songToAdd);
-    }
-
 }

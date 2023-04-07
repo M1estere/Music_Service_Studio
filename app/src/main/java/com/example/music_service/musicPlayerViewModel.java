@@ -8,9 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -23,10 +28,14 @@ import com.example.music_service.model.globals.SongsProps;
 import com.example.music_service.model.Player;
 import com.example.music_service.model.Playlist;
 import com.example.music_service.model.Song;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-public class MusicPlayerViewModel extends BaseObservable {
+import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+public class MusicPlayerViewModel extends BaseObservable {
     private View mainPlayer;
 
     private SlidingUpPanelLayout slider;
@@ -129,8 +138,8 @@ public class MusicPlayerViewModel extends BaseObservable {
                     return;
                 }
             });
-        }
 
+        }
         Globs.fillAllSongs();
         Player.setMusicPlayer(this);
         initSongs();
@@ -157,7 +166,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                                 } else {
                                     if (isSeeking == true)
                                         setCurrentProgress(Convert.GetTimeFromSeconds(
-                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) -progressBar.getMax()) ) * 1000 )
+                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
                                         );
                                     else
                                         setCurrentProgress(Convert.GetTimeFromSeconds(
@@ -183,24 +192,17 @@ public class MusicPlayerViewModel extends BaseObservable {
             public void onPanelSlide(View panel, float slideOffset) {
                 View navBar = activity.findViewById(R.id.nav_bar);
 
-                System.out.printf("Height: %d\n", navBar.getHeight());
                 navBar.animate().translationY(navBar.getHeight() - (1 - slideOffset) * navBar.getHeight()).setDuration(100);
 
                 View miniPlayerView = activity.findViewById(R.id.mini_player);
                 miniPlayerView.setAlpha(1 - (slideOffset * 2));
 
-                mainPlayer.setAlpha( Math.abs((1 - slideOffset) - 1) );
+                mainPlayer.setAlpha(Math.abs((1 - slideOffset) - 1));
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-//                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-//                    View navBar = activity.findViewById(R.id.nav_bar);
-//                    navBar.setVisibility(View.GONE);
-//                } else if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-//                    View navBar = activity.findViewById(R.id.nav_bar);
-//                    navBar.setVisibility(View.VISIBLE);
-//                }
+
             }
         });
 
@@ -209,14 +211,11 @@ public class MusicPlayerViewModel extends BaseObservable {
             activity.startService(new Intent(activity.getBaseContext(), OnClearFromRecentService.class));
         }
 
-        CreateNotification.setViewModel(this);
-        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
-                Globs.currentTrackNumber, Globs.currentSongs.size() - 1);
-
         updateUI();
     }
 
     private NotificationManager notificationManager;
+
     private void createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CreateNotification.CHANNEL_ID,
@@ -293,11 +292,6 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void updateUI() {
-        Globs.currentSongs.clear();
-
-        for (String title : Player.getSongs())
-            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
-
         setTrackName(Globs.currentSongs.get(Globs.currentTrackNumber).getTitle());
         setAuthorName(Globs.currentSongs.get(Globs.currentTrackNumber).getArtist());
 
@@ -313,7 +307,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void changeRepeatingState() {
-
+        Player.changeRepeatingState();
     }
 
     public void savePlaylist() {
@@ -324,17 +318,67 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     }
 
-    private void createSong(String title, int id) {
-        Song songToAdd = new Song(title, id);
+    public void openSongInfo(View view) {
+        String text = view.getTag().toString();
+        Song song = SongsProps.getSongByName(text);
 
-        Globs.currentSongs.add(songToAdd);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                activity, R.style.BottomSheetDialogTheme
+        );
+
+        View bottomSheetView = LayoutInflater.from(activity.getApplicationContext())
+                .inflate(
+                        R.layout.layout_bottom_sheet,
+                        (RelativeLayout) activity.findViewById(R.id.bottom_sheet_container)
+                );
+
+        TextView title = bottomSheetView.findViewById(R.id.title_song);
+        title.setText(song.getTitle());
+
+        TextView artist = bottomSheetView.findViewById(R.id.author_song);
+        artist.setText(song.getArtist());
+
+        TextView duration = bottomSheetView.findViewById(R.id.duration_song);
+        duration.setText(song.getDurationString());
+
+        Button playButton = bottomSheetView.findViewById(R.id.play_button);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseTrack(title.getText().toString());
+            }
+        });
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
+
+    public void chooseTrack(String title) {
+        if (title == null) return;
+
+        int songIndex = findSong(title);
+
+        if (Globs.currentTrackNumber == songIndex) return;
+
+        Globs.currentTrackNumber = songIndex;
+
+        Player.selectTrack(Globs.currentTrackNumber);
+
+        Player.updatePlayer();
+    }
+
+    private int findSong(String title) {
+        int songIndex = 0;
+        for (int i = 0; i < Globs.currentSongs.size(); i++)
+            if (Globs.currentSongs.get(i).getTitle().equals(title)) songIndex = i;
+
+        return songIndex;
     }
 
     private void initSongs() {
         Player.setContext(activity);
 
         Playlist playlist = new Playlist("Start List");
-
         PlaylistSystem.fillOnePlaylist(20, playlist);
 
         Player.setQueue(playlist.getSongTitles());

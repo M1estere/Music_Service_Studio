@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        final boolean Set = true;
-
         replaceFragment(new HomeFragment());
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);

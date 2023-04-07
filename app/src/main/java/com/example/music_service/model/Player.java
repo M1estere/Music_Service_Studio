@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import androidx.annotation.NonNull;
 
 import com.example.music_service.MusicPlayerViewModel;
+import com.example.music_service.R;
+import com.example.music_service.model.globals.Convert;
 import com.example.music_service.model.globals.Globs;
 import com.example.music_service.model.globals.SongsProps;
 
@@ -13,8 +15,10 @@ import java.util.ArrayList;
 
 public class Player {
 
+    public enum RepeatingState { NoRepeat, RepeatPlaylist, RepeatTrack }
+    public static RepeatingState playerRepeatingState = RepeatingState.NoRepeat;
+
     private static MediaPlayer musicPlayer;
-    private static ArrayList<String> songTitles = new ArrayList<>();
 
     private static Context context;
 
@@ -28,13 +32,14 @@ public class Player {
     }
 
     public static void startTrack() {
-        int index = SongsProps.songs.indexOf(songTitles.get(Globs.currentTrackNumber));
+        int index = SongsProps.songs.indexOf(Convert.getPathFromTitle(Globs.getTitles().get(Globs.currentTrackNumber)));
         currentTrackID = SongsProps.ids.get(index);
 
         if (musicPlayer != null) {
             musicPlayer.reset();
             musicPlayer.release();
         }
+
         musicPlayer = MediaPlayer.create(context, currentTrackID);
         playSong();
     }
@@ -71,7 +76,7 @@ public class Player {
     }
 
     public static int nextSong() {
-        if (Globs.currentTrackNumber == songTitles.size() - 1) Globs.currentTrackNumber = -1;
+        if (Globs.currentTrackNumber == Globs.currentSongs.size() - 1) Globs.currentTrackNumber = -1;
 
         Globs.currentTrackNumber++;
 
@@ -95,8 +100,11 @@ public class Player {
     }
 
     public static void setQueue(@NonNull ArrayList<String> titles) {
-        songTitles.clear();
-        songTitles = (ArrayList<String>) titles.clone();
+        Globs.currentSongs.clear();
+        for (String title : titles)
+            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
+
+        System.out.printf("globals count: %d", Globs.currentSongs.size());
 
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
@@ -104,22 +112,110 @@ public class Player {
         musicPlayerViewModel.updateUI();
     }
 
+    private static void createSong(String title, int id) {
+        Song songToAdd = new Song(title, id);
+
+        Globs.currentSongs.add(songToAdd);
+    }
+
     public static void updateQueue(ArrayList<String> titles) {
-        songTitles.clear();
-        songTitles = (ArrayList<String>) titles.clone();
+        Globs.currentSongs.clear();
+        for (String title : titles)
+            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
 
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
 
+        musicPlayerViewModel.updateUI();
+    }
+
+    public static void addToQueueEnd(String path)
+    {
+        String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
+        if (currentTitle == path) return;
+
+        if (Globs.currentSongs.contains(path) == true)
+            deleteFromQueue(path);
+
+        Globs.currentTrackNumber = Globs.currentSongs.indexOf(currentTitle);
+
+        Globs.currentSongs.add(new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
+        musicPlayerViewModel.updateUI();
+    }
+
+    public static void addNextToQueue(String path)
+    {
+        String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
+        if (currentTitle == path) return;
+
+        int oldLength = Globs.currentSongs.size();
+        int index = Globs.currentTrackNumber + 1;
+        String oldTrackTitle = currentTitle;
+
+        if (Globs.getTitles().contains(path) == true)
+        {
+            int trackIndex = Globs.getTitles().indexOf(path);
+            deleteFromQueue(path);
+
+            index--;
+            if (trackIndex > Globs.currentTrackNumber) index++;
+        }
+        Globs.currentSongs.add(index, new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
+        Globs.currentTrackNumber = Globs.getTitles().indexOf(oldTrackTitle);
+
+        musicPlayerViewModel.updateUI();
+    }
+
+    public static int deleteFromQueue(String name)
+    {
+        int deletableIndex = 0;
+
+        for (int i = 0; i < Globs.currentSongs.size(); i++)
+            if (Globs.getTitles().get(i).equals(name)) deletableIndex = i;
+
+        Globs.removeSong(name);
+
+        if (deletableIndex < Globs.currentTrackNumber)
+            Globs.currentTrackNumber--;
+
+        return Globs.currentTrackNumber;
+    }
+
+    public static String changeRepeatingState()
+    {
+        String returner = "";
+        switch (playerRepeatingState)
+        {
+            case NoRepeat: {
+                playerRepeatingState = RepeatingState.RepeatPlaylist;
+                returner = "0";
+                break;
+            }
+            case RepeatPlaylist: {
+                playerRepeatingState = RepeatingState.RepeatTrack;
+                returner = "1";
+                break;
+            }
+            case RepeatTrack: {
+                playerRepeatingState = RepeatingState.NoRepeat;
+                returner = "";
+                break;
+            }
+            default: {
+                returner = "WTF";
+                break;
+            }
+        }
+
+        return returner;
+    }
+
+    public static void updatePlayer() {
         musicPlayerViewModel.updateUI();
     }
 
     public static void setContext(Context cont) {
         context = cont;
-    }
-
-    public static ArrayList<String> getSongs() {
-        return songTitles;
     }
 
     public static void goTo(int seekPosition) {
