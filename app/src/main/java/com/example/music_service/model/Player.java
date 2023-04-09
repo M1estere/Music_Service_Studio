@@ -1,7 +1,10 @@
 package com.example.music_service.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +14,7 @@ import com.example.music_service.model.globals.Convert;
 import com.example.music_service.model.globals.Globs;
 import com.example.music_service.model.globals.SongsProps;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player {
@@ -42,6 +46,23 @@ public class Player {
 
         musicPlayer = MediaPlayer.create(context, currentTrackID);
         playSong();
+    }
+
+    public static void startUri(Activity act, String uri) {
+        musicPlayer = new MediaPlayer();
+
+        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        try {
+            musicPlayer.setDataSource(uri);
+
+            musicPlayer.prepare();
+            musicPlayer.start();
+
+            Toast.makeText(act, "Audio started playing..", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(act, "exc..", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static MediaPlayer getMusicPlayer() {

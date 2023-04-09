@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,34 +29,38 @@ import com.example.music_service.model.globals.SongsProps;
 import com.example.music_service.model.Player;
 import com.example.music_service.model.Playlist;
 import com.example.music_service.model.Song;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 
 public class MusicPlayerViewModel extends BaseObservable {
     private View mainPlayer;
-
     private SlidingUpPanelLayout slider;
-
     private TextView mainSongTitle;
     private TextView miniSongTitle;
-
     private Activity activity;
-
     private String trackName;
     private String authorName;
-
     private String currentTrackDuration;
-
     private int maxProgress;
     private String currentProgress;
     private int progress;
-
     private SeekBar progressBar;
-
     private boolean isSeeking = false;
 
     @Bindable
@@ -102,6 +107,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         notifyPropertyChanged(BR.currentTrackDuration);
     }
 
+    String audioUrl = "";
     public MusicPlayerViewModel(Activity mainActivity, boolean refill) {
         activity = mainActivity;
 
@@ -140,6 +146,7 @@ public class MusicPlayerViewModel extends BaseObservable {
             });
 
         }
+
         Globs.fillAllSongs();
         Player.setMusicPlayer(this);
         initSongs();
