@@ -174,6 +174,9 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             infoButton = itemView.findViewById(R.id.info_button);
 
             parent = itemView.findViewById(R.id.parent);
+
+            trackNameTxt.setSelected(true);
+            authorNameTxt.setSelected(true);
         }
     }
 }

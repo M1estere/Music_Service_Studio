@@ -1,6 +1,7 @@
 package com.example.music_service;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -38,7 +39,7 @@ public class QueueActivityViewModel extends BaseObservable {
         queueRecView.setLayoutManager(new LinearLayoutManager(activity));
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-                ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+                ItemTouchHelper.START | ItemTouchHelper.END, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
@@ -59,7 +60,16 @@ public class QueueActivityViewModel extends BaseObservable {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Toast.makeText(activity, "on Swiped ", Toast.LENGTH_SHORT).show();
+                String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
 
+                int position = viewHolder.getAdapterPosition();
+                if (position == Globs.currentTrackNumber) return;
+
+                Globs.currentSongs.remove(position);
+                adapter.notifyDataSetChanged();
+
+                Globs.currentTrackNumber = findSong(currentTitle);
             }
         };
 
