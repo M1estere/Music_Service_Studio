@@ -214,18 +214,6 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <!--Overlay Info Button-->
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_below="@id/cover"
-                        android:backgroundTint="@android:color/transparent"
-                        android:id="@+id/song_info_button"
-                        android:textColor="@android:color/transparent"
-                        android:onClick="@{viewModel.openSongInfo}"
-                        android:tag="@{viewModel.trackName}"
-                        android:layout_marginTop="15dp"/>
-
                     <!--Song Info-->
                     <LinearLayout
                         android:id="@+id/song_info"

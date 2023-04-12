@@ -317,69 +317,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     }
 
-    public void openSongInfo(View view) {
-        String text = view.getTag().toString();
-        Song song = SongsProps.getSongByName(text);
-
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                activity, R.style.BottomSheetDialogTheme
-        );
-
-        View bottomSheetView = LayoutInflater.from(activity.getApplicationContext())
-                .inflate(
-                        R.layout.layout_bottom_sheet,
-                        (RelativeLayout) activity.findViewById(R.id.bottom_sheet_container)
-                );
-
-        TextView title = bottomSheetView.findViewById(R.id.title_song);
-        title.setText(song.getTitle());
-
-        TextView artist = bottomSheetView.findViewById(R.id.author_song);
-        artist.setText(song.getArtist());
-
-        TextView duration = bottomSheetView.findViewById(R.id.duration_song);
-        duration.setText(song.getDurationString());
-
-        Button playButton = bottomSheetView.findViewById(R.id.play_button);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseTrack(title.getText().toString());
-            }
-        });
-
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-    }
-
-    public void chooseTrack(String title) {
-        if (title == null) return;
-
-        int songIndex = findSong(title);
-
-        if (Globs.currentTrackNumber == songIndex) return;
-
-        Globs.currentTrackNumber = songIndex;
-
-        Player.selectTrack(Globs.currentTrackNumber);
-
-        Player.updatePlayer();
-    }
-
-    private int findSong(String title) {
-        int songIndex = 0;
-        for (int i = 0; i < Globs.currentSongs.size(); i++)
-            if (Globs.currentSongs.get(i).getTitle().equals(title)) songIndex = i;
-
-        return songIndex;
-    }
-
     private void initSongs() {
         Player.setContext(activity);
-
-        //Playlist playlist = new Playlist("Start List");
-        //PlaylistSystem.fillOnePlaylist(20, playlist);
-
-        //Player.setQueue(playlist.getSongTitles());
     }
 }

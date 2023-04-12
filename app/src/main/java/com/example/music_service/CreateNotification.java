@@ -1,7 +1,9 @@
 package com.example.music_service;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -122,6 +124,10 @@ public class CreateNotification {
 
             mediaSession.setActive(true);
 
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                    new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+            notification.contentIntent = contentIntent;
             notificationManagerCompat.notify(1, notification);
         }
     }
