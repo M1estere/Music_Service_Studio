@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.app.Activity;
 import android.widget.Toast;
@@ -11,13 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
 import com.example.music_service.adapters.QueueRecViewAdapter;
-import com.example.music_service.model.globals.Convert;
-import com.example.music_service.model.globals.Globs;
-import com.example.music_service.model.globals.SongsProps;
-import com.example.music_service.model.Player;
-import com.example.music_service.model.Song;
+import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.Player;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -26,13 +22,16 @@ public class QueueActivityViewModel extends BaseObservable {
     private Activity mainActivity;
 
     private RecyclerView queueRecView;
+    private QueueRecViewAdapter adapter;
 
     public QueueActivityViewModel(@NonNull Activity activity) {
+        Player.setQueueActivityViewModel(this);
+
         mainActivity = activity;
 
         queueRecView = activity.findViewById(R.id.queue_rec_view);
 
-        QueueRecViewAdapter adapter = new QueueRecViewAdapter(activity, this);
+        adapter = new QueueRecViewAdapter(activity, this);
         adapter.setSongs(Globs.currentSongs);
 
         queueRecView.setAdapter(adapter);
@@ -53,14 +52,11 @@ public class QueueActivityViewModel extends BaseObservable {
 
                 Globs.currentTrackNumber = findSong(currentTitle);
 
-                System.out.printf("swapped, was: %d, now: %d\n", old, Globs.currentTrackNumber);
-
                 return false;
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Toast.makeText(activity, "on Swiped ", Toast.LENGTH_SHORT).show();
                 String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
 
                 int position = viewHolder.getAdapterPosition();
@@ -75,6 +71,10 @@ public class QueueActivityViewModel extends BaseObservable {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(queueRecView);
+    }
+
+    public void updateQueue() {
+        adapter.notifyDataSetChanged();
     }
 
     public void chooseTrack(String title) {

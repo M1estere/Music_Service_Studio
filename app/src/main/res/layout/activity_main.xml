@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.music_service.MusicPlayerViewModel" />
+            type="com.example.music_service.viewModels.MusicPlayerViewModel" />
     </data>
 
     <RelativeLayout

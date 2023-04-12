@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.fragments;
 
 import android.os.Bundle;
 
@@ -12,9 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.music_service.R;
 import com.example.music_service.adapters.ArtistsRecViewAdapter;
-import com.example.music_service.model.globals.SongsProps;
-import com.example.music_service.model.Author;
+import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.Author;
 
 import java.util.ArrayList;
 import java.util.Collections;

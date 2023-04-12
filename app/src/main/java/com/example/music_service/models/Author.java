@@ -1,8 +1,8 @@
-package com.example.music_service.model;
+package com.example.music_service.models;
 
 import androidx.annotation.NonNull;
 
-import com.example.music_service.model.globals.SongsProps;
+import com.example.music_service.models.globals.SongsProps;
 
 import java.util.ArrayList;
 

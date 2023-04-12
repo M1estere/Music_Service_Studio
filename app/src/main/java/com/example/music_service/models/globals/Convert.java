@@ -1,4 +1,4 @@
-package com.example.music_service.model.globals;
+package com.example.music_service.models.globals;
 
 public class Convert {
 
@@ -38,7 +38,8 @@ public class Convert {
         String result = title.toLowerCase();
         result = result.replace(' ', '_');
 
-        result += ".mp3";
+        if (result.contains(".mp3") == false)
+            result += ".mp3";
 
         return result;
     }

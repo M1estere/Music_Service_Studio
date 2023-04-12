@@ -1,6 +1,6 @@
-package com.example.music_service.model.globals;
+package com.example.music_service.models.globals;
 
-import com.example.music_service.model.Playlist;
+import com.example.music_service.models.Playlist;
 
 import java.util.ArrayList;
 

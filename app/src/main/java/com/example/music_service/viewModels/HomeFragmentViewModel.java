@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.app.Activity;
 
@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.R;
 import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
-import com.example.music_service.model.Player;
-import com.example.music_service.model.Playlist;
-import com.example.music_service.model.globals.PlaylistSystem;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Playlist;
+import com.example.music_service.models.globals.PlaylistSystem;
 
 import java.util.ArrayList;
 
@@ -43,12 +44,8 @@ public class HomeFragmentViewModel extends BaseObservable {
         recommendations = new ArrayList<>();
         PlaylistSystem.fillPlaylistsSection(recommendations, 5, 3, 60);
 
-        System.out.printf("Total (recommendations): %d\n", recommendations.size());
-
         popular = new ArrayList<>();
         PlaylistSystem.fillPlaylistsSection(popular, 7, 2, 60);
-
-        System.out.printf("Total (popular): %d\n", popular.size());
 
         ProgramPlaylistsRecViewAdapter recommendationsAdapter = new ProgramPlaylistsRecViewAdapter(mainActivity, this);
         recommendationsAdapter.setPlaylists(recommendations);

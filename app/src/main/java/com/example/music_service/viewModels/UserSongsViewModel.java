@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.view.View;
 
@@ -7,8 +7,9 @@ import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.R;
 import com.example.music_service.adapters.UserSongsRecViewAdapter;
-import com.example.music_service.model.Song;
+import com.example.music_service.models.Song;
 
 import java.util.ArrayList;
 

@@ -1,12 +1,13 @@
-package com.example.music_service.model.globals;
+package com.example.music_service.models.globals;
 
 import com.example.music_service.R;
-import com.example.music_service.model.Song;
+import com.example.music_service.models.Song;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Globs {
+    public static boolean recheckLogin = true;
 
     public static final String TAG = "Music Service";
 
@@ -22,9 +23,25 @@ public class Globs {
         return returner;
     }
 
+    public static int getSongNumber(String path) {
+        ArrayList<String> titles = getTitles();
+        int index = -1;
+
+        for (int i = 0; i < titles.size(); i++) {
+            String thisPath = Convert.getPathFromTitle(titles.get(i));
+
+            if (path.equals(thisPath) == false) continue;
+            index = i;
+        }
+
+        return index;
+    }
+
     public static int currentTrackNumber = 0;
 
     public static void fillAllSongs() {
+        if (SongsProps.songs.size() > 0) return;
+
         addSong(R.raw.alive, "alive.mp3", "Warbly Jets", "warbly.png");
         addSong(R.raw.ancients, "ancients.mp3", "Nier OST", "nier_replicant.png");
         addSong(R.raw.animals, "animals.mp3", "Maroon 5", "maroon_v.png");
@@ -62,10 +79,14 @@ public class Globs {
     }
 
     public static void removeSong(String title) {
+        title = Convert.getTitleFromPath(title);
+
         int index = 0;
 
         for (int i = 0; i < currentSongs.size(); i++)
             if (currentSongs.get(i).getTitle().equals(title))
                 index = i;
+
+        currentSongs.remove(index);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.music_service;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +10,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.music_service.databinding.ActivityMainBinding;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.example.music_service.fragments.HomeFragment;
+import com.example.music_service.fragments.LibraryFragment;
+import com.example.music_service.fragments.PersonalFragment;
+import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

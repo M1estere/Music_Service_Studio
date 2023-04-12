@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_service.HomeFragmentViewModel;
-import com.example.music_service.model.Playlist;
+import com.example.music_service.viewModels.HomeFragmentViewModel;
+import com.example.music_service.models.Playlist;
 import com.example.music_service.R;
 
 import java.util.ArrayList;

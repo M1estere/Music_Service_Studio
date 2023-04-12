@@ -8,17 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_service.QueueActivityViewModel;
+import com.example.music_service.viewModels.QueueActivityViewModel;
 import com.example.music_service.R;
-import com.example.music_service.model.Player;
-import com.example.music_service.model.Song;
-import com.example.music_service.model.globals.Globs;
-import com.example.music_service.model.globals.SongsProps;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.globals.SongsProps;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseTrack(title.getText().toString());
+                queueActivityViewModel.chooseTrack(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
             }
@@ -115,32 +116,26 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
+        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Player.deleteFromQueue(title.getText().toString());
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        CardView favButton = bottomSheetView.findViewById(R.id.fav_button);
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, title.getText().toString() + " added to favs", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
-    }
-
-    public void chooseTrack(String title)
-    {
-        if (title == null) return;
-
-        int songIndex = findSong(title);
-
-        if (Globs.currentTrackNumber == songIndex) return;
-
-        Globs.currentTrackNumber = songIndex;
-
-        Player.selectTrack(Globs.currentTrackNumber);
-
-        Player.updatePlayer();
-    }
-
-    private int findSong(String title)
-    {
-        int songIndex = 0;
-        for (int i = 0; i < Globs.currentSongs.size(); i++)
-            if (Globs.currentSongs.get(i).equals(title)) songIndex = i;
-
-        return songIndex;
     }
 
     @Override
@@ -161,7 +156,6 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 //        private final TextView durationTxt;
 
         private final Button infoButton;
-
         private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {

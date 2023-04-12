@@ -1,10 +1,7 @@
-package com.example.music_service.model;
+package com.example.music_service.models;
 
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
-
-import com.example.music_service.model.globals.Convert;
-import com.example.music_service.model.globals.SongsProps;
+import com.example.music_service.models.globals.Convert;
+import com.example.music_service.models.globals.SongsProps;
 
 public class Song {
     private String path;

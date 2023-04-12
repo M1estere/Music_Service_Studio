@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,13 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.music_service.AccountActivity;
+import com.example.music_service.PersonalViewPageAdapter;
+import com.example.music_service.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -61,7 +63,7 @@ public class PersonalFragment extends Fragment implements TabLayoutMediator.TabC
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
-    private MyViewPageAdapter myViewPageAdapter;
+    private PersonalViewPageAdapter myViewPageAdapter;
 
     private CardView accountButton;
 
@@ -69,9 +71,9 @@ public class PersonalFragment extends Fragment implements TabLayoutMediator.TabC
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout = view.findViewById(R.id.nav_bar);
+        tabLayout = view.findViewById(R.id.navigation_bar);
         viewPager2 = view.findViewById(R.id.frame_content);
-        myViewPageAdapter = new MyViewPageAdapter(getActivity());
+        myViewPageAdapter = new PersonalViewPageAdapter(getActivity());
         viewPager2.setAdapter(myViewPageAdapter);
 
         accountButton = view.findViewById(R.id.account_button);

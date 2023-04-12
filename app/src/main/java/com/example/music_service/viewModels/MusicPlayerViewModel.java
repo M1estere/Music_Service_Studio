@@ -1,52 +1,32 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.music_service.model.globals.PlaylistSystem;
-import com.example.music_service.model.globals.Convert;
-import com.example.music_service.model.globals.Globs;
-import com.example.music_service.model.globals.SongsProps;
-import com.example.music_service.model.Player;
-import com.example.music_service.model.Playlist;
-import com.example.music_service.model.Song;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.music_service.BR;
+import com.example.music_service.CreateNotification;
+import com.example.music_service.OnClearFromRecentService;
+import com.example.music_service.QueueActivity;
+import com.example.music_service.R;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.Convert;
+import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.globals.SongsProps;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.lang.ref.Reference;
-import java.util.ArrayList;
 
 public class MusicPlayerViewModel extends BaseObservable {
     private View mainPlayer;
@@ -108,6 +88,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     String audioUrl = "";
+
     public MusicPlayerViewModel(Activity mainActivity, boolean refill) {
         activity = mainActivity;
 
@@ -151,6 +132,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         Player.setMusicPlayer(this);
         initSongs();
 
+        View miniPlayerView = activity.findViewById(R.id.mini_player);
         new Thread() {
             public void run() {
                 while (Set == true) {
@@ -160,25 +142,35 @@ public class MusicPlayerViewModel extends BaseObservable {
                             @Override
                             public void run() {
 
-                                if (Player.isPlay() == true) {
-                                    if (isSeeking == false) {
-                                        setProgress(Player.getCurrentPos() / 1000);
-                                        setCurrentProgress(Convert.GetTimeFromSeconds(Player.getCurrentPos()));
+                                miniPlayerView.setVisibility(View.GONE);
+                                mainPlayer.setVisibility(View.GONE);
+
+                                slider.setTouchEnabled(false);
+                                if (Player.getMusicPlayer() != null) {
+                                    miniPlayerView.setVisibility(View.VISIBLE);
+                                    mainPlayer.setVisibility(View.VISIBLE);
+                                    slider.setTouchEnabled(true);
+
+                                    if (Player.isPlay() == true) {
+                                        if (isSeeking == false) {
+                                            setProgress(Player.getCurrentPos() / 1000);
+                                            setCurrentProgress(Convert.GetTimeFromSeconds(Player.getCurrentPos()));
+                                        } else {
+                                            setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                    (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
+                                            );
+                                        }
+                                        checkProgression();
                                     } else {
-                                        setCurrentProgress(Convert.GetTimeFromSeconds(
-                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
-                                        );
+                                        if (isSeeking == true)
+                                            setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                    (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
+                                            );
+                                        else
+                                            setCurrentProgress(Convert.GetTimeFromSeconds(
+                                                    (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
+                                            );
                                     }
-                                    checkProgression();
-                                } else {
-                                    if (isSeeking == true)
-                                        setCurrentProgress(Convert.GetTimeFromSeconds(
-                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
-                                        );
-                                    else
-                                        setCurrentProgress(Convert.GetTimeFromSeconds(
-                                                (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000)
-                                        );
                                 }
                             }
                         });
@@ -201,7 +193,6 @@ public class MusicPlayerViewModel extends BaseObservable {
 
                 navBar.animate().translationY(navBar.getHeight() - (1 - slideOffset) * navBar.getHeight()).setDuration(100);
 
-                View miniPlayerView = activity.findViewById(R.id.mini_player);
                 miniPlayerView.setAlpha(1 - (slideOffset * 2));
 
                 mainPlayer.setAlpha(Math.abs((1 - slideOffset) - 1));
@@ -218,7 +209,8 @@ public class MusicPlayerViewModel extends BaseObservable {
             activity.startService(new Intent(activity.getBaseContext(), OnClearFromRecentService.class));
         }
 
-        updateUI();
+        if (Player.getMusicPlayer() != null)
+            updateUI();
     }
 
     private NotificationManager notificationManager;
@@ -385,9 +377,9 @@ public class MusicPlayerViewModel extends BaseObservable {
     private void initSongs() {
         Player.setContext(activity);
 
-        Playlist playlist = new Playlist("Start List");
-        PlaylistSystem.fillOnePlaylist(20, playlist);
+        //Playlist playlist = new Playlist("Start List");
+        //PlaylistSystem.fillOnePlaylist(20, playlist);
 
-        Player.setQueue(playlist.getSongTitles());
+        //Player.setQueue(playlist.getSongTitles());
     }
 }

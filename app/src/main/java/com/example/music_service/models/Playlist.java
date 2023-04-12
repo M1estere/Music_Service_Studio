@@ -1,4 +1,4 @@
-package com.example.music_service.model;
+package com.example.music_service.models;
 
 import java.util.ArrayList;
 

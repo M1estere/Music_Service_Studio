@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.music_service.databinding.QueueActivityBinding;
+import com.example.music_service.viewModels.QueueActivityViewModel;
 
 public class QueueActivity extends AppCompatActivity {
 

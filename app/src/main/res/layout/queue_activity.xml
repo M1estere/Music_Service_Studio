@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.music_service.QueueActivityViewModel" />
+            type="com.example.music_service.viewModels.QueueActivityViewModel" />
     </data>
 
     <RelativeLayout

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_700"
-    tools:context=".PersonalFragment">
+    tools:context=".fragments.PersonalFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -31,7 +31,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hello"
+                        android:text="Welcome"
                         android:textColor="@color/grey"
                         android:textSize="16sp" />
 
@@ -39,7 +39,7 @@
                         android:id="@+id/name_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="M1estere"
+                        android:text="Personal"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -71,7 +71,7 @@
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/nav_bar"
+            android:id="@+id/navigation_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/top"
@@ -84,16 +84,15 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:id="@+id/frame_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame_content"
-            android:layout_below="@id/nav_bar"/>
+            android:layout_below="@id/navigation_bar"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp" />
 
     </RelativeLayout>
-
 
 
 </FrameLayout>

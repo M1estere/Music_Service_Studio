@@ -5,10 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.music_service.fragments.UserAlbumsFragment;
+import com.example.music_service.fragments.UserPlaylistsFragment;
+import com.example.music_service.fragments.UserSongsFragment;
 
-public class MyViewPageAdapter extends FragmentStateAdapter {
 
-    public MyViewPageAdapter(@NonNull FragmentActivity fragmentActivity) {
+public class PersonalViewPageAdapter extends FragmentStateAdapter {
+
+    public PersonalViewPageAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -18,8 +22,6 @@ public class MyViewPageAdapter extends FragmentStateAdapter {
         switch (position) {
             case 0:
                 return new UserPlaylistsFragment();
-            case 1:
-                return new UserSongsFragment();
             case 2:
                 return new UserAlbumsFragment();
             default:

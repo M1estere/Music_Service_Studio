@@ -1,29 +1,23 @@
 package com.example.music_service;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaMetadata;
-import android.media.session.MediaSession;
 import android.media.session.PlaybackState;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.ResultReceiver;
-import android.provider.MediaStore;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.music_service.model.Player;
-import com.example.music_service.model.Song;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Song;
+import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class CreateNotification {
 

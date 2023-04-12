@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.model.Playlist;
+import com.example.music_service.models.Playlist;
 
 import java.util.ArrayList;
 
