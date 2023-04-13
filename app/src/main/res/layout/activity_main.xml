@@ -36,6 +36,8 @@
             </FrameLayout>
 
             <RelativeLayout
+                android:id="@+id/big_player"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/purple_700">

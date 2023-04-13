@@ -81,6 +81,7 @@ public class AccountActivityViewModel extends BaseObservable {
 
     public void logOut() {
         Globs.recheckLogin = false;
+        FirebaseAuth.getInstance().signOut();
 
         Intent intent = new Intent(activity, AuthenticationActivity.class);
         activity.startActivity(intent);

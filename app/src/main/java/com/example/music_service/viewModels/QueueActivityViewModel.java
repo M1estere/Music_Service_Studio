@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
 import com.example.music_service.adapters.QueueRecViewAdapter;
+import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.Player;
 
@@ -75,6 +76,15 @@ public class QueueActivityViewModel extends BaseObservable {
 
     public void updateQueue() {
         adapter.notifyDataSetChanged();
+    }
+
+    public void addToFavourites(String title) {
+        if (title == null) return;
+
+        if (FavouriteMusic.trackInFavourites(title) == false)
+            FavouriteMusic.addToFavourites(title, mainActivity);
+        else
+            FavouriteMusic.removeFromFavourites(title, mainActivity);
     }
 
     public void chooseTrack(String title) {

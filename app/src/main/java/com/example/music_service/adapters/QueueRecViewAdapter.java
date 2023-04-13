@@ -130,7 +130,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, title.getText().toString() + " added to favs", Toast.LENGTH_SHORT).show();
+                queueActivityViewModel.addToFavourites(title.getText().toString());
             }
         });
 

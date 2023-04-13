@@ -20,6 +20,7 @@ import com.example.music_service.CreateNotification;
 import com.example.music_service.OnClearFromRecentService;
 import com.example.music_service.QueueActivity;
 import com.example.music_service.R;
+import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.globals.Convert;
@@ -183,6 +184,7 @@ public class MusicPlayerViewModel extends BaseObservable {
             }
         }.start();
 
+        FavouriteMusic.loadCollectionFromFile();
         mainPlayer = activity.findViewById(R.id.main_player);
 
         slider = activity.findViewById(R.id.sliding_layout);
