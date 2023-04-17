@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.music_service.activities.MainActivity;
+import com.example.music_service.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -123,12 +125,10 @@ public class LoginFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Done.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
                                     openMainPage();
                                 } else {
-                                    Toast.makeText(getActivity(), "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

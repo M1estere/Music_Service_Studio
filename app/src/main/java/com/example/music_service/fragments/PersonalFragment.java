@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.music_service.AccountActivity;
-import com.example.music_service.PersonalViewPageAdapter;
+import com.example.music_service.activities.AccountActivity;
+import com.example.music_service.adapters.PersonalViewPageAdapter;
 import com.example.music_service.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

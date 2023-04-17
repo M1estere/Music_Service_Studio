@@ -17,6 +17,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.music_service.activities.MainActivity;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
 import com.example.music_service.viewModels.MusicPlayerViewModel;
@@ -34,6 +35,8 @@ public class CreateNotification {
     private static MediaSessionCompat mediaSession;
 
     public static MusicPlayerViewModel viewModel;
+
+    public static boolean isPlaying = true;
     public static void setViewModel(MusicPlayerViewModel vm) {
         viewModel = vm;
     }
@@ -82,6 +85,7 @@ public class CreateNotification {
                 @Override
                 public void onPlay() {
                     super.onPlay();
+                    isPlaying = true;
 
                     System.out.println("Continued");
                     viewModel.changePlayingState();
@@ -90,6 +94,7 @@ public class CreateNotification {
                 @Override
                 public void onPause() {
                     super.onPause();
+                    isPlaying = false;
 
                     System.out.println("Paused");
                     viewModel.changePlayingState();

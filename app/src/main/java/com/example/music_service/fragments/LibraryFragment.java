@@ -14,8 +14,13 @@ import android.view.ViewGroup;
 
 import com.example.music_service.R;
 import com.example.music_service.adapters.ArtistsRecViewAdapter;
+import com.example.music_service.adapters.DailyTopRecViewAdapter;
+import com.example.music_service.models.Playlist;
+import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.models.globals.SongsProps;
 import com.example.music_service.models.Author;
+import com.example.music_service.viewModels.LibraryFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,14 +45,6 @@ public class LibraryFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LibraryFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static LibraryFragment newInstance(String param1, String param2) {
         LibraryFragment fragment = new LibraryFragment();
@@ -57,10 +54,6 @@ public class LibraryFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    private ArrayList<Author> authors = new ArrayList<>();
-
-    private RecyclerView authorsRecView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,39 +75,6 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fillAuthorsList();
-        sortAuthors();
-
-        authorsRecView = view.findViewById(R.id.artists_rec_view);
-
-        ArtistsRecViewAdapter adapter = new ArtistsRecViewAdapter(getActivity());
-        adapter.setAuthors(authors);
-
-        authorsRecView.setAdapter(adapter);
-        authorsRecView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-    }
-
-    private void fillAuthorsList() {
-        ArrayList<String> checked = new ArrayList<>();
-
-        for (String author : SongsProps.authors) {
-            if (checked.contains(author)) continue;
-
-            checked.add(author);
-
-            authors.add(new Author(author));
-        }
-    }
-
-    private void sortAuthors() {
-        ArrayList<String> tempAuthors = new ArrayList<String>();
-        for (Author author : authors)
-            tempAuthors.add(author.getAuthorName());
-
-        Collections.sort(tempAuthors);
-        authors.clear();
-
-        for (String name : tempAuthors)
-            authors.add(new Author(name));
+        LibraryFragmentViewModel libraryFragmentViewModel = new LibraryFragmentViewModel(view);
     }
 }

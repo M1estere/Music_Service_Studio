@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,12 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.example.music_service.activities.AuthenticationActivity;
+import com.example.music_service.BR;
+import com.example.music_service.models.Player;
 import com.example.music_service.models.globals.Globs;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -82,6 +83,7 @@ public class AccountActivityViewModel extends BaseObservable {
     public void logOut() {
         Globs.recheckLogin = false;
         FirebaseAuth.getInstance().signOut();
+        Player.drop();
 
         Intent intent = new Intent(activity, AuthenticationActivity.class);
         activity.startActivity(intent);

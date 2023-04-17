@@ -1,5 +1,10 @@
 package com.example.music_service.models.globals;
 
+import com.example.music_service.models.Playlist;
+import com.example.music_service.models.Song;
+
+import java.util.ArrayList;
+
 public class Convert {
 
     // convert 'break_through_it_all.mp3' to 'Break Through It All'
@@ -50,6 +55,15 @@ public class Convert {
         int minutes = (int) ((mSeconds / (1000 * 60)) % 60);
 
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    public static Playlist getPlaylistFromSongs(ArrayList<Song> songs, String name) {
+        Playlist playlist = new Playlist(name);
+
+        for (Song song : songs)
+            playlist.addSong(song.getPath(), song.getId());
+
+        return playlist;
     }
 
 }

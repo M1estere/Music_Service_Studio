@@ -38,13 +38,14 @@ public class MorningRecViewAdapter extends RecyclerView.Adapter<MorningRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        int pos = holder.getAdapterPosition();
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                String name = playlists.get(position).getPlaylistName();
+                String name = playlists.get(pos).getPlaylistName();
 
-                Toast.makeText(context, name + " was chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "(Morning) " + name + " was chosen", Toast.LENGTH_SHORT).show();
                 homeFragmentViewModel.choosePlaylist(name);
             }
         });

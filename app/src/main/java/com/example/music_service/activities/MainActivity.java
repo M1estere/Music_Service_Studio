@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.activities;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.music_service.R;
 import com.example.music_service.databinding.ActivityMainBinding;
 import com.example.music_service.fragments.HomeFragment;
 import com.example.music_service.fragments.LibraryFragment;
@@ -17,18 +18,16 @@ import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.music_service.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         replaceFragment(new HomeFragment());
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this, true);
+        MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this);
 
         binding.setViewModel(musicPlayerViewModel);
 

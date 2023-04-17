@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.music_service.AccountActivityViewModel" />
+            type="com.example.music_service.viewModels.AccountActivityViewModel" />
     </data>
 
     <RelativeLayout

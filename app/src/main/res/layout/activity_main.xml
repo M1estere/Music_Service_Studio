@@ -24,7 +24,9 @@
             android:clickable="false"
             android:gravity="bottom"
             app:umanoPanelHeight="60dp"
-            app:umanoShadowHeight="4dp">
+            app:umanoShadowHeight="0dp"
+            app:umanoOverlay="true"
+            app:umanoParallaxOffset="15dp">
 
             <FrameLayout
                 android:id="@+id/frame_layout"
@@ -355,7 +357,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginBottom="25dp"
+                        android:layout_marginBottom="15dp"
                         android:backgroundTint="@color/purple_200"
                         android:minHeight="65dp"
                         app:cardCornerRadius="50dp">

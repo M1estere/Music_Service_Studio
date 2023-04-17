@@ -42,11 +42,15 @@ public class UserSongsViewModel extends BaseObservable {
         songs.clear();
 
         String tracks = FavouriteMusic.getFavouriteTitles();
+        tracks = tracks.trim();
 
         if (tracks.length() < 3) return;
 
         String[] trackList = tracks.split(" ");
         for (String trackName : trackList) {
+            if (trackName.equals(" ") || trackName.isEmpty()) continue;
+
+            System.out.printf("Track name: %s\n", trackName);
             songs.add(new Song(trackName, SongsProps.ids.get(SongsProps.songs.indexOf(trackName))));
         }
 

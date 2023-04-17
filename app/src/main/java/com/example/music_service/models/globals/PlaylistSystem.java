@@ -1,6 +1,7 @@
 package com.example.music_service.models.globals;
 
 import com.example.music_service.models.Playlist;
+import com.example.music_service.models.Song;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,18 @@ public class PlaylistSystem {
             titles.remove(songTitle);
             listToFill.addSong(songTitle, songId);
         }
+    }
+
+    public static ArrayList<Song> getSongsFromPlaylist(Playlist source) {
+        ArrayList<Song> songs = new ArrayList<>();
+
+        ArrayList<String> titles = source.getSongTitles();
+
+        for (String title : titles) {
+            songs.add(new Song(title, SongsProps.ids.get(SongsProps.songs.indexOf(title))));
+        }
+
+        return songs;
     }
 
 }

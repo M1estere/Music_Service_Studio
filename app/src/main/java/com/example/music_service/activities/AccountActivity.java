@@ -1,11 +1,13 @@
-package com.example.music_service;
+package com.example.music_service.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.music_service.R;
 import com.example.music_service.databinding.AccountActivityBinding;
+import com.example.music_service.viewModels.AccountActivityViewModel;
 
 public class AccountActivity extends AppCompatActivity {
 

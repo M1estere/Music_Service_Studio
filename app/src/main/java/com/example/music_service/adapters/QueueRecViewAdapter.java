@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.viewModels.QueueActivityViewModel;
 import com.example.music_service.R;
 import com.example.music_service.models.Player;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapter.ViewHolder> {
 
     private final Context context;
-    private QueueActivityViewModel queueActivityViewModel;
+    private final QueueActivityViewModel queueActivityViewModel;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
@@ -36,18 +37,31 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         queueActivityViewModel = viewModel;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return (position == songs.size()) ? R.layout.hold_to_move_text : R.layout.queue_item;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.queue_item, parent, false);
+        View view;
+        if (viewType == R.layout.queue_item) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.queue_item, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hold_to_move_text, parent, false);
+        }
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.trackNameTxt.setText(songs.get(position).getTitle());
-        holder.authorNameTxt.setText(songs.get(position).getArtist());
+        if (holder.trackNameTxt == null) return;
+        int pos = holder.getAdapterPosition();
+
+        holder.trackNameTxt.setText(songs.get(pos).getTitle());
+        holder.authorNameTxt.setText(songs.get(pos).getArtist());
         holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
 
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
@@ -58,10 +72,11 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         });
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                queueActivityViewModel.chooseTrack(holder.trackNameTxt.getText().toString());
+                String songName = holder.trackNameTxt.getText().toString();
+                Toast.makeText(context, "(Queue) " + songName + " selected", Toast.LENGTH_SHORT).show();
+                queueActivityViewModel.chooseTrack(songName);
             }
         });
     }
@@ -70,10 +85,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         String text = view.getTag().toString();
         Song song = SongsProps.getSongByName(text);
 
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                ((Activity)context), R.style.BottomSheetDialogTheme
-        );
-
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog((Activity) context, R.style.BottomSheetDialogTheme);
         View bottomSheetView = LayoutInflater.from(((Activity)context).getApplicationContext())
                 .inflate(
                         R.layout.layout_bottom_sheet,
@@ -81,12 +93,19 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
                 );
 
         TextView title = bottomSheetView.findViewById(R.id.title_song);
-        title.setText(song.getTitle());
-
         TextView artist = bottomSheetView.findViewById(R.id.author_song);
-        artist.setText(song.getArtist());
 
         Button playButton = bottomSheetView.findViewById(R.id.play_button);
+        Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
+        Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
+
+        CardView favButton = bottomSheetView.findViewById(R.id.fav_button);
+
+        title.setText(song.getTitle());
+        artist.setText(song.getArtist());
+
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +115,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
-        Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
+
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +125,6 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
-        Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +134,6 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
-        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,11 +143,10 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
-        CardView favButton = bottomSheetView.findViewById(R.id.fav_button);
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queueActivityViewModel.addToFavourites(title.getText().toString());
+                FavouriteMusic.addToFavourites(title.getText().toString(), (Activity) context);
             }
         });
 
@@ -140,7 +156,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return songs.size() + 1;
     }
 
     public void setSongs(ArrayList<Song> songs) {
@@ -150,10 +166,8 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private final TextView trackNameTxt;
         private final TextView authorNameTxt;
-//        private final TextView durationTxt;
 
         private final Button infoButton;
         private final CardView parent;
@@ -163,11 +177,12 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
             trackNameTxt = itemView.findViewById(R.id.track_title_txt);
             authorNameTxt = itemView.findViewById(R.id.author_txt);
-//            durationTxt = itemView.findViewById(R.id.track_length);
 
             infoButton = itemView.findViewById(R.id.info_button);
 
             parent = itemView.findViewById(R.id.parent);
+
+            if (trackNameTxt == null) return;
 
             trackNameTxt.setSelected(true);
             authorNameTxt.setSelected(true);

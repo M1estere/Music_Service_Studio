@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.models.Author;
 import com.example.music_service.R;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Playlist;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAdapter.ViewHolder> {
-
     private final Context context;
     private ArrayList<Author> artists = new ArrayList<>();
 
@@ -35,16 +37,41 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.artistName.setText(artists.get(position).getAuthorName());
+        int pos = holder.getAdapterPosition();
+        holder.artistName.setText(artists.get(pos).getAuthorName());
         holder.artistName.setSelected(true);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, artists.get(position).getAuthorName() + " chosen", Toast.LENGTH_SHORT).show();
+                String authorName = artists.get(pos).getAuthorName();
+                Toast.makeText(context, "(Authors) " + authorName + " chosen", Toast.LENGTH_SHORT).show();
+                startAuthorPlaylist(authorName);
             }
         });
+    }
+
+    private void startAuthorPlaylist(String name)
+    {
+        if (name == null) return;
+
+        Playlist playlistToSet = new Playlist(name);
+        playlistToSet.setSongTitles(findAuthor(name));
+        Player.updateQueue(playlistToSet.getSongTitles());
+    }
+
+    private ArrayList<String> findAuthor(String name)
+    {
+        int k = 0;
+        for (int i = 0; i < artists.size(); i++)
+        {
+            if (artists.get(i).getAuthorName().equals(name) == false) continue;
+
+            k = i;
+        }
+
+        return artists.get(k).getTitles();
     }
 
     @Override

@@ -16,6 +16,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,12 @@ public class FavouriteMusic {
     public static void saveCollectionToFile(String title, Activity activity, boolean added) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(activity, "No user currently registered", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         CollectionReference reference = firestore.collection(user.getUid());
 
         Map<String, Object> userData = new HashMap<>();
@@ -46,9 +54,9 @@ public class FavouriteMusic {
                     documentSnapshot.getReference().update(userData);
 
                     if (added)
-                        Toast.makeText(activity, title + " was added to favourites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,  "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(activity, title + " was deleted from favourites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
 
                     if (userSongsViewModel != null) userSongsViewModel.updateSongs();
                 }
@@ -61,6 +69,9 @@ public class FavouriteMusic {
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) return;
+
         CollectionReference reference = firestore.collection(user.getUid());
 
         reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -84,9 +95,15 @@ public class FavouriteMusic {
     public static void addToFavourites(String title, Activity activity) {
         String path = Convert.getPathFromTitle(title);
 
-        if (favouriteTitles.contains(path)) return;
+        if (favouriteTitles.contains(path)) {
+            removeFromFavourites(title, activity);
+            return;
+        }
 
-        favouriteTitles += String.format(" %s", path);
+        if (favouriteTitles.isEmpty() == false)
+            favouriteTitles += String.format(" %s", path);
+        else
+            favouriteTitles += path;
 
         saveCollectionToFile(title, activity, true);
     }
@@ -103,6 +120,17 @@ public class FavouriteMusic {
 
     public static boolean trackInFavourites(String title) {
         return favouriteTitles.contains(Convert.getPathFromTitle(title));
+    }
+
+    public static int size() {
+        return getArrayTitles().size();
+    }
+
+    public static ArrayList<String> getArrayTitles() {
+        ArrayList<String> proper = new ArrayList<>(Arrays.asList(favouriteTitles.trim().split(" ")));
+        proper.removeAll(Arrays.asList("", null));
+
+        return proper;
     }
 
 }

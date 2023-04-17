@@ -38,16 +38,17 @@ public class QueueActivityViewModel extends BaseObservable {
         queueRecView.setAdapter(adapter);
         queueRecView.setLayoutManager(new LinearLayoutManager(activity));
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-                ItemTouchHelper.START | ItemTouchHelper.END, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
 
                 int toPosition = target.getAdapterPosition();
-                int old = Globs.currentTrackNumber;
 
                 String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
+                if (toPosition >= Globs.currentSongs.size()) return false;
                 Collections.swap(Globs.currentSongs, fromPosition, toPosition);
                 adapter.notifyItemMoved(fromPosition, toPosition);
 

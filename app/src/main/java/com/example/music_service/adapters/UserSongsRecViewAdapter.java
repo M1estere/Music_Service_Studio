@@ -1,9 +1,11 @@
 package com.example.music_service.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +14,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
+import com.example.music_service.models.FavouriteMusic;
+import com.example.music_service.models.Player;
+import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.Convert;
 
 import java.util.ArrayList;
 
@@ -36,16 +42,42 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.trackNameTxt.setText(songs.get(position).getTitle());
-        holder.authorNameTxt.setText(songs.get(position).getArtist());
+        int pos = holder.getAdapterPosition();
+        holder.trackNameTxt.setText(songs.get(pos).getTitle());
+        holder.authorNameTxt.setText(songs.get(pos).getArtist());
 
-        holder.parent.setOnClickListener(new View.OnClickListener() {
+        holder.trackNameTxt.setSelected(true);
 
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "shit chosen", Toast.LENGTH_SHORT).show();
+                FavouriteMusic.removeFromFavourites(holder.trackNameTxt.getText().toString(), (Activity) context);
             }
         });
+
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String trackName = holder.trackNameTxt.getText().toString();
+                Toast.makeText(context, "(Favourites) " + trackName + " chosen", Toast.LENGTH_SHORT).show();
+                chooseTrackFromFavs(trackName);
+            }
+        });
+    }
+
+    private void chooseTrackFromFavs(String title)
+    {
+        int currentTrackIndex = 0;
+        for (int i = 0; i < FavouriteMusic.size(); i++)
+        {
+            String name = Convert.getTitleFromPath(FavouriteMusic.getArrayTitles().get(i));
+            if (name.equals(title)) currentTrackIndex = i;
+        }
+
+        Playlist newPlaylist = new Playlist("Favourites");
+        newPlaylist.setSongTitles(FavouriteMusic.getArrayTitles());
+
+        Player.updateQueue(newPlaylist.getSongTitles(), currentTrackIndex);
     }
 
     @Override
@@ -65,12 +97,14 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         private final TextView authorNameTxt;
 
         private final CardView parent;
+        private final Button removeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             trackNameTxt = itemView.findViewById(R.id.track_title);
             authorNameTxt = itemView.findViewById(R.id.track_author);
+            removeButton = itemView.findViewById(R.id.remove_button);
 
             parent = itemView.findViewById(R.id.parent);
         }

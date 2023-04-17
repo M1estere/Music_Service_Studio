@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Playlist {
 
+    public void setSongTitles(ArrayList<String> songTitles) {
+        this.songTitles = songTitles;
+    }
+
     private ArrayList<String> songTitles;
     private ArrayList<Integer> songIDs;
 

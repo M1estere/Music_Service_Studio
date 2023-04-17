@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.viewModels;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.music_service.adapters.AuthViewPageAdapter;
+import com.example.music_service.activities.MainActivity;
+import com.example.music_service.R;
 import com.example.music_service.models.globals.Globs;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -45,7 +48,6 @@ public class AuthenticationActivityViewModel implements TabLayoutMediator.TabCon
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                System.out.printf("We are on %d\n", tab.getPosition());
                 viewPager2.setCurrentItem(tab.getPosition());
             }
 

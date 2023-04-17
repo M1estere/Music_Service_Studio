@@ -39,15 +39,16 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.playlistTitle.setText(playlists.get(position).getPlaylistName());
+        int pos = holder.getAdapterPosition();
+        holder.playlistTitle.setText(playlists.get(pos).getPlaylistName());
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                String name = playlists.get(position).getPlaylistName();
+                String name = playlists.get(pos).getPlaylistName();
 
-                Toast.makeText(context, name + " was chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "(Program) " + name + " was chosen", Toast.LENGTH_SHORT).show();
                 homeFragmentViewModel.choosePlaylist(name);
             }
         });

@@ -36,14 +36,15 @@ public class UserPlaylistsRecViewAdapter extends RecyclerView.Adapter<UserPlayli
 
     @Override
     public void onBindViewHolder(@NonNull UserPlaylistsRecViewAdapter.ViewHolder holder, int position) {
-        holder.playlistName.setText(playlists.get(position).getPlaylistName());
-        holder.tracksAmount.setText(playlists.get(position).getSongsAmount() + " tracks");
+        int pos = holder.getAdapterPosition();
+        holder.playlistName.setText(playlists.get(pos).getPlaylistName());
+        holder.tracksAmount.setText(playlists.get(pos).getSongsAmount() + " tracks");
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "shit chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "(User pl) " + holder.playlistName.getText().toString() + " chosen", Toast.LENGTH_SHORT).show();
             }
         });
     }

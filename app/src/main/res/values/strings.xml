@@ -2,4 +2,6 @@
     <string name="app_name">Music_Service</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hold_to_drag_element">Hold to reorder elements</string>
+    <string name="best_of_the_best">Best of the best</string>
 </resources>
