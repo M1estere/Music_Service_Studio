@@ -25,7 +25,6 @@
             android:gravity="bottom"
             app:umanoPanelHeight="60dp"
             app:umanoShadowHeight="0dp"
-            app:umanoOverlay="true"
             app:umanoParallaxOffset="15dp">
 
             <FrameLayout

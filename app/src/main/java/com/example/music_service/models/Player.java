@@ -32,6 +32,8 @@ public class Player {
     }
 
     public static void startTrack() {
+        musicPlayerViewModel.setProgress(0);
+
         int index = SongsProps.songs.indexOf(Convert.getPathFromTitle(Globs.getTitles().get(Globs.currentTrackNumber)));
         int currentTrackID = SongsProps.ids.get(index);
 
