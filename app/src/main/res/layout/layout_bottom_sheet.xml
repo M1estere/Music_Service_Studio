@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:text="Play"
+            android:text="@string/play"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:text="Play Last"
+            android:text="@string/play_last"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:text="Play Next"
+            android:text="@string/play_next"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -157,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:text="Remove"
+            android:text="@string/remove"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

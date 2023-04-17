@@ -36,7 +36,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Music Studio"
+                        android:text="@string/music_studio"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:hint=" Name" />
+                        android:hint="@string/name" />
 
                 </LinearLayout>
 
@@ -82,7 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/white"
-                        android:hint=" Username" />
+                        android:hint="@string/username" />
 
                 </LinearLayout>
 
@@ -103,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/white"
-                        android:hint=" E-Mail" />
+                        android:hint="@string/e_mail" />
 
                 </LinearLayout>
 
@@ -125,7 +125,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:hint=" Password"
+                        android:hint="@string/password"
                         android:inputType="textPassword" />
 
                 </LinearLayout>
@@ -136,7 +136,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="30dp"
                     android:backgroundTint="@color/purple_200"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:textColor="@color/white" />
 
             </LinearLayout>

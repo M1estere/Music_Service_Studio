@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/white"
-                        android:hint=" E-Mail" />
+                        android:hint="@string/e_mail" />
 
                 </LinearLayout>
 
@@ -82,7 +82,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:hint=" Password"
+                        android:hint="@string/password"
                         android:inputType="textPassword"/>
 
                 </LinearLayout>
@@ -92,7 +92,7 @@
                     android:id="@+id/log_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Sign In"
+                    android:text="@string/sign_in"
                     android:backgroundTint="@color/purple_200"
                     android:textColor="@color/white"/>
 

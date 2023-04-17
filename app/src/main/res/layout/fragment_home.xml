@@ -17,7 +17,7 @@
             android:id="@+id/good_morning_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Good Day"
+            android:text="@string/good_day"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/morning_region"
             android:layout_marginTop="15dp"
-            android:text="Recommendations"
+            android:text="@string/recommendations"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/recommendations_rec_view"
             android:layout_marginTop="15dp"
-            android:text="Popular Choice"
+            android:text="@string/popular_choice"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
