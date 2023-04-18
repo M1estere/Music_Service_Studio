@@ -1,6 +1,7 @@
 package com.example.music_service.activities;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int currentFragment = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +37,18 @@ public class MainActivity extends AppCompatActivity {
         binding.navBar.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home_button:
+                    if (currentFragment == 0) return true;
+                    currentFragment = 0;
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.library_button:
+                    if (currentFragment == 1) return true;
+                    currentFragment = 1;
                     replaceFragment(new LibraryFragment());
                     break;
                 case R.id.personal_button:
+                    if (currentFragment == 2) return true;
+                    currentFragment = 2;
                     replaceFragment(new PersonalFragment());
                     break;
                 default:
@@ -52,9 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .setReorderingAllowed(true)
+                .commit();
+    }
 
-        fragmentTransaction.commit();
+    @Override
+    public void onBackPressed() {
+
     }
 }

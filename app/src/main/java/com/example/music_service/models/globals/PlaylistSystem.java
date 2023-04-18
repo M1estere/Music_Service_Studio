@@ -7,6 +7,14 @@ import java.util.ArrayList;
 
 public class PlaylistSystem {
 
+    private static Playlist currentPlaylist;
+    public static void setCurrentPlaylist(Playlist currentPlaylist) {
+        PlaylistSystem.currentPlaylist = currentPlaylist;
+    }
+    public static Playlist getCurrentPlaylist() {
+        return currentPlaylist;
+    }
+
     public static void fillPlaylistsSection(ArrayList<Playlist> section, int upBorder, int lowBorder, int startPct) {
         int amount = 0;
 
@@ -14,7 +22,7 @@ public class PlaylistSystem {
         else amount = lowBorder;
 
         for (int i = 0; i < amount; i++) {
-            section.add(new Playlist("Top 2023" + Globs.random.nextInt(500)));
+            section.add(new Playlist("Top " + Globs.random.nextInt(500)));
 
             fillOnePlaylist(startPct, section.get(i));
         }
@@ -50,6 +58,18 @@ public class PlaylistSystem {
         }
 
         return songs;
+    }
+
+    public static ArrayList<Song> getSongsFromTitles(Playlist source) {
+        ArrayList<Song> result = new ArrayList<>();
+
+        ArrayList<String> titles = source.getSongTitles();
+
+        for (String title : titles) {
+            result.add(new Song(title, SongsProps.ids.get(SongsProps.songs.indexOf(title))));
+        }
+
+        return result;
     }
 
 }

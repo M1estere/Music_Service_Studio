@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+   // implementation 'com.github.AtifSayings:Animatoo:1.0.1'
+    implementation 'com.github.mohammadatif:Animatoo:master'
     implementation 'com.google.firebase:firebase-auth:21.2.0'
     implementation 'com.google.firebase:firebase-firestore:24.4.5'
     implementation platform('com.google.firebase:firebase-bom:31.4.0')

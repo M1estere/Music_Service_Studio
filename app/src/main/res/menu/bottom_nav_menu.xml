@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/home_button"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Home" />
+        android:icon="@drawable/baseline_home_24"
+        android:title="@string/home" />
     <item
         android:id="@+id/library_button"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Library" />
+        android:icon="@drawable/baseline_library_music_24"
+        android:title="@string/library" />
     <item
         android:id="@+id/personal_button"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Personal" />
+        android:icon="@drawable/person_24"
+        android:title="@string/personal_title" />
 </menu>

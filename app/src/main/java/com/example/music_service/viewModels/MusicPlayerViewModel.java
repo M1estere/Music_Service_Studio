@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -23,10 +26,11 @@ import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MusicPlayerViewModel extends BaseObservable {
-    private Activity activity;
+    private final Activity activity;
 
     private CardView cover;
 
@@ -48,6 +52,9 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     private SeekBar progressBar;
     private boolean isSeeking = false;
+
+    private ImageButton bigPause;
+    private ImageButton smallPause;
 
     public MusicPlayerViewModel(Activity mainActivity) {
         activity = mainActivity;
@@ -76,6 +83,9 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         progressBar = activity.findViewById(R.id.progress_bar);
         slider = activity.findViewById(R.id.sliding_layout);
+
+        bigPause = activity.findViewById(R.id.pause_button);
+        smallPause = activity.findViewById(R.id.pause);
     }
 
     private void startElementsSetup() {
@@ -181,9 +191,10 @@ public class MusicPlayerViewModel extends BaseObservable {
         slider.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                View navBar = activity.findViewById(R.id.nav_bar);
+                BottomNavigationView navBar = activity.findViewById(R.id.nav_bar);
 
                 navBar.animate().translationY(navBar.getHeight() - (1 - slideOffset) * navBar.getHeight()).setDuration(100);
+
 
                 miniPlayerView.setAlpha(1 - (slideOffset * 2));
 
@@ -204,6 +215,16 @@ public class MusicPlayerViewModel extends BaseObservable {
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
+        }
+    }
+
+    public void setChangeStateButtonGfxId(int id) {
+        if (id == R.drawable.play_80) {
+            bigPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.play_80));
+            smallPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.play_40));
+        } else {
+            bigPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.pause_80));
+            smallPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.pause_40));
         }
     }
 
@@ -295,6 +316,8 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void playSong() {
+        setChangeStateButtonGfxId(R.drawable.pause_80);
+
         cover.animate().scaleX(1f).scaleY(1f)
                 .setDuration(150)
                 .setInterpolator(new AnticipateOvershootInterpolator())
@@ -305,6 +328,8 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void pauseSong() {
+        setChangeStateButtonGfxId(R.drawable.play_80);
+
         cover.animate().scaleX(0.85f).scaleY(0.85f)
                 .setDuration(200)
                 .setInterpolator(new AnticipateOvershootInterpolator())
@@ -330,6 +355,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public void queuePage() {
         Intent intent = new Intent(activity, QueueActivity.class);
         activity.startActivity(intent);
+
     }
 
     public void updateUI() {

@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        HomeFragmentViewModel homeFragmentViewModel = new HomeFragmentViewModel(getActivity());
+        HomeFragmentViewModel homeFragmentViewModel = new HomeFragmentViewModel(view);
     }
 
     @Override

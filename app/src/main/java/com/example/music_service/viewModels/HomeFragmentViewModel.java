@@ -1,95 +1,102 @@
 package com.example.music_service.viewModels;
 
 import android.app.Activity;
+import android.view.View;
 
 import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
+import com.example.music_service.SwipeToRefresh;
 import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
-import com.example.music_service.models.Player;
-import com.example.music_service.models.Playlist;
+import com.example.music_service.models.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;
 
-import java.util.ArrayList;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class HomeFragmentViewModel extends BaseObservable {
 
-    private Activity mainActivity;
+    private View globView;
 
     private RecyclerView recommendationsRec;
     private RecyclerView popularChoiceRec;
-
     private RecyclerView morningRec;
 
-    private ArrayList<Playlist> recommendations;
-    private ArrayList<Playlist> popular;
-    private ArrayList<Playlist> morning;
+    private SwipeToRefresh swipeRefreshLayout;
 
-    public HomeFragmentViewModel(Activity activity) {
-        this.mainActivity = activity;
+    private ProgramPlaylistsRecViewAdapter recommendationsAdapter;
+    private ProgramPlaylistsRecViewAdapter popularAdapter;
+    private MorningRecViewAdapter morningRecViewAdapter;
 
-        recommendationsRec = mainActivity.findViewById(R.id.recommendations_rec_view);
-        popularChoiceRec = mainActivity.findViewById(R.id.popular_choice_rec_view);
+    public HomeFragmentViewModel(@NonNull View view) {
+        globView = view;
 
-        morningRec = mainActivity.findViewById(R.id.morning_region);
+        recommendationsRec = globView.findViewById(R.id.recommendations_rec_view);
+        popularChoiceRec = globView.findViewById(R.id.popular_choice_rec_view);
+
+        morningRec = globView.findViewById(R.id.morning_region);
+
+        swipeRefreshLayout = globView.findViewById(R.id.swipe);
+        swipeRefreshLayout.setColorSchemeColors(globView.getContext().getResources().getColor(R.color.red), globView.getContext().getResources().getColor(R.color.purple_200));
+        swipeRefreshLayout.offsetTopAndBottom(500);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                resetPage();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         initRecs();
     }
 
     private void initRecs() {
-        recommendations = new ArrayList<>();
-        PlaylistSystem.fillPlaylistsSection(recommendations, 5, 3, 60);
+        if (HomeFragmentData.recommendations.size() < 1)
+            PlaylistSystem.fillPlaylistsSection(HomeFragmentData.recommendations, 5, 3, 60);
 
-        popular = new ArrayList<>();
-        PlaylistSystem.fillPlaylistsSection(popular, 7, 2, 60);
+        if (HomeFragmentData.popular.size() < 1)
+            PlaylistSystem.fillPlaylistsSection(HomeFragmentData.popular, 7, 2, 60);
 
-        ProgramPlaylistsRecViewAdapter recommendationsAdapter = new ProgramPlaylistsRecViewAdapter(mainActivity, this);
-        recommendationsAdapter.setPlaylists(recommendations);
+        recommendationsAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext(), this);
+        recommendationsAdapter.setPlaylists(HomeFragmentData.recommendations);
 
         recommendationsRec.setAdapter(recommendationsAdapter);
-        recommendationsRec.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL,  false));
+        recommendationsRec.setLayoutManager(new LinearLayoutManager(globView.getContext(), LinearLayoutManager.HORIZONTAL,  false));
 
-        ProgramPlaylistsRecViewAdapter popularAdapter = new ProgramPlaylistsRecViewAdapter(mainActivity, this);
-        popularAdapter.setPlaylists(popular);
+        popularAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext(), this);
+        popularAdapter.setPlaylists(HomeFragmentData.popular);
 
         popularChoiceRec.setAdapter(popularAdapter);
-        popularChoiceRec.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
+        popularChoiceRec.setLayoutManager(new LinearLayoutManager(globView.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        morning = new ArrayList<>();
-        PlaylistSystem.fillPlaylistsSection(morning, 6, 6, 70);
+        if (HomeFragmentData.morningPlaylists.size() < 1)
+            PlaylistSystem.fillPlaylistsSection(HomeFragmentData.morningPlaylists, 6, 6, 70);
 
-        MorningRecViewAdapter morningRecViewAdapter = new MorningRecViewAdapter(mainActivity, this);
-        morningRecViewAdapter.setPlaylists(morning);
+        morningRecViewAdapter = new MorningRecViewAdapter(globView.getContext(), this);
+        morningRecViewAdapter.setPlaylists(HomeFragmentData.morningPlaylists);
 
         morningRec.setAdapter(morningRecViewAdapter);
-        morningRec.setLayoutManager(new GridLayoutManager(mainActivity, 2));
+        morningRec.setLayoutManager(new GridLayoutManager(globView.getContext(), 2));
     }
 
-    public void choosePlaylist(String name) {
-        if (name == null) return;
+    private void resetPage() {
+        HomeFragmentData.recommendations.clear();
+        PlaylistSystem.fillPlaylistsSection(HomeFragmentData.recommendations, 5, 3, 60);
 
-        Playlist temp = findPlaylist(name);
+        recommendationsAdapter.setPlaylists(HomeFragmentData.recommendations);
 
-        Player.updateQueue((ArrayList<String>) temp.getSongTitles().clone());
+        HomeFragmentData.popular.clear();
+        PlaylistSystem.fillPlaylistsSection(HomeFragmentData.popular, 7, 2, 60);
+        popularAdapter.setPlaylists(HomeFragmentData.popular);
+
+        HomeFragmentData.morningPlaylists.clear();
+        PlaylistSystem.fillPlaylistsSection(HomeFragmentData.morningPlaylists, 6, 6, 70);
+        morningRecViewAdapter.setPlaylists(HomeFragmentData.morningPlaylists);
     }
 
-    private Playlist findPlaylist(String name) {
-        for (int i = 0; i < recommendations.size(); i++)
-            if (recommendations.get(i).getPlaylistName().equals(name))
-                return recommendations.get(i);
-
-        for (int i = 0; i < popular.size(); i++)
-            if (popular.get(i).getPlaylistName().equals(name))
-                return popular.get(i);
-
-        for (int i = 0; i < morning.size(); i++)
-            if (morning.get(i).getPlaylistName().equals(name))
-                return morning.get(i);
-
-        return new Playlist("Locker");
-    }
 }

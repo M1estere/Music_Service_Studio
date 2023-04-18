@@ -1,16 +1,22 @@
 package com.example.music_service.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.activities.PlaylistInfoActivity;
+import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.viewModels.HomeFragmentViewModel;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.R;
@@ -48,10 +54,17 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
             public void onClick(View view) {
                 String name = playlists.get(pos).getPlaylistName();
 
-                Toast.makeText(context, "(Program) " + name + " was chosen", Toast.LENGTH_SHORT).show();
-                homeFragmentViewModel.choosePlaylist(name);
+                goToPlaylistInfo(holder, pos);
             }
         });
+    }
+
+    private void goToPlaylistInfo(ViewHolder holder, int pos) {
+        PlaylistSystem.setCurrentPlaylist(playlists.get(pos));
+
+        Intent intent = new Intent(context, PlaylistInfoActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.playlistTitle, "title"), Pair.create(holder.cover, "play_cover"));
+        context.startActivity(intent, options.toBundle());
     }
 
     @Override
@@ -68,6 +81,7 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView playlistTitle;
+        private final CardView cover;
 
         private final CardView parent;
 
@@ -75,6 +89,7 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
             super(itemView);
 
             playlistTitle = itemView.findViewById(R.id.playlist_title);
+            cover = itemView.findViewById(R.id.content);
 
             parent = itemView.findViewById(R.id.parent);
         }

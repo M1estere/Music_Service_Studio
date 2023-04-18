@@ -17,26 +17,18 @@
         <RelativeLayout
             android:id="@+id/up_region"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-            <LinearLayout
-                android:id="@+id/up_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageButton
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp">
-
-                <Button
-                    android:id="@+id/button_back"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:onClick="@{()-> viewModel.backToPlayer()}"
-                    android:text="" />
-
-            </LinearLayout>
+                android:id="@+id/button_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()-> viewModel.backToPlayer()}"
+                android:src="@drawable/close_50"/>
 
             <TextView
                 android:id="@+id/song_text"

@@ -1,17 +1,22 @@
 package com.example.music_service.viewModels;
 
+import android.app.Activity;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
+import com.example.music_service.SwipeToRefresh;
 import com.example.music_service.adapters.ArtistsRecViewAdapter;
 import com.example.music_service.adapters.BestTracksAdapter;
 import com.example.music_service.adapters.DailyTopRecViewAdapter;
 import com.example.music_service.models.Author;
+import com.example.music_service.models.LibraryFragmentData;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
@@ -26,28 +31,44 @@ import java.util.Collections;
 public class LibraryFragmentViewModel extends BaseObservable {
 
     private ArrayList<Author> authors;
-    private ArrayList<Song> titles;
 
     private RecyclerView authorsRecView;
     private RecyclerView dailyTopRecView;
     private RecyclerView bestRecView;
 
-    private Playlist topPlaylist;
-    private ArrayList<Song> bestSongs;
+    private SwipeToRefresh swipeToRefresh;
+
+    private DailyTopRecViewAdapter dailyTopAdapter;
+    private BestTracksAdapter bestTracksAdapter;
+
+    private View globView;
 
     public LibraryFragmentViewModel(@NonNull View view) {
+        globView = view;
+
+        swipeToRefresh = view.findViewById(R.id.swipe);
+        swipeToRefresh.setColorSchemeColors(view.getContext().getResources().getColor(R.color.red), view.getContext().getResources().getColor(R.color.purple_200));
+        swipeToRefresh.offsetTopAndBottom(500);
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                resetPage();
+                swipeToRefresh.setRefreshing(false);
+            }
+        });
+
         authors = new ArrayList<>();
-        titles = new ArrayList<>();
-        bestSongs = new ArrayList<>();
 
         twoBest();
-
         fillAuthorsList();
         sortAuthors();
 
-        topPlaylist = new Playlist("Daily Top");
-        PlaylistSystem.fillOnePlaylist(10, topPlaylist);
-        titles = PlaylistSystem.getSongsFromPlaylist(topPlaylist);
+        if (LibraryFragmentData.dailyTopSongs == null) {
+            LibraryFragmentData.dailyTopSongs = new Playlist("Daily Top");
+            PlaylistSystem.fillOnePlaylist(10, LibraryFragmentData.dailyTopSongs);
+
+            LibraryFragmentData.dailyTops = PlaylistSystem.getSongsFromPlaylist(LibraryFragmentData.dailyTopSongs);
+        }
 
         authorsRecView = view.findViewById(R.id.artists_rec_view);
 
@@ -60,8 +81,8 @@ public class LibraryFragmentViewModel extends BaseObservable {
 
         dailyTopRecView = view.findViewById(R.id.daily_top_rec_view);
 
-        DailyTopRecViewAdapter dailyTopAdapter = new DailyTopRecViewAdapter(view.getContext(), this);
-        dailyTopAdapter.setSongs(titles);
+        dailyTopAdapter = new DailyTopRecViewAdapter(view.getContext(), this);
+        dailyTopAdapter.setSongs(LibraryFragmentData.dailyTops);
 
         dailyTopRecView.setAdapter(dailyTopAdapter);
         dailyTopRecView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -69,15 +90,35 @@ public class LibraryFragmentViewModel extends BaseObservable {
 
         bestRecView = view.findViewById(R.id.best_rec_view);
 
-        BestTracksAdapter bestTracksAdapter = new BestTracksAdapter(view.getContext(), this);
-        bestTracksAdapter.setSongs(bestSongs);
+        bestTracksAdapter = new BestTracksAdapter(view.getContext(), this);
+        bestTracksAdapter.setSongs(LibraryFragmentData.bestSongs);
 
         bestRecView.setAdapter(bestTracksAdapter);
         bestRecView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         bestRecView.suppressLayout(true);
     }
 
+    private void resetPage() {
+        bestRecView.suppressLayout(false);
+        LibraryFragmentData.dailyTopSongs = null;
+        LibraryFragmentData.dailyTops.clear();
+
+        LibraryFragmentData.bestSongs.clear();
+        twoBest();
+
+        LibraryFragmentData.dailyTopSongs = new Playlist("Daily Top");
+        PlaylistSystem.fillOnePlaylist(10, LibraryFragmentData.dailyTopSongs);
+        LibraryFragmentData.dailyTops = PlaylistSystem.getSongsFromPlaylist(LibraryFragmentData.dailyTopSongs);
+
+        dailyTopAdapter.setSongs(LibraryFragmentData.dailyTops);
+
+        bestTracksAdapter.setSongs(LibraryFragmentData.bestSongs);
+        bestRecView.suppressLayout(true);
+    }
+
     private void twoBest() {
+        if (LibraryFragmentData.bestSongs.size() >= 2) return;
+
         ArrayList<String> titles = (ArrayList<String>) SongsProps.songs.clone();
         Collections.shuffle(titles);
 
@@ -88,7 +129,7 @@ public class LibraryFragmentViewModel extends BaseObservable {
             int songId = SongsProps.ids.get(randomIndex);
 
             titles.remove(songTitle);
-            bestSongs.add(new Song(songTitle, SongsProps.ids.get(SongsProps.songs.indexOf(songTitle))));
+            LibraryFragmentData.bestSongs.add(new Song(songTitle, SongsProps.ids.get(SongsProps.songs.indexOf(songTitle))));
         }
     }
 
@@ -118,24 +159,24 @@ public class LibraryFragmentViewModel extends BaseObservable {
 
     public void chooseTrack(String name) {
         int currentTrackIndex = 0;
-        for (int i = 0; i < topPlaylist.getSongsAmount(); i++)
+        for (int i = 0; i < LibraryFragmentData.dailyTopSongs.getSongsAmount(); i++)
         {
-            String nameT = Convert.getTitleFromPath(topPlaylist.getSongTitles().get(i));
+            String nameT = Convert.getTitleFromPath(LibraryFragmentData.dailyTopSongs.getSongTitles().get(i));
             if (nameT.equals(name)) currentTrackIndex = i;
         }
 
-        Player.updateQueue(topPlaylist.getSongTitles(), currentTrackIndex);
+        Player.updateQueue(LibraryFragmentData.dailyTopSongs.getSongTitles(), currentTrackIndex);
     }
 
     public void chooseFromBest(String name) {
         int currentTrackIndex = 0;
-        for (int i = 0; i < bestSongs.size(); i++)
+        for (int i = 0; i < LibraryFragmentData.bestSongs.size(); i++)
         {
-            String nameT = bestSongs.get(i).getTitle();
+            String nameT = LibraryFragmentData.bestSongs.get(i).getTitle();
             if (nameT.equals(name)) currentTrackIndex = i;
         }
 
-        Player.updateQueue(Convert.getPlaylistFromSongs(bestSongs, "Best Songs").getSongTitles(), currentTrackIndex);
+        Player.updateQueue(Convert.getPlaylistFromSongs(LibraryFragmentData.bestSongs, "Best Songs").getSongTitles(), currentTrackIndex);
     }
 
 }

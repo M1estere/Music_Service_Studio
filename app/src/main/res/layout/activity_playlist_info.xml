@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.music_service.viewModels.PlaylistInfoViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#020017">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <ImageButton
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/back_button"
+                    android:onClick="@{() -> viewModel.back()}"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/back_40"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                    <ImageButton
+                        android:id="@+id/search_button"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/search_40"
+                        android:layout_alignParentEnd="true"
+                        android:backgroundTint="@android:color/transparent"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/top_bar"
+                android:id="@+id/playlist_info_zone">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/playlist_image"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_centerHorizontal="true"
+                    app:cardCornerRadius="15dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:transitionName="play_cover">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shawn" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/playlist_image"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/white"
+                    android:text="@{viewModel.currentPlaylistTitle}"
+                    android:textSize="22sp"
+                    android:textStyle="normal"
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="center"
+                    android:transitionName="title"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/playlist_info_zone"
+                android:id="@+id/buttons_region"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageButton
+                    android:id="@+id/play_button"
+                    android:layout_width="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/heart_unfilled_60"/>
+
+                <ImageButton
+                    android:onClick="@{() -> viewModel.startPlaylist()}"
+                    android:id="@+id/save_button"
+                    android:layout_marginStart="45dp"
+                    android:layout_toEndOf="@id/play_button"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/play_80"/>
+
+                <ImageButton
+                    android:id="@+id/options_button"
+                    android:layout_marginStart="45dp"
+                    android:layout_toEndOf="@id/save_button"
+                    android:layout_width="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/info_60"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/buttons_region"
+                android:id="@+id/songs_zone"
+                android:background="@drawable/bottom_sheet_background"
+                android:backgroundTint="@color/black">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:requiresFadingEdge="vertical|horizontal"
+                    android:id="@+id/songs_rec_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

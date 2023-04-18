@@ -98,7 +98,7 @@ public class Player {
         musicPlayer.start();
         if (musicPaused) musicPlayer.pause();
 
-        musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
     }
 
     private static void createSong(String title, int id) {
@@ -115,7 +115,7 @@ public class Player {
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
 
-        musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
     }
 
     public static void updateQueue(ArrayList<String> titles, int startIndex) {
@@ -126,7 +126,7 @@ public class Player {
         Globs.currentTrackNumber = startIndex;
         selectTrack(Globs.currentTrackNumber);
 
-        musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
     }
 
     public static void addToQueueEnd(String title)
@@ -142,8 +142,8 @@ public class Player {
 
         Globs.currentSongs.add(new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
 
-        musicPlayerViewModel.updateUI();
-        queueActivityViewModel.updateQueue();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
     public static void addNextToQueue(String title)
@@ -167,8 +167,8 @@ public class Player {
         Globs.currentSongs.add(index, new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
         Globs.currentTrackNumber = Globs.getTitles().indexOf(currentTitle);
 
-        musicPlayerViewModel.updateUI();
-        queueActivityViewModel.updateQueue();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
     public static void deleteFromQueue(String name)
@@ -185,13 +185,12 @@ public class Player {
             if (Globs.getTitles().get(i).equals(path)) deletableIndex = i;
 
         Globs.removeSong(path);
-        System.out.printf("Removing %s\n", path);
 
         if (deletableIndex < Globs.currentTrackNumber)
             Globs.currentTrackNumber--;
 
-        musicPlayerViewModel.updateUI();
-        queueActivityViewModel.updateQueue();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
     public static void changeRepeatingState()

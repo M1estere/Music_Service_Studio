@@ -3,45 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginBottom="15dp"
-    android:backgroundTint="@color/purple_700">
+    android:layout_height="85dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="5dp"
+    android:backgroundTint="@android:color/transparent"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/image_area"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <ImageView
+            android:id="@+id/song_cover"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:backgroundTint="@android:color/transparent"
-            android:elevation="0dp"
-            app:cardCornerRadius="15dp">
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_launcher_background" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@color/white" />
-
-        </androidx.cardview.widget.CardView>
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/image_area"
+            android:layout_toEndOf="@id/song_cover"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/song_info_area"
+                android:id="@+id/track_info_region"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_weight="150"
                 android:orientation="vertical">
 
                 <TextView
@@ -49,10 +47,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
+                    android:focusable="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="Break Through It All"
+                    android:text="TGIF"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -61,24 +60,25 @@
                     android:id="@+id/track_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
                     android:text="Katy Perry"
                     android:textColor="@color/grey"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/remove_button"
+                android:src="@drawable/options"
+                android:id="@+id/info_button"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
-                android:src="@drawable/delete_50" />
+                android:textColor="@android:color/transparent" />
 
-        </RelativeLayout>
+        </LinearLayout>
+
 
     </RelativeLayout>
 

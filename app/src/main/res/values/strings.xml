@@ -28,4 +28,7 @@
     <string name="play_next">Play Next</string>
     <string name="remove">Remove</string>
     <string name="queue">Queue</string>
+    <string name="home">Home</string>
+    <string name="library">Library</string>
+    <string name="personal_title">Personal</string>
 </resources>

@@ -25,7 +25,7 @@
             android:gravity="bottom"
             app:umanoPanelHeight="60dp"
             app:umanoShadowHeight="0dp"
-            app:umanoParallaxOffset="15dp">
+            app:umanoParallaxOffset="0dp">
 
             <FrameLayout
                 android:id="@+id/frame_layout"
@@ -43,6 +43,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/purple_700">
 
+                <!--Mini Player-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/mini_player"
                     android:layout_width="match_parent"
@@ -55,8 +56,8 @@
                         android:id="@+id/track_progress"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:background="@color/white"
+                        android:layout_height="2dp"
+                        android:background="@color/black"
                         android:max="@{viewModel.maxProgress}"
                         android:progress="@{viewModel.progress}" />
 
@@ -75,7 +76,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:src="@drawable/shawn" />
 
                         <!--Texts-->
                         <LinearLayout
@@ -83,6 +84,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/track_cover"
                             android:orientation="vertical">
@@ -119,27 +122,21 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <Button
-                                android:id="@+id/previous"
-                                android:layout_width="29dp"
-                                android:layout_height="35dp"
-                                android:layout_marginEnd="5dp"
-                                android:backgroundTint="@color/white"
-                                android:onClick="@{()-> viewModel.previousSong()}" />
-
-                            <Button
+                            <ImageButton
+                                android:src="@drawable/pause_40"
                                 android:id="@+id/pause"
-                                android:layout_width="42dp"
-                                android:layout_height="50dp"
-                                android:backgroundTint="@color/white"
-                                android:onClick="@{()-> viewModel.changePlayingState()}" />
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:backgroundTint="@android:color/transparent"
+                                android:onClick="@{()-> viewModel.changePlayingState()}"
+                                android:layout_marginEnd="5dp"/>
 
-                            <Button
-                                android:id="@+id/next"
-                                android:layout_width="28dp"
+                            <ImageButton
+                                android:src="@drawable/baseline_skip_next_24"
+                                android:id="@+id/previous"
+                                android:layout_width="35dp"
                                 android:layout_height="35dp"
-                                android:layout_marginStart="5dp"
-                                android:backgroundTint="@color/white"
+                                android:backgroundTint="@android:color/transparent"
                                 android:onClick="@{()-> viewModel.nextSong()}" />
 
                         </LinearLayout>
@@ -160,22 +157,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <ImageButton
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="20dp">
-
-                            <Button
-                                android:id="@+id/queue_page_button"
-                                android:layout_width="45dp"
-                                android:layout_height="55dp"
-                                android:layout_margin="10dp"
-                                android:backgroundTint="@color/white"
-                                android:onClick="@{()-> viewModel.queuePage()}"
-                                android:text="" />
-
-                        </LinearLayout>
+                            android:id="@+id/queue_page_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:onClick="@{()-> viewModel.queuePage()}"
+                            android:src="@drawable/queue_50" />
 
                         <TextView
                             android:id="@+id/song_text"
@@ -209,6 +199,7 @@
                         app:cardCornerRadius="25dp">
 
                         <ImageView
+                            android:id="@+id/image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/up_region"
@@ -317,34 +308,36 @@
                         android:minHeight="75dp"
                         android:orientation="horizontal">
 
-                        <Button
+                        <ImageButton
+                            android:src="@drawable/ic_previous"
                             android:id="@+id/previous_button"
-                            android:layout_width="55dp"
+                            android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginEnd="20dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.previousSong()}"
-                            android:padding="10dp"
-                            android:text="" />
+                            android:padding="10dp" />
 
-                        <Button
+                        <ImageButton
+                            android:src="@drawable/pause_80"
+                            android:adjustViewBounds="true"
                             android:id="@+id/pause_button"
-                            android:layout_width="70dp"
+                            android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.changePlayingState()}"
-                            android:padding="10dp"
-                            android:text="" />
+                            android:padding="10dp" />
 
-                        <Button
+                        <ImageButton
+                            android:src="@drawable/ic_next"
+                            android:adjustViewBounds="true"
                             android:id="@+id/next_button"
-                            android:layout_width="55dp"
+                            android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="20dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.nextSong()}"
-                            android:padding="10dp"
-                            android:text="" />
+                            android:padding="10dp"/>
 
                     </LinearLayout>
 
@@ -366,34 +359,36 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center">
 
-                            <Button
+                            <ImageButton
+                                android:src="@drawable/save"
+                                android:backgroundTint="@android:color/transparent"
+                                android:layout_centerVertical="true"
                                 android:id="@+id/save_playlist_button"
                                 android:layout_width="45dp"
                                 android:layout_height="50dp"
                                 android:layout_alignParentStart="true"
                                 android:layout_marginStart="25dp"
-                                android:backgroundTint="@color/white"
-                                android:onClick="@{() -> viewModel.savePlaylist()}"
-                                android:text="" />
+                                android:onClick="@{() -> viewModel.savePlaylist()}"/>
 
-                            <Button
+                            <ImageButton
                                 android:id="@+id/add_track_to_favs_button"
-                                android:layout_width="45dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_centerInParent="true"
-                                android:backgroundTint="@color/white"
+                                android:backgroundTint="@android:color/transparent"
                                 android:onClick="@{() -> viewModel.favouriteTrack()}"
-                                android:text="" />
+                                android:src="@drawable/heart_unfilled_40"/>
 
-                            <Button
+                            <ImageButton
+                                android:layout_centerVertical="true"
+                                android:backgroundTint="@android:color/transparent"
+                                android:src="@drawable/repeat"
                                 android:id="@+id/change_repeat_state_button"
-                                android:layout_width="45dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="25dp"
-                                android:backgroundTint="@color/white"
-                                android:onClick="@{() -> viewModel.changeRepeatingState()}"
-                                android:text="" />
+                                android:onClick="@{() -> viewModel.changeRepeatingState()}" />
 
                         </RelativeLayout>
 
@@ -406,14 +401,23 @@
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:shadowColor="@color/white"
             android:id="@+id/nav_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/purple_200"
-            app:itemTextColor="@color/grey"
+            android:background="@color/black"
+            app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/bottom_nav_menu" />
+            app:menu="@menu/bottom_nav_menu">
+
+            <ImageView
+                android:layout_above="@id/nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@color/dark_grey"/>
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </RelativeLayout>
 

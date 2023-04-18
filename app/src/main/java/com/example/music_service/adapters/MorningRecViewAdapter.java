@@ -1,6 +1,7 @@
 package com.example.music_service.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_service.activities.PlaylistInfoActivity;
+import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.viewModels.HomeFragmentViewModel;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.R;
@@ -46,9 +49,16 @@ public class MorningRecViewAdapter extends RecyclerView.Adapter<MorningRecViewAd
                 String name = playlists.get(pos).getPlaylistName();
 
                 Toast.makeText(context, "(Morning) " + name + " was chosen", Toast.LENGTH_SHORT).show();
-                homeFragmentViewModel.choosePlaylist(name);
+                goToPlaylistInfo(pos);
             }
         });
+    }
+
+    private void goToPlaylistInfo(int pos) {
+        PlaylistSystem.setCurrentPlaylist(playlists.get(pos));
+
+        Intent intent = new Intent(context, PlaylistInfoActivity.class);
+        context.startActivity(intent);
     }
 
     @Override

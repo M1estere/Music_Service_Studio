@@ -26,7 +26,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
@@ -35,6 +35,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:layout_gravity="start|center"
                 android:id="@+id/track_info_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,12 +72,14 @@
 
             </LinearLayout>
 
-            <Button
+            <ImageButton
+                android:layout_gravity="center"
+                android:src="@drawable/options"
                 android:id="@+id/info_button"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@android:color/transparent"
                 android:textColor="@android:color/transparent" />
 
         </LinearLayout>
