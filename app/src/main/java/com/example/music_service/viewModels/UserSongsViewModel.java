@@ -51,7 +51,7 @@ public class UserSongsViewModel extends BaseObservable {
             if (trackName.equals(" ") || trackName.isEmpty()) continue;
 
             System.out.printf("Track name: %s\n", trackName);
-            songs.add(new Song(trackName, SongsProps.ids.get(SongsProps.songs.indexOf(trackName))));
+            songs.add(new Song(trackName, SongsProps.uris.get(SongsProps.songs.indexOf(trackName))));
         }
 
         adapter.notifyDataSetChanged();

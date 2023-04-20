@@ -61,7 +61,7 @@ public class Convert {
         Playlist playlist = new Playlist(name);
 
         for (Song song : songs)
-            playlist.addSong(song.getPath(), song.getId());
+            playlist.addSong(song.getPath(), song.getUri());
 
         return playlist;
     }

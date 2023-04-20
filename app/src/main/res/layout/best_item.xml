@@ -34,7 +34,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@color/white" />
+                    android:src="@color/white"
+                    android:id="@+id/song_cover"/>
 
             </androidx.cardview.widget.CardView>
 

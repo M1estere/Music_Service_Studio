@@ -22,7 +22,7 @@
             android:transitionName="play_cover">
 
             <ImageView
-                android:id="@+id/play_cover"
+                android:id="@+id/image_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/shawn" />

@@ -1,12 +1,15 @@
 package com.example.music_service.models.globals;
 
-import com.example.music_service.R;
+import android.app.Activity;
+
 import com.example.music_service.models.Song;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Globs {
+    public static final String BASE_URL = "https://drive.google.com/uc?id=";
+
     public static boolean recheckLogin = true;
 
     public static final String TAG = "Music Service";
@@ -14,6 +17,8 @@ public class Globs {
     public static Random random = new Random();
 
     public static ArrayList<Song> currentSongs = new ArrayList<>();
+    public static int currentTrackNumber = 0;
+
     public static ArrayList<String> getTitles() {
         ArrayList<String> returner = new ArrayList<>();
 
@@ -37,47 +42,6 @@ public class Globs {
         return index;
     }
 
-    public static int currentTrackNumber = 0;
-
-    public static void fillAllSongs() {
-        if (SongsProps.songs.size() > 0) return;
-
-        addSong(R.raw.alive, "alive.mp3", "Warbly Jets", "warbly.png");
-        addSong(R.raw.ancients, "ancients.mp3", "Nier OST", "nier_replicant.png");
-        addSong(R.raw.animals, "animals.mp3", "Maroon 5", "maroon_v.png");
-        addSong(R.raw.ashes_of_dreams, "ashes_of_dreams.mp3", "Nier OST", "nier_replicant.png");
-        addSong(R.raw.bad, "bad.mp3", "Michael Jackson", "michael_jackson.jpg");
-
-        addSong(R.raw.beat_it, "beat_it.mp3", "Michael Jackson", "michael_jackson.jpg");
-        addSong(R.raw.believer, "believer.mp3", "Imagine Dragons", "imagine_dragons.jpg");
-        addSong(R.raw.billie_jean, "billie_jean.mp3", "Michael Jackson", "michael_jackson.jpg");
-        addSong(R.raw.break_through_it_all, "break_through_it_all.mp3", "Sonic OST", "sonic_frontiers_ost.png");
-        addSong(R.raw.circles, "circles.mp3", "Post Malone", "post_malone.png");
-
-        addSong(R.raw.cold_heart, "cold_heart.mp3", "Elton John", "elton.png");
-        addSong(R.raw.easier, "easier.mp3", "5SOS", "seconds_of_summer.png");
-        addSong(R.raw.electrical_storm, "electrical_storm.mp3", "U2", "u2.png");
-        addSong(R.raw.endless_possibility, "endless_possibility.mp3", "Sonic OST", "sonic_unleashed_ost.jpg");
-
-        addSong(R.raw.get_lucky, "get_lucky.mp3", "Daft Punk", "daft_punk.png");
-        addSong(R.raw.grandmother, "grandmother.mp3", "Nier OST", "nier_replicant.png");
-        addSong(R.raw.his_world, "his_world.mp3", "Sonic OST", "sonic06_ost.png");
-        addSong(R.raw.i_feel_it_coming, "i_feel_it_coming.mp3", "The Weeknd", "weeknd.png");
-
-        addSong(R.raw.in_your_eyes, "in_your_eyes.mp3", "The Weeknd", "weeknd.png");
-        addSong(R.raw.infinite, "infinite.mp3", "Sonic OST", "sonic_forces_ost.png");
-        addSong(R.raw.last_christmas, "last_christmas.mp3", "WHAM!", "last_christmas.jpg");
-        addSong(R.raw.lost_in_japan, "lost_in_japan.mp3", "Shawn Mendes", "shawn_mendes.jpg");
-    }
-
-    private static void addSong(int id, String title, String author, String trackCover) {
-        SongsProps.ids.add(id);
-
-        SongsProps.songs.add(title);
-        SongsProps.authors.add(author);
-        SongsProps.covers.add(trackCover);
-    }
-
     public static void removeSong(String title) {
         title = Convert.getTitleFromPath(title);
 
@@ -88,5 +52,44 @@ public class Globs {
                 index = i;
 
         currentSongs.remove(index);
+    }
+
+    public static void fillSongsFromDrive(Activity activity) {
+        addSong("1xxp53U3PHZljo7U6zpNdamZ-qWNYR0aA", "alive.mp3");
+        addSong("1ZqMaDkZuCU7fr4QUHmp0v-V2kpRk3xYZ", "ancients.mp3");
+        addSong("1794d4RMX5VHbPzAvOALQeYzbt12_LhX0", "animals.mp3");
+        addSong("1JyNk6bTQDLJBppvTbOpWqPPEZPSihKMZ", "ashes_of_dreams.mp3");
+        addSong("13GMzHPT6yyNhogx2tdYl-6PtdDrV0-hF", "bad.mp3");
+
+        addSong("1ieBtOEu2WgtHPJHqEeamH8_tFon6uOll", "beat_it.mp3");
+        addSong("1wMcM0NjsMN4XOA6xY7DM6kBe3yxH-F3M", "believer.mp3");
+        addSong("1U4G2BIjGNQKMmMJzn2DC8eKQqHV_Gm_L", "billie_jean.mp3");
+        addSong("1SMVRNq8tAZJHtx8mqkMJlCGEecM5ROXK", "break_through_it_all.mp3");
+        addSong("1LuUaq2X0pCa5Hfb-WSKliDXcMgX44L09", "circles.mp3");
+
+        addSong("114bWXbdp4T40Xgk7IIXYN6zOVeQlQB14", "cold_heart.mp3");
+        addSong("1hDkkLNPeKieM66KlyElrUUvwj7aKyJmO", "easier.mp3");
+        addSong("1oJqnbt-mGY7_iVDYNBI0cfMKz1kuPi60", "electrical_storm.mp3");
+        addSong("1SLalSZKfkqCpND7rIF_gmPhPybAy8Arz", "endless_possibility.mp3");
+        addSong("1arrsJ77uctLSW1MuCdMB_poRRw-DuJAz", "feel_good_inc.mp3");
+
+        addSong("10Bjtx4eaDnEjqwHAuxEK_8D0nG2_ogg4", "get_lucky.mp3");
+        addSong("1XhGZmOqf-JhOL_3VH1-Bt44ID7OdmHsw", "grandmother.mp3");
+        addSong("17ytq5D8_el-BxelW8TgAfwOpvMWOtdB7", "guy_exe.mp3");
+        addSong("1srLlJsB0vi7O871Dg1s3o5stn9pAeqXE", "his_world.mp3");
+        addSong("1ZWEuC-vI8Wr3OykorTHR7yLbkiHsxL7G", "i_feel_it_coming.mp3");
+
+        addSong("1VuvQSmDnRlb79XBUb1sX3U1Yfe89Pt_f", "in_your_eyes.mp3");
+        addSong("1UmIF5hAVHNkUTIHMegfCzDwYU3XiBupS", "infinite.mp3");
+        addSong("1N2mFLS-Ias2F17o_-YEQ8uaeLkLIoeky", "last_christmas.mp3");
+        addSong("1k7YUYcXGdP6i8HAtFRfTomQ3qPMLkpme", "lost_in_japan.mp3");
+        addSong("1kICFte8iYX7cfnV2WIGrMmY53DmEfOjm", "makes_me_wonder.mp3");
+
+        SongsProps.checkCoversArtists(activity);
+    }
+
+    public static void addSong(String uri, String title) {
+        SongsProps.uris.add(Globs.BASE_URL + uri);
+        SongsProps.songs.add(title);
     }
 }

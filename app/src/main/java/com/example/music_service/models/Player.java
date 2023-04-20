@@ -1,21 +1,28 @@
 package com.example.music_service.models;
 
 import android.content.Context;
-import android.media.MediaPlayer;
+import android.widget.Toast;
 
 import com.example.music_service.viewModels.MusicPlayerViewModel;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.SongsProps;
 import com.example.music_service.viewModels.QueueActivityViewModel;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFile;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.PlaybackException;
+import com.google.android.gms.drive.DriveId;
 
 import java.util.ArrayList;
 
 public class Player {
+
     public enum RepeatingState { NoRepeat, RepeatPlaylist, RepeatTrack }
 
     private static Context context;
-    private static MediaPlayer musicPlayer = null;
+    private static ExoPlayer musicPlayer = null;
 
     public static RepeatingState playerRepeatingState = RepeatingState.NoRepeat;
 
@@ -26,27 +33,56 @@ public class Player {
         musicPlayerViewModel = m;
     }
 
+    private static boolean isPrepared = false;
+
+    public static boolean checkPrepared() {
+        return isPrepared;
+    }
+
     private static QueueActivityViewModel queueActivityViewModel;
     public static void setQueueActivityViewModel(QueueActivityViewModel q) {
         queueActivityViewModel = q;
     }
 
     public static void startTrack() {
+        isPrepared = false;
+        if (musicPlayer != null) {
+            musicPlayer.setPlayWhenReady(false);
+            musicPlayer.stop();
+            musicPlayer.release();
+
+            musicPlayer = null;
+        }
+
         musicPlayerViewModel.setProgress(0);
 
         int index = SongsProps.songs.indexOf(Convert.getPathFromTitle(Globs.getTitles().get(Globs.currentTrackNumber)));
-        int currentTrackID = SongsProps.ids.get(index);
+        String currentTrackUri = SongsProps.uris.get(index);
 
-        if (musicPlayer != null) {
-            musicPlayer.reset();
-            musicPlayer.release();
-        }
+        musicPlayer = new ExoPlayer.Builder(context)
+                .build();
 
-        musicPlayer = MediaPlayer.create(context, currentTrackID);
-        justPlay();
+        MediaItem mediaItem = MediaItem.fromUri(currentTrackUri);
+        musicPlayer.addMediaItem(mediaItem);
+
+        System.out.println("Currently chosen: " + currentTrackUri);
+        musicPlayer.addListener(new com.google.android.exoplayer2.Player.Listener() {
+            @Override
+            public void onPlaybackStateChanged(int state) {
+                if (state == ExoPlayer.STATE_READY) {
+                    isPrepared = true;
+                    musicPlayer.setPlayWhenReady(!musicPaused);
+                    musicPlayerViewModel.updateUI();
+
+                    Toast.makeText(context, "Live with: " + Globs.currentSongs.get(Globs.currentTrackNumber).getTitle().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        musicPlayer.prepare();
     }
 
-    public static MediaPlayer getMusicPlayer() {
+    public static ExoPlayer getMusicPlayer() {
         return musicPlayer;
     }
 
@@ -65,13 +101,9 @@ public class Player {
         return Globs.currentTrackNumber;
     }
 
-    private static void justPlay() {
-        musicPlayer.start();
-    }
-
     public static void playSong() {
         musicPaused = false;
-        musicPlayer.start();
+        musicPlayer.play();
     }
 
     public static void pause() {
@@ -95,14 +127,12 @@ public class Player {
 
         startTrack();
 
-        musicPlayer.start();
-        if (musicPaused) musicPlayer.pause();
-
         if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPaused) musicPlayer.pause();
     }
 
-    private static void createSong(String title, int id) {
-        Song songToAdd = new Song(title, id);
+    private static void createSong(String title, String uri) {
+        Song songToAdd = new Song(title, uri);
 
         Globs.currentSongs.add(songToAdd);
     }
@@ -110,7 +140,7 @@ public class Player {
     public static void updateQueue(ArrayList<String> titles) {
         Globs.currentSongs.clear();
         for (String title : titles)
-            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
+            createSong(title, SongsProps.uris.get(SongsProps.songs.indexOf(title)));
 
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
@@ -120,13 +150,12 @@ public class Player {
 
     public static void updateQueue(ArrayList<String> titles, int startIndex) {
         Globs.currentSongs.clear();
-        for (String title : titles)
-            createSong(title, SongsProps.ids.get(SongsProps.songs.indexOf(title)));
+        for (String title : titles) {
+            createSong(title, SongsProps.uris.get(SongsProps.songs.indexOf(title)));
+        }
 
         Globs.currentTrackNumber = startIndex;
         selectTrack(Globs.currentTrackNumber);
-
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
     }
 
     public static void addToQueueEnd(String title)
@@ -140,7 +169,7 @@ public class Player {
         if (Globs.getSongNumber(path) != -1)
             deleteFromQueue(path);
 
-        Globs.currentSongs.add(new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
+        Globs.currentSongs.add(new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
 
         if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
@@ -164,7 +193,7 @@ public class Player {
             index--;
             if (trackIndex > Globs.currentTrackNumber) index++;
         }
-        Globs.currentSongs.add(index, new Song(path, SongsProps.ids.get(SongsProps.songs.indexOf(path))));
+        Globs.currentSongs.add(index, new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
         Globs.currentTrackNumber = Globs.getTitles().indexOf(currentTitle);
 
         if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
@@ -242,10 +271,11 @@ public class Player {
         return (musicPlayer.getCurrentPosition() / (float) musicPlayer.getDuration());
     }
     public static int getDuration() {
-        return musicPlayer.getDuration() - 1000;
+        int duration = (int)musicPlayer.getDuration() - 1000;
+        return Math.max(duration, 2);
     }
     public static int getCurrentPos() {
-        return musicPlayer.getCurrentPosition();
+        return (int)musicPlayer.getCurrentPosition();
     }
     public static boolean isPlay() {
         return !musicPaused;

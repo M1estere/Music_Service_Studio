@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.viewModels.QueueActivityViewModel;
 import com.example.music_service.R;
@@ -64,6 +66,11 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
         holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
+
+        Glide.with(holder.itemView)
+                .load(songs.get(pos).getCover())
+                .thumbnail(0.05f).
+                into(holder.cover);
 
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +179,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
         private final ImageButton infoButton;
         private final CardView parent;
+        private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -182,6 +190,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             infoButton = itemView.findViewById(R.id.info_button);
 
             parent = itemView.findViewById(R.id.parent);
+            cover = itemView.findViewById(R.id.song_cover);
 
             if (trackNameTxt == null) return;
 

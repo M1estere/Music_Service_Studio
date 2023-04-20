@@ -26,10 +26,6 @@ public class CreateNotification {
 
     public static final String CHANNEL_ID = "channel1";
 
-    public static final String ACTION_PREVIOUS = "action_previous";
-    public static final String ACTION_PLAY = "action_play";
-    public static final String ACTION_NEXT = "action_next";
-
     public static Notification notification;
 
     private static MediaSessionCompat mediaSession;
@@ -37,6 +33,7 @@ public class CreateNotification {
     public static MusicPlayerViewModel viewModel;
 
     public static boolean isPlaying = true;
+
     public static void setViewModel(MusicPlayerViewModel vm) {
         viewModel = vm;
     }
@@ -64,8 +61,6 @@ public class CreateNotification {
                             .putString(MediaMetadata.METADATA_KEY_TITLE, song.getTitle())
 
                             .putString(MediaMetadata.METADATA_KEY_ARTIST, song.getArtist())
-                            //.putString(
-                            //        MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, currentTrack.albumArtUri)
 
                             .putLong(MediaMetadata.METADATA_KEY_DURATION, Player.getDuration()) // 4
                             .build())
@@ -74,10 +69,10 @@ public class CreateNotification {
             mediaSession.setPlaybackState(
                     PlaybackStateCompat.fromPlaybackState(new PlaybackState.Builder()
                             .setState(Player.isPlay() ? PlaybackState.STATE_PLAYING : PlaybackState.STATE_PAUSED, Player.getCurrentPos(), 1)
-                                    .setActions(PlaybackState.ACTION_SEEK_TO |
-                                            PlaybackState.ACTION_PLAY_PAUSE |
-                                            PlaybackState.ACTION_SKIP_TO_NEXT |
-                                            PlaybackState.ACTION_SKIP_TO_PREVIOUS)
+                            .setActions(PlaybackState.ACTION_SEEK_TO |
+                                    PlaybackState.ACTION_PLAY_PAUSE |
+                                    PlaybackState.ACTION_SKIP_TO_NEXT |
+                                    PlaybackState.ACTION_SKIP_TO_PREVIOUS)
                             .build())
             );
 
@@ -87,7 +82,6 @@ public class CreateNotification {
                     super.onPlay();
                     isPlaying = true;
 
-                    System.out.println("Continued");
                     viewModel.changePlayingState();
                 }
 
@@ -96,7 +90,6 @@ public class CreateNotification {
                     super.onPause();
                     isPlaying = false;
 
-                    System.out.println("Paused");
                     viewModel.changePlayingState();
                 }
 
@@ -104,7 +97,7 @@ public class CreateNotification {
                 public void onSkipToNext() {
                     super.onSkipToNext();
 
-                    System.out.println("Next");
+                    System.out.printf("Me (notification)");
                     viewModel.nextSong();
                 }
 
@@ -112,7 +105,6 @@ public class CreateNotification {
                 public void onSkipToPrevious() {
                     super.onSkipToPrevious();
 
-                    System.out.println("Previous");
                     viewModel.previousSong();
                 }
 
@@ -120,7 +112,6 @@ public class CreateNotification {
                 public void onSeekTo(long pos) {
                     super.onSeekTo(pos);
 
-                    System.out.println("Moved");
                     Player.goTo((int) (pos));
                     viewModel.updateUI();
                     viewModel.setProgress((int) (pos / 1000));
@@ -129,10 +120,8 @@ public class CreateNotification {
 
             mediaSession.setActive(true);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+            notification.contentIntent = PendingIntent.getActivity(context, 0,
                     new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
-            notification.contentIntent = contentIntent;
             notificationManagerCompat.notify(1, notification);
         }
     }

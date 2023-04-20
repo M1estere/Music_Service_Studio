@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -24,10 +23,21 @@ import com.example.music_service.activities.QueueActivity;
 import com.example.music_service.R;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
+import com.example.music_service.models.Song;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.globals.SongsProps;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class MusicPlayerViewModel extends BaseObservable {
     private final Activity activity;
@@ -65,12 +75,28 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         startPlayerThread();
 
+        /*addSong("https://drive.google.com/uc?id=1ZdC6bQ3KiO2z-9ZivX5ft9NgeA4oebHE", "alive.mp3", "Warbly Jets");
+        addSong("https://drive.google.com/uc?id=1_dR2ialQuEXZsZd8a7kuKYV1siP2kEi4", "believer.mp3", "Imagine Dragons");
+
+        Globs.currentSongs.add(new Song("alive.mp3", "https://drive.google.com/uc?id=1ZdC6bQ3KiO2z-9ZivX5ft9NgeA4oebHE"));
+        Globs.currentSongs.add(new Song("believer.mp3", "https://drive.google.com/uc?id=1_dR2ialQuEXZsZd8a7kuKYV1siP2kEi4"));
+
+        Player.startTrack();*/
+
         if (Player.getMusicPlayer() != null) updateUI();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
             activity.startService(new Intent(activity.getBaseContext(), OnClearFromRecentService.class));
         }
     }
+
+    /*public void addSong(String uri, String title, String author) {
+        System.out.printf("Adding: %s\n", title);
+        SongsProps.uris.add(uri);
+
+        SongsProps.songs.add(title);
+        SongsProps.authors.add(author);
+    }*/
 
     private void findAllIds() {
         cover = activity.findViewById(R.id.cover);
@@ -103,7 +129,6 @@ public class MusicPlayerViewModel extends BaseObservable {
         findAllIds();
         startElementsSetup();
 
-        Globs.fillAllSongs();
         Player.setMusicPlayer(this);
         Player.setContext(activity);
 
@@ -115,7 +140,6 @@ public class MusicPlayerViewModel extends BaseObservable {
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             private int progress;
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progress = i;
@@ -149,9 +173,12 @@ public class MusicPlayerViewModel extends BaseObservable {
                                     if (slider.getPanelState() == SlidingUpPanelLayout.PanelState.HIDDEN)
                                         slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
-                                    if (miniPlayerView.getVisibility() == View.GONE) miniPlayerView.setVisibility(View.VISIBLE);
-                                    if (mainPlayer.getVisibility() == View.GONE) mainPlayer.setVisibility(View.VISIBLE);
-                                    if (slider.isTouchEnabled() == false) slider.setTouchEnabled(true);
+                                    if (miniPlayerView.getVisibility() == View.GONE)
+                                        miniPlayerView.setVisibility(View.VISIBLE);
+                                    if (mainPlayer.getVisibility() == View.GONE)
+                                        mainPlayer.setVisibility(View.VISIBLE);
+                                    if (slider.isTouchEnabled() == false)
+                                        slider.setTouchEnabled(true);
 
                                     if (Player.isPlay() == true) {
                                         if (isSeeking == false) {
@@ -289,6 +316,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void checkProgression() {
+        if (Player.checkPrepared() == false) return;
         if (Player.getCurrentPos() >= Player.getDuration() - 2000)
             nextSong();
     }
@@ -309,7 +337,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void nextSong() {
-        Globs.currentTrackNumber = Player.nextSong();
+        Player.nextSong();
 
         updateUI();
         setProgress(0);

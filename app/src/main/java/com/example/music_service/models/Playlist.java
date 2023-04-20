@@ -9,7 +9,7 @@ public class Playlist {
     }
 
     private ArrayList<String> songTitles;
-    private ArrayList<Integer> songIDs;
+    private ArrayList<String> songUris;
 
     private String playlistName;
 
@@ -17,12 +17,12 @@ public class Playlist {
         this.playlistName = playlistName;
 
         songTitles = new ArrayList<>();
-        songIDs = new ArrayList<>();
+        songUris = new ArrayList<>();
     }
 
-    public void addSong(String title, int id) {
+    public void addSong(String title, String uri) {
         songTitles.add(title);
-        songIDs.add(id);
+        songUris.add(uri);
     }
 
     public ArrayList<String> getSongTitles() {

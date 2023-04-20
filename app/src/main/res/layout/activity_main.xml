@@ -137,7 +137,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:backgroundTint="@android:color/transparent"
-                                android:onClick="@{()-> viewModel.nextSong()}" />
+                                android:onClick="@{()-> viewModel.nextSong()}"/>
 
                         </LinearLayout>
 
@@ -336,8 +336,9 @@
                             android:layout_height="60dp"
                             android:layout_marginStart="20dp"
                             android:backgroundTint="@android:color/transparent"
-                            android:onClick="@{()-> viewModel.nextSong()}"
-                            android:padding="10dp"/>
+                            android:padding="10dp"
+                            android:onClick="@{()-> viewModel.nextSong()}"/>
+
 
                     </LinearLayout>
 

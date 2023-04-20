@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_service.R;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
@@ -49,6 +51,11 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
 
         holder.trackNameTxt.setSelected(true);
+
+        Glide.with(holder.itemView)
+                .load(songs.get(pos).getCover())
+                .thumbnail(0.05f)
+                .into(holder.cover);
 
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +107,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
 
         private final CardView parent;
         private final ImageButton removeButton;
+        private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,6 +115,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
             trackNameTxt = itemView.findViewById(R.id.track_title);
             authorNameTxt = itemView.findViewById(R.id.track_author);
             removeButton = itemView.findViewById(R.id.remove_button);
+            cover = itemView.findViewById(R.id.song_cover);
 
             parent = itemView.findViewById(R.id.parent);
         }

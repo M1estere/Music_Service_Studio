@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.music_service.TracksLoadActivity;
 import com.example.music_service.adapters.AuthViewPageAdapter;
 import com.example.music_service.activities.MainActivity;
 import com.example.music_service.R;
@@ -66,7 +67,7 @@ public class AuthenticationActivityViewModel implements TabLayoutMediator.TabCon
     private void openMainPage() {
         Globs.recheckLogin = false;
 
-        Intent intent = new Intent(authActivity, MainActivity.class);
+        Intent intent = new Intent(authActivity, TracksLoadActivity.class);
         authActivity.startActivity(intent);
     }
 

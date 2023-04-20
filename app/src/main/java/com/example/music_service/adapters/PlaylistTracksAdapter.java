@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_service.R;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
@@ -59,6 +60,8 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
 
         holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
         holder.trackNameTxt.setSelected(true);
+
+        Glide.with(holder.itemView).load(songs.get(pos).getCover()).thumbnail(0.05f).into(holder.cover);
 
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +172,7 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
 
         private final CardView parent;
         private final ImageButton infoButton;
+        private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -177,6 +181,7 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
             authorNameTxt = itemView.findViewById(R.id.track_author);
 
             infoButton = itemView.findViewById(R.id.info_button);
+            cover = itemView.findViewById(R.id.song_cover);
 
             parent = itemView.findViewById(R.id.parent);
         }

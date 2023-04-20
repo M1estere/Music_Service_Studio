@@ -14,7 +14,9 @@ import com.example.music_service.SwipeToRefresh;
 import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
 import com.example.music_service.models.HomeFragmentData;
+import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.models.globals.SongsProps;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -55,7 +57,7 @@ public class HomeFragmentViewModel extends BaseObservable {
         initRecs();
     }
 
-    private void initRecs() {
+    public void initRecs() {
         if (HomeFragmentData.recommendations.size() < 1)
             PlaylistSystem.fillPlaylistsSection(HomeFragmentData.recommendations, 5, 3, 60);
 

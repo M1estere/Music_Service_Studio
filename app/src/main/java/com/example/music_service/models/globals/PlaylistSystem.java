@@ -29,6 +29,8 @@ public class PlaylistSystem {
     }
 
     public static void fillOnePlaylist(float startSongsPercentage, Playlist listToFill) {
+        System.out.printf("Size of playlist: %d\n", SongsProps.songs.size());
+
         startSongsPercentage /= 100;
 
         ArrayList<String> titles = new ArrayList<>();
@@ -41,10 +43,10 @@ public class PlaylistSystem {
         for (int i = 0; i < length; i++) {
             int randomIndex = Globs.random.nextInt(titles.size());
             String songTitle = titles.get(randomIndex);
-            int songId = SongsProps.ids.get(randomIndex);
+            String songUri = SongsProps.uris.get(randomIndex);
 
             titles.remove(songTitle);
-            listToFill.addSong(songTitle, songId);
+            listToFill.addSong(songTitle, songUri);
         }
     }
 
@@ -54,7 +56,7 @@ public class PlaylistSystem {
         ArrayList<String> titles = source.getSongTitles();
 
         for (String title : titles) {
-            songs.add(new Song(title, SongsProps.ids.get(SongsProps.songs.indexOf(title))));
+            songs.add(new Song(title, SongsProps.uris.get(SongsProps.songs.indexOf(title))));
         }
 
         return songs;
@@ -66,7 +68,7 @@ public class PlaylistSystem {
         ArrayList<String> titles = source.getSongTitles();
 
         for (String title : titles) {
-            result.add(new Song(title, SongsProps.ids.get(SongsProps.songs.indexOf(title))));
+            result.add(new Song(title, SongsProps.uris.get(SongsProps.songs.indexOf(title))));
         }
 
         return result;

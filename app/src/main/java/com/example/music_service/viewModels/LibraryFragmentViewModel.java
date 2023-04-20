@@ -126,10 +126,10 @@ public class LibraryFragmentViewModel extends BaseObservable {
             int randomIndex = Globs.random.nextInt(titles.size());
             String songTitle = titles.get(randomIndex);
 
-            int songId = SongsProps.ids.get(randomIndex);
+            String songUri = SongsProps.uris.get(randomIndex);
 
             titles.remove(songTitle);
-            LibraryFragmentData.bestSongs.add(new Song(songTitle, SongsProps.ids.get(SongsProps.songs.indexOf(songTitle))));
+            LibraryFragmentData.bestSongs.add(new Song(songTitle, SongsProps.uris.get(SongsProps.songs.indexOf(songTitle))));
         }
     }
 
@@ -159,10 +159,13 @@ public class LibraryFragmentViewModel extends BaseObservable {
 
     public void chooseTrack(String name) {
         int currentTrackIndex = 0;
-        for (int i = 0; i < LibraryFragmentData.dailyTopSongs.getSongsAmount(); i++)
-        {
+
+        for (int i = 0; i < LibraryFragmentData.dailyTopSongs.getSongsAmount(); i++) {
             String nameT = Convert.getTitleFromPath(LibraryFragmentData.dailyTopSongs.getSongTitles().get(i));
-            if (nameT.equals(name)) currentTrackIndex = i;
+            if (nameT.equals(name)) {
+                currentTrackIndex = i;
+                break;
+            }
         }
 
         Player.updateQueue(LibraryFragmentData.dailyTopSongs.getSongTitles(), currentTrackIndex);

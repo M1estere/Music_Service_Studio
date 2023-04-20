@@ -9,30 +9,36 @@ public class Song {
     private String title;
     private String artist;
 
-    private int id;
-    // public String cover;
+    private String uri;
+    public String cover;
 
-    public Song(String path, int id) {
-        this.id = id;
+    public Song(String path, String uri) {
+        this.uri = uri;
         this.path = path;
 
         title = Convert.getTitleFromPath(path);
-        artist = SongsProps.authors.get(SongsProps.songs.indexOf(path));
+        int index = SongsProps.songs.indexOf(path);
+        artist = SongsProps.authors.get(index);
+
+        cover = SongsProps.covers.get(index);
     }
 
     public Song(String path) {
         title = path;
         this.path = Convert.getPathFromTitle(path);
 
-        artist = SongsProps.authors.get(SongsProps.songs.indexOf(this.path));
+        int index = SongsProps.songs.indexOf(path);
+        artist = SongsProps.authors.get(index);
+
+        cover = SongsProps.covers.get(index);
     }
 
-    public int getId() {
-        return id;
+    public String getUri() {
+        return uri;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String ur) {
+        uri = ur;
     }
 
     public String getPath() {
@@ -53,5 +59,9 @@ public class Song {
 
     public String getArtist() {
         return artist;
+    }
+
+    public String getCover() {
+        return cover;
     }
 }

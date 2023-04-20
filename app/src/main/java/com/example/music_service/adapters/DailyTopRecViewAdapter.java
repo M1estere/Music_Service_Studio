@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_service.R;
 import com.example.music_service.models.Song;
 import com.example.music_service.viewModels.LibraryFragmentViewModel;
@@ -37,11 +39,18 @@ public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecView
         return new DailyTopRecViewAdapter.ViewHolder(view);
     }
 
+    public static String BASE_URL = "https://drive.google.com/uc?id=1z4SDt_IUbO0n5gqinMEnco-oSazMysKK";
+
     @Override
     public void onBindViewHolder(@NonNull DailyTopRecViewAdapter.ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
+
+        Glide.with(holder.itemView)
+                .load(songs.get(pos).getCover())
+                .thumbnail(0.05f)
+                .into(holder.cover);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +79,14 @@ public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecView
         private final TextView authorNameTxt;
 
         private final CardView parent;
+        private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             trackNameTxt = itemView.findViewById(R.id.track_title);
             authorNameTxt = itemView.findViewById(R.id.track_author);
+            cover = itemView.findViewById(R.id.song_cover);
 
             parent = itemView.findViewById(R.id.parent);
         }
