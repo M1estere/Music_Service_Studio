@@ -1,4 +1,4 @@
-package com.example.music_service.activities;
+package com.example.music_service.views;
 
 import android.os.Bundle;
 

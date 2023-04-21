@@ -1,14 +1,12 @@
-package com.example.music_service.activities;
+package com.example.music_service.views;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.music_service.R;
 import com.example.music_service.databinding.ActivityMainBinding;
@@ -19,6 +17,7 @@ import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MusicPlayerViewModel musicPlayerViewModel;
     private int currentFragment = 0;
 
     @Override
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment());
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        MusicPlayerViewModel musicPlayerViewModel = new MusicPlayerViewModel(this);
+        musicPlayerViewModel = new MusicPlayerViewModel(this);
 
         binding.setViewModel(musicPlayerViewModel);
 
@@ -68,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onResume() {
+        super.onResume();
 
+        musicPlayerViewModel.updateUI();
     }
 }

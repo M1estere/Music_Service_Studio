@@ -6,14 +6,10 @@ import android.widget.Toast;
 import com.example.music_service.viewModels.MusicPlayerViewModel;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.viewModels.QueueActivityViewModel;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveFile;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackException;
-import com.google.android.gms.drive.DriveId;
 
 import java.util.ArrayList;
 
@@ -65,7 +61,6 @@ public class Player {
         MediaItem mediaItem = MediaItem.fromUri(currentTrackUri);
         musicPlayer.addMediaItem(mediaItem);
 
-        System.out.println("Currently chosen: " + currentTrackUri);
         musicPlayer.addListener(new com.google.android.exoplayer2.Player.Listener() {
             @Override
             public void onPlaybackStateChanged(int state) {
@@ -74,7 +69,7 @@ public class Player {
                     musicPlayer.setPlayWhenReady(!musicPaused);
                     musicPlayerViewModel.updateUI();
 
-                    Toast.makeText(context, "Live with: " + Globs.currentSongs.get(Globs.currentTrackNumber).getTitle().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "(Player) Live with: " + Globs.currentSongs.get(Globs.currentTrackNumber).getTitle(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,6 +121,7 @@ public class Player {
         if (musicPlayer != null) musicPlayer.stop();
 
         startTrack();
+        musicPlayerViewModel.updateUI(false);
 
         if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
         if (musicPaused) musicPlayer.pause();
@@ -175,8 +171,7 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
-    public static void addNextToQueue(String title)
-    {
+    public static void addNextToQueue(String title) {
         String path = Convert.getPathFromTitle(title);
 
         String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
@@ -185,8 +180,8 @@ public class Player {
 
         int index = Globs.currentTrackNumber + 1;
 
-        if (Globs.getTitles().contains(title))
-        {
+        title = Convert.getTitleFromPath(title);
+        if (Globs.getTitles().contains(title)) {
             int trackIndex = Globs.getTitles().indexOf(title);
             deleteFromQueue(path);
 
@@ -200,8 +195,7 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
-    public static void deleteFromQueue(String name)
-    {
+    public static void deleteFromQueue(String name) {
         String path = Convert.getPathFromTitle(name);
 
         String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
@@ -222,7 +216,7 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
-    public static void changeRepeatingState()
+    public static RepeatingState changeRepeatingState()
     {
         String returner = "";
         switch (playerRepeatingState)
@@ -247,6 +241,8 @@ public class Player {
                 break;
             }
         }
+
+        return playerRepeatingState;
     }
 
     public static void drop() {
@@ -265,18 +261,22 @@ public class Player {
 
     public static void goTo(int seekPosition) {
         musicPlayer.seekTo(seekPosition);
+        musicPlayerViewModel.updateUI(false);
     }
 
     public static float getProgress() {
         return (musicPlayer.getCurrentPosition() / (float) musicPlayer.getDuration());
     }
+
     public static int getDuration() {
         int duration = (int)musicPlayer.getDuration() - 1000;
         return Math.max(duration, 2);
     }
+
     public static int getCurrentPos() {
         return (int)musicPlayer.getCurrentPosition();
     }
+
     public static boolean isPlay() {
         return !musicPaused;
     }

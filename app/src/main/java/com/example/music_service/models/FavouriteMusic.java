@@ -92,26 +92,27 @@ public class FavouriteMusic {
         favouriteTitles = "";
     }
 
-    public static void addToFavourites(String title, Activity activity) {
+    public static boolean addToFavourites(String title, Activity activity) {
         String path = Convert.getPathFromTitle(title);
 
         if (favouriteTitles.contains(path)) {
             removeFromFavourites(title, activity);
-            return;
+            return false;
         }
 
-        if (favouriteTitles.isEmpty() == false)
+        if (!favouriteTitles.isEmpty())
             favouriteTitles += String.format(" %s", path);
         else
             favouriteTitles += path;
 
         saveCollectionToFile(title, activity, true);
+        return true;
     }
 
     public static void removeFromFavourites(String title, Activity activity) {
         String path = Convert.getPathFromTitle(title);
 
-        if (favouriteTitles.contains(path) == false) return;
+        if (!favouriteTitles.contains(path)) return;
 
         favouriteTitles = favouriteTitles.replace(path, "");
 
@@ -131,6 +132,12 @@ public class FavouriteMusic {
         proper.removeAll(Arrays.asList("", null));
 
         return proper;
+    }
+
+    public static boolean contains(String title) {
+        String path = Convert.getPathFromTitle(title);
+
+        return favouriteTitles.contains(path);
     }
 
 }

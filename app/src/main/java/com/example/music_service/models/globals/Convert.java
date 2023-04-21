@@ -1,5 +1,16 @@
 package com.example.music_service.models.globals;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 
@@ -57,6 +68,7 @@ public class Convert {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
+    // create playlist out of songs list
     public static Playlist getPlaylistFromSongs(ArrayList<Song> songs, String name) {
         Playlist playlist = new Playlist(name);
 
@@ -64,6 +76,24 @@ public class Convert {
             playlist.addSong(song.getPath(), song.getUri());
 
         return playlist;
+    }
+
+    public static Bitmap getBitmapFromUri(Context context, String uri) {
+        final Bitmap[] result = {null};
+
+        Glide.with(context)
+                .asBitmap()
+                .load(Uri.parse(uri))
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        result[0] = resource;
+                    }
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {  }
+                });
+
+        return result[0];
     }
 
 }

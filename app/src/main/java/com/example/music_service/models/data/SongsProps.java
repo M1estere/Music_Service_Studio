@@ -1,22 +1,19 @@
-package com.example.music_service.models.globals;
+package com.example.music_service.models.data;
 
 import android.app.Activity;
-import android.widget.Toast;
 
 import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.Convert;
+import com.example.music_service.models.globals.Globs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public class SongsProps {
 
@@ -26,13 +23,18 @@ public class SongsProps {
     public static ArrayList<String> covers = new ArrayList<>();
 
     public static Song getSongByName(String songName) {
-        return new Song(songName);
+        return new Song(Convert.getPathFromTitle(songName));
+    }
+
+    public static String getCurrentCover() {
+        String currentTrackTitle = Globs.currentSongs.get(Globs.currentTrackNumber).getTitle();
+
+        return covers.get(getSongNumber(currentTrackTitle));
     }
 
     public static void addCover(String url) {
         covers.add(url);
     }
-
     public static void addArtist(String artistName) {
         authors.add(artistName);
     }
@@ -51,7 +53,7 @@ public class SongsProps {
                     String artist = jsonObject.getString("artist");
 
                     if (trackPath.equals(title)) {
-                        addCover(Globs.BASE_URL + coverPath);
+                        addCover(DataLoader.BASE_URL + coverPath);
                         addArtist(artist);
                     }
                 }
@@ -61,7 +63,7 @@ public class SongsProps {
         }
     }
 
-    public static String readJSONFromAsset(Activity activity) {
+    private static String readJSONFromAsset(Activity activity) {
         String json = null;
         try {
             InputStream is = activity.getAssets().open("relations.json");
@@ -77,6 +79,20 @@ public class SongsProps {
         }
 
         return json;
+    }
+
+    public static int getSongNumber(String title) {
+        int result = 0;
+        String path = Convert.getPathFromTitle(title);
+
+        for (int i = 0; i < songs.size(); i++) {
+            String songPath = songs.get(i);
+            if (!path.equals(songPath)) continue;
+
+            result = i;
+        }
+
+        return result;
     }
 
 }

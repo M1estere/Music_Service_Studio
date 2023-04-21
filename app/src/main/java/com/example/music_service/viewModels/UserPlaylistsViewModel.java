@@ -16,23 +16,19 @@ import java.util.ArrayList;
 
 public class UserPlaylistsViewModel extends BaseObservable {
 
-    private View mainView;
-
-    private ArrayList<Playlist> playlists = new ArrayList<>();
-    private RecyclerView userPlaylistsRecView;
+    private final ArrayList<Playlist> playlists = new ArrayList<>();
 
     public UserPlaylistsViewModel(@NonNull View view) {
-        mainView = view;
 
-        userPlaylistsRecView = view.findViewById(R.id.playlists_rec);
+        RecyclerView userPlaylistsRecView = view.findViewById(R.id.playlists_rec);
 
         fillPlaylists();
 
-        UserPlaylistsRecViewAdapter adapter = new UserPlaylistsRecViewAdapter(mainView.getContext());
+        UserPlaylistsRecViewAdapter adapter = new UserPlaylistsRecViewAdapter(view.getContext());
         adapter.setPlaylists(playlists);
 
         userPlaylistsRecView.setAdapter(adapter);
-        userPlaylistsRecView.setLayoutManager(new LinearLayoutManager(mainView.getContext()));
+        userPlaylistsRecView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
     private void fillPlaylists() {

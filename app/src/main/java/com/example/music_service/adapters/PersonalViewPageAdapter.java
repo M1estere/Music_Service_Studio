@@ -9,7 +9,6 @@ import com.example.music_service.fragments.UserAlbumsFragment;
 import com.example.music_service.fragments.UserPlaylistsFragment;
 import com.example.music_service.fragments.UserSongsFragment;
 
-
 public class PersonalViewPageAdapter extends FragmentStateAdapter {
 
     public PersonalViewPageAdapter(@NonNull FragmentActivity fragmentActivity) {

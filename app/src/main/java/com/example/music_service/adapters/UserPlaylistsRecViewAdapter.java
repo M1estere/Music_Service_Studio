@@ -61,8 +61,8 @@ public class UserPlaylistsRecViewAdapter extends RecyclerView.Adapter<UserPlayli
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView playlistName;
-        private TextView tracksAmount;
+        private final TextView playlistName;
+        private final TextView tracksAmount;
 
         private final CardView parent;
 

@@ -1,11 +1,11 @@
-package com.example.music_service;
+package com.example.music_service.models;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaMetadata;
 import android.media.session.PlaybackState;
@@ -17,12 +17,13 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.music_service.activities.MainActivity;
-import com.example.music_service.models.Player;
-import com.example.music_service.models.Song;
+import com.example.music_service.R;
+import com.example.music_service.views.MainActivity;
 import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class CreateNotification {
+
+    private static Context context;
 
     public static final String CHANNEL_ID = "channel1";
 
@@ -35,20 +36,18 @@ public class CreateNotification {
     public static boolean isPlaying = true;
 
     public static void setViewModel(MusicPlayerViewModel vm) {
-        viewModel = vm;
+        if (viewModel == null) viewModel = vm;
     }
 
-    public static void createNotification(Context context, Song song, int position, int size) {
+    public static void createNotification(Context cont, Song song, int position, int size, Bitmap icon) {
+        context = cont;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
             mediaSession = new MediaSessionCompat(context, "tag");
 
-            Bitmap iconB = BitmapFactory.decodeResource(context.getResources(), R.drawable.shawn);
-
             notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.oneokrock)
-                    .setLargeIcon(iconB)
+                    .setSmallIcon(R.drawable.play_40)
                     .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                             .setMediaSession(mediaSession.getSessionToken())
                             .setShowActionsInCompactView(0, 1, 2))
@@ -63,6 +62,8 @@ public class CreateNotification {
                             .putString(MediaMetadata.METADATA_KEY_ARTIST, song.getArtist())
 
                             .putLong(MediaMetadata.METADATA_KEY_DURATION, Player.getDuration()) // 4
+                            .putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, icon)
+
                             .build())
             );
 
@@ -80,31 +81,28 @@ public class CreateNotification {
                 @Override
                 public void onPlay() {
                     super.onPlay();
-                    isPlaying = true;
 
+                    isPlaying = true;
                     viewModel.changePlayingState();
                 }
 
                 @Override
                 public void onPause() {
                     super.onPause();
-                    isPlaying = false;
 
+                    isPlaying = false;
                     viewModel.changePlayingState();
                 }
 
                 @Override
                 public void onSkipToNext() {
                     super.onSkipToNext();
-
-                    System.out.printf("Me (notification)");
                     viewModel.nextSong();
                 }
 
                 @Override
                 public void onSkipToPrevious() {
                     super.onSkipToPrevious();
-
                     viewModel.previousSong();
                 }
 
@@ -113,7 +111,6 @@ public class CreateNotification {
                     super.onSeekTo(pos);
 
                     Player.goTo((int) (pos));
-                    viewModel.updateUI();
                     viewModel.setProgress((int) (pos / 1000));
                 }
             });
@@ -122,13 +119,13 @@ public class CreateNotification {
 
             notification.contentIntent = PendingIntent.getActivity(context, 0,
                     new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
             notificationManagerCompat.notify(1, notification);
         }
     }
 
     public static void destroyNotification() {
-        if (mediaSession != null) {
-            mediaSession.setActive(false);
-        }
+        if (mediaSession == null) return;
+        mediaSession.setActive(false);
     }
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_background"
-    android:backgroundTint="@color/black"
+    android:backgroundTint="@color/darker_grey"
     android:orientation="vertical">
 
     <!--Decorative Line-->
@@ -35,7 +36,7 @@
             app:cardCornerRadius="12dp">
 
             <ImageView
-                android:id="@+id/cover_song"
+                android:id="@+id/track_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_launcher_background" />
@@ -45,7 +46,8 @@
         <!--Song Info-->
         <LinearLayout
             android:id="@+id/base_info"
-            android:layout_width="wrap_content"
+            android:layout_toStartOf="@id/fav_button"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/cd_view"
@@ -57,6 +59,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="testik"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -73,9 +79,13 @@
                     android:layout_gravity="start"
                     android:text="Maroon 5"
                     android:textColor="@color/grey"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"/>
 
-                <TextView
+                <!--<TextView
                     style="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,23 +103,25 @@
                     android:layout_marginStart="10dp"
                     android:text="03:29"
                     android:textColor="@color/grey"
-                    android:textSize="18sp" />
+                    android:textSize="18sp" />-->
 
             </LinearLayout>
 
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/fav_button"
+            android:id="@+id/fav_button_whole"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            app:cardCornerRadius="15dp">
+            android:backgroundTint="@android:color/transparent">
 
             <ImageView
+                android:id="@+id/fav_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_background" />
+                android:background="@android:color/transparent"
+                android:src="@drawable/heart_unfilled_40" />
 
         </androidx.cardview.widget.CardView>
 

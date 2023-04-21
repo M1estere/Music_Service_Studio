@@ -1,6 +1,5 @@
 package com.example.music_service.viewModels;
 
-import android.app.Activity;
 import android.view.View;
 
 import androidx.databinding.BaseObservable;
@@ -10,25 +9,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
-import com.example.music_service.SwipeToRefresh;
+import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
-import com.example.music_service.models.HomeFragmentData;
-import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.data.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.models.globals.SongsProps;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class HomeFragmentViewModel extends BaseObservable {
 
-    private View globView;
+    private final View globView;
 
-    private RecyclerView recommendationsRec;
-    private RecyclerView popularChoiceRec;
-    private RecyclerView morningRec;
+    private final RecyclerView recommendationsRec;
+    private final RecyclerView popularChoiceRec;
+    private final RecyclerView morningRec;
 
-    private SwipeToRefresh swipeRefreshLayout;
+    private final SwipeToRefresh swipeRefreshLayout;
 
     private ProgramPlaylistsRecViewAdapter recommendationsAdapter;
     private ProgramPlaylistsRecViewAdapter popularAdapter;
@@ -64,13 +61,13 @@ public class HomeFragmentViewModel extends BaseObservable {
         if (HomeFragmentData.popular.size() < 1)
             PlaylistSystem.fillPlaylistsSection(HomeFragmentData.popular, 7, 2, 60);
 
-        recommendationsAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext(), this);
+        recommendationsAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext());
         recommendationsAdapter.setPlaylists(HomeFragmentData.recommendations);
 
         recommendationsRec.setAdapter(recommendationsAdapter);
         recommendationsRec.setLayoutManager(new LinearLayoutManager(globView.getContext(), LinearLayoutManager.HORIZONTAL,  false));
 
-        popularAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext(), this);
+        popularAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext());
         popularAdapter.setPlaylists(HomeFragmentData.popular);
 
         popularChoiceRec.setAdapter(popularAdapter);
@@ -79,7 +76,7 @@ public class HomeFragmentViewModel extends BaseObservable {
         if (HomeFragmentData.morningPlaylists.size() < 1)
             PlaylistSystem.fillPlaylistsSection(HomeFragmentData.morningPlaylists, 6, 6, 70);
 
-        morningRecViewAdapter = new MorningRecViewAdapter(globView.getContext(), this);
+        morningRecViewAdapter = new MorningRecViewAdapter(globView.getContext());
         morningRecViewAdapter.setPlaylists(HomeFragmentData.morningPlaylists);
 
         morningRec.setAdapter(morningRecViewAdapter);

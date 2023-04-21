@@ -16,7 +16,6 @@ import com.example.music_service.R;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAdapter.ViewHolder> {
@@ -66,7 +65,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         int k = 0;
         for (int i = 0; i < artists.size(); i++)
         {
-            if (artists.get(i).getAuthorName().equals(name) == false) continue;
+            if (!artists.get(i).getAuthorName().equals(name)) continue;
 
             k = i;
         }

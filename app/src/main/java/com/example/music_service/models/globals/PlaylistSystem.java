@@ -2,6 +2,7 @@ package com.example.music_service.models.globals;
 
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,6 @@ public class PlaylistSystem {
     }
 
     public static void fillOnePlaylist(float startSongsPercentage, Playlist listToFill) {
-        System.out.printf("Size of playlist: %d\n", SongsProps.songs.size());
-
         startSongsPercentage /= 100;
 
         ArrayList<String> titles = new ArrayList<>();

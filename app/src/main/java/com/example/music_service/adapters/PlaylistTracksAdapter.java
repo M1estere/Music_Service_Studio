@@ -2,7 +2,6 @@ package com.example.music_service.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,8 +24,7 @@ import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.models.globals.SongsProps;
-import com.example.music_service.viewModels.LibraryFragmentViewModel;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.viewModels.PlaylistInfoViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -40,7 +39,6 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
 
     public PlaylistTracksAdapter(Context context, PlaylistInfoViewModel pv) {
         this.context = context;
-
         playlistInfoViewModel = pv;
     }
 
@@ -92,7 +90,9 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
                 );
 
         TextView title = bottomSheetView.findViewById(R.id.title_song);
+        title.setSelected(true);
         TextView artist = bottomSheetView.findViewById(R.id.author_song);
+        artist.setSelected(true);
 
         Button playButton = bottomSheetView.findViewById(R.id.play_button);
         Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
@@ -101,7 +101,17 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
         Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
         removeButton.setVisibility(View.GONE);
 
-        CardView favButton = bottomSheetView.findViewById(R.id.fav_button);
+        CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
+
+        ImageView cover = bottomSheetView.findViewById(R.id.track_cover);
+
+        Glide.with(bottomSheetView)
+                .load(song.getCover())
+                .thumbnail(0.05f).
+                into(cover);
+
+        ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
+        heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
 
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
@@ -146,7 +156,8 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FavouriteMusic.addToFavourites(title.getText().toString(), (Activity) context);
+                boolean added = FavouriteMusic.addToFavourites(title.getText().toString(), (Activity) context);
+                heart.setImageDrawable(added ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
             }
         });
 

@@ -1,4 +1,6 @@
-package com.example.music_service.models;
+package com.example.music_service.models.data;
+
+import com.example.music_service.models.Playlist;
 
 import java.util.ArrayList;
 

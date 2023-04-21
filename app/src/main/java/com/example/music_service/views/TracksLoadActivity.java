@@ -1,13 +1,13 @@
-package com.example.music_service;
+package com.example.music_service.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.music_service.activities.MainActivity;
+import com.example.music_service.R;
+import com.example.music_service.models.data.DataLoader;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.models.globals.SongsProps;
 
 public class TracksLoadActivity extends AppCompatActivity {
 
@@ -20,7 +20,9 @@ public class TracksLoadActivity extends AppCompatActivity {
     }
 
     private void loadTracksFromFirebaseStorage() {
-        /*ProgressBar progressBar = findViewById(R.id.progress_bar);
+        /*
+        //Load data from firebase
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("music");
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -65,13 +67,8 @@ public class TracksLoadActivity extends AppCompatActivity {
             }
         });*/
 
-        Globs.fillSongsFromDrive(this);
+        DataLoader.fillSongsFromDrive(this);
         openMainPage();
-    }
-
-    public static void addSong(String uri, String title) {
-        SongsProps.uris.add(Globs.BASE_URL + uri);
-        SongsProps.songs.add(title);
     }
 
     private void openMainPage() {

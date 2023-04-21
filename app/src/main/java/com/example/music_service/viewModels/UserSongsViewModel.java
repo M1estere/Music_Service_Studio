@@ -11,29 +11,25 @@ import com.example.music_service.R;
 import com.example.music_service.adapters.UserSongsRecViewAdapter;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Song;
-import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
 
 public class UserSongsViewModel extends BaseObservable {
 
-    private View mainView;
-
-    private ArrayList<Song> songs = new ArrayList<>();
-    private RecyclerView userSongsRecView;
-    private UserSongsRecViewAdapter adapter;
+    private final ArrayList<Song> songs = new ArrayList<>();
+    private final UserSongsRecViewAdapter adapter;
 
     public UserSongsViewModel(@NonNull View view) {
         FavouriteMusic.setUserSongsViewModel(this);
-        mainView = view;
 
-        userSongsRecView = view.findViewById(R.id.songs_rec);
+        RecyclerView userSongsRecView = view.findViewById(R.id.songs_rec);
 
-        adapter = new UserSongsRecViewAdapter(mainView.getContext());
+        adapter = new UserSongsRecViewAdapter(view.getContext());
         adapter.setSongs(songs);
 
         userSongsRecView.setAdapter(adapter);
-        userSongsRecView.setLayoutManager(new LinearLayoutManager(mainView.getContext()));
+        userSongsRecView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         updateSongs();
     }
@@ -50,11 +46,9 @@ public class UserSongsViewModel extends BaseObservable {
         for (String trackName : trackList) {
             if (trackName.equals(" ") || trackName.isEmpty()) continue;
 
-            System.out.printf("Track name: %s\n", trackName);
             songs.add(new Song(trackName, SongsProps.uris.get(SongsProps.songs.indexOf(trackName))));
         }
 
         adapter.notifyDataSetChanged();
-        System.out.println("Updated");
     }
 }

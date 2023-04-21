@@ -1,16 +1,16 @@
 package com.example.music_service.models;
 
 import com.example.music_service.models.globals.Convert;
-import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.data.SongsProps;
 
 public class Song {
     private String path;
+    private String uri;
 
     private String title;
     private String artist;
 
-    private String uri;
-    public String cover;
+    private String coverUri;
 
     public Song(String path, String uri) {
         this.uri = uri;
@@ -20,17 +20,17 @@ public class Song {
         int index = SongsProps.songs.indexOf(path);
         artist = SongsProps.authors.get(index);
 
-        cover = SongsProps.covers.get(index);
+        coverUri = SongsProps.covers.get(index);
     }
 
     public Song(String path) {
-        title = path;
-        this.path = Convert.getPathFromTitle(path);
+        title = Convert.getTitleFromPath(path);
+        this.path = path;
 
         int index = SongsProps.songs.indexOf(path);
         artist = SongsProps.authors.get(index);
 
-        cover = SongsProps.covers.get(index);
+        coverUri = SongsProps.covers.get(index);
     }
 
     public String getUri() {
@@ -62,6 +62,6 @@ public class Song {
     }
 
     public String getCover() {
-        return cover;
+        return coverUri;
     }
 }

@@ -16,9 +16,7 @@ import com.example.music_service.models.globals.PlaylistSystem;
 
 public class PlaylistInfoViewModel extends BaseObservable {
 
-    private Activity activity;
-
-    private RecyclerView tracksRecView;
+    private final Activity activity;
 
     @Bindable
     public String getCurrentPlaylistTitle() {
@@ -28,7 +26,7 @@ public class PlaylistInfoViewModel extends BaseObservable {
     public PlaylistInfoViewModel(Activity act) {
         activity = act;
 
-        tracksRecView = activity.findViewById(R.id.songs_rec_view);
+        RecyclerView tracksRecView = activity.findViewById(R.id.songs_rec_view);
 
         PlaylistTracksAdapter adapter = new PlaylistTracksAdapter(activity, this);
         adapter.setSongs(PlaylistSystem.getSongsFromTitles(PlaylistSystem.getCurrentPlaylist()));

@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_service.activities.PlaylistInfoActivity;
+import com.example.music_service.views.PlaylistInfoActivity;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.viewModels.HomeFragmentViewModel;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.R;
 
@@ -21,14 +20,11 @@ import java.util.ArrayList;
 
 public class MorningRecViewAdapter extends RecyclerView.Adapter<MorningRecViewAdapter.ViewHolder> {
 
-    private HomeFragmentViewModel homeFragmentViewModel;
-
     private final Context context;
     private ArrayList<Playlist> playlists = new ArrayList<>();
 
-    public MorningRecViewAdapter(Context context, HomeFragmentViewModel viewModel) {
+    public MorningRecViewAdapter(Context context) {
         this.context = context;
-        homeFragmentViewModel = viewModel;
     }
 
     @NonNull

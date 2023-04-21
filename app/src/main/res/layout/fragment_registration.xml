@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/purple_700"
     tools:context=".fragments.RegistrationFragment">
 
@@ -25,6 +26,7 @@
                     android:id="@+id/top_image"
                     android:layout_width="150dp"
                     android:layout_height="70dp"
+                    app:cardCornerRadius="10dp"
                     android:backgroundTint="@android:color/transparent">
 
                     <ImageView
@@ -43,92 +45,124 @@
                 </androidx.cardview.widget.CardView>
 
                 <!--Name-->
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@android:color/transparent">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_launcher_background" />
-
-                    <EditText
-                        android:id="@+id/name_edit_text"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:hint="@string/name" />
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:src="@drawable/name_black_24" />
 
-                <LinearLayout
+                        <EditText
+                            android:id="@+id/name_edit_text"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:hint="@string/name" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@android:color/transparent">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_launcher_background" />
-
-                    <EditText
-                        android:id="@+id/username_edit_text"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:hint="@string/username" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:src="@drawable/abc_black_24" />
 
-                <LinearLayout
+                        <EditText
+                            android:id="@+id/username_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:hint="@string/username" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@android:color/transparent">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_launcher_background" />
-
-                    <EditText
-                        android:id="@+id/mail_edit_text"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:hint="@string/e_mail" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:src="@drawable/person_black_24" />
 
-                <LinearLayout
+                        <EditText
+                            android:id="@+id/mail_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:hint="@string/e_mail" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@android:color/transparent">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_launcher_background" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/password_edit_text"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:hint="@string/password"
-                        android:inputType="textPassword" />
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:src="@drawable/key_black_24" />
 
-                </LinearLayout>
+                        <EditText
+                            android:id="@+id/password_edit_text"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:hint="@string/password"
+                            android:inputType="textPassword" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/reg_button"

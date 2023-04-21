@@ -1,7 +1,6 @@
 package com.example.music_service.viewModels;
 
 import android.app.Activity;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.music_service.R;
 import com.example.music_service.adapters.QueueRecViewAdapter;
 import com.example.music_service.models.FavouriteMusic;
@@ -21,17 +19,15 @@ import java.util.Objects;
 
 public class QueueActivityViewModel extends BaseObservable {
 
-    private Activity mainActivity;
-
-    private RecyclerView queueRecView;
-    private QueueRecViewAdapter adapter;
+    private final Activity mainActivity;
+    private final QueueRecViewAdapter adapter;
 
     public QueueActivityViewModel(@NonNull Activity activity) {
         Player.setQueueActivityViewModel(this);
 
         mainActivity = activity;
 
-        queueRecView = activity.findViewById(R.id.queue_rec_view);
+        RecyclerView queueRecView = activity.findViewById(R.id.queue_rec_view);
 
         adapter = new QueueRecViewAdapter(activity, this);
         adapter.setSongs(Globs.currentSongs);
@@ -83,7 +79,7 @@ public class QueueActivityViewModel extends BaseObservable {
     public void addToFavourites(String title) {
         if (title == null) return;
 
-        if (FavouriteMusic.trackInFavourites(title) == false)
+        if (!FavouriteMusic.trackInFavourites(title))
             FavouriteMusic.addToFavourites(title, mainActivity);
         else
             FavouriteMusic.removeFromFavourites(title, mainActivity);

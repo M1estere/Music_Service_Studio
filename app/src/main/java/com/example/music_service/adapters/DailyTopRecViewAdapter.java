@@ -39,8 +39,6 @@ public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecView
         return new DailyTopRecViewAdapter.ViewHolder(view);
     }
 
-    public static String BASE_URL = "https://drive.google.com/uc?id=1z4SDt_IUbO0n5gqinMEnco-oSazMysKK";
-
     @Override
     public void onBindViewHolder(@NonNull DailyTopRecViewAdapter.ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();

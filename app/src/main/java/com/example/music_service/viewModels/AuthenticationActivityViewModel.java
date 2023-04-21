@@ -7,9 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.music_service.TracksLoadActivity;
+import com.example.music_service.views.TracksLoadActivity;
 import com.example.music_service.adapters.AuthViewPageAdapter;
-import com.example.music_service.activities.MainActivity;
 import com.example.music_service.R;
 import com.example.music_service.models.globals.Globs;
 import com.google.android.material.tabs.TabLayout;

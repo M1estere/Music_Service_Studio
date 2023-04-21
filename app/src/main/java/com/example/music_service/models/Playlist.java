@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 public class Playlist {
 
-    public void setSongTitles(ArrayList<String> songTitles) {
-        this.songTitles = songTitles;
-    }
-
     private ArrayList<String> songTitles;
     private ArrayList<String> songUris;
 
@@ -18,6 +14,10 @@ public class Playlist {
 
         songTitles = new ArrayList<>();
         songUris = new ArrayList<>();
+    }
+
+    public void setSongTitles(ArrayList<String> songTitles) {
+        this.songTitles = songTitles;
     }
 
     public void addSong(String title, String uri) {

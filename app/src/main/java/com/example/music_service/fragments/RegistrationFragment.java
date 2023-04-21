@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.music_service.activities.MainActivity;
+import com.example.music_service.views.MainActivity;
 import com.example.music_service.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,22 +32,13 @@ import java.util.Map;
 
 public class RegistrationFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public RegistrationFragment() {
-        // Required empty public constructor
+
     }
 
     public static RegistrationFragment newInstance(String param1, String param2) {
         RegistrationFragment fragment = new RegistrationFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,14 +46,9 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     private FirebaseAuth mAuth;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,8 +63,7 @@ public class RegistrationFragment extends Fragment {
     private EditText editTextMail;
     private EditText editTextPassword;
 
-    private Button registrationButton;
-
+    //TO_DO: REMOVE THIS OUT OF HERE
     private FirebaseFirestore firestore;
     private CollectionReference reference;
 
@@ -93,7 +78,7 @@ public class RegistrationFragment extends Fragment {
         editTextMail = view.findViewById(R.id.mail_edit_text);
         editTextPassword = view.findViewById(R.id.password_edit_text);
 
-        registrationButton = view.findViewById(R.id.reg_button);
+        Button registrationButton = view.findViewById(R.id.reg_button);
 
         registrationButton.setOnClickListener(new View.OnClickListener() {
 

@@ -8,7 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.music_service.activities.AuthenticationActivity;
+import com.example.music_service.models.CreateNotification;
+import com.example.music_service.views.AuthenticationActivity;
 import com.example.music_service.BR;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.globals.Globs;
@@ -45,18 +46,16 @@ public class AccountActivityViewModel extends BaseObservable {
         notifyPropertyChanged(BR.currentUserUsername);
     }
 
-    private Activity activity;
+    private final Activity activity;
 
-    private FirebaseFirestore firestore;
-    private CollectionReference reference;
     public AccountActivityViewModel(Activity act) {
         this.activity = act;
 
-        firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        reference = firestore.collection(userId);
+        CollectionReference reference = firestore.collection(userId);
 
         ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Getting data...");
@@ -82,6 +81,7 @@ public class AccountActivityViewModel extends BaseObservable {
 
     public void logOut() {
         Globs.recheckLogin = false;
+        CreateNotification.destroyNotification();
         FirebaseAuth.getInstance().signOut();
         Player.drop();
 

@@ -1,8 +1,6 @@
 package com.example.music_service.viewModels;
 
-import android.app.Activity;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -11,41 +9,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
-import com.example.music_service.SwipeToRefresh;
+import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.adapters.ArtistsRecViewAdapter;
 import com.example.music_service.adapters.BestTracksAdapter;
 import com.example.music_service.adapters.DailyTopRecViewAdapter;
 import com.example.music_service.models.Author;
-import com.example.music_service.models.LibraryFragmentData;
+import com.example.music_service.models.data.LibraryFragmentData;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class LibraryFragmentViewModel extends BaseObservable {
 
-    private ArrayList<Author> authors;
+    private final ArrayList<Author> authors;
 
-    private RecyclerView authorsRecView;
-    private RecyclerView dailyTopRecView;
-    private RecyclerView bestRecView;
+    private final RecyclerView bestRecView;
+    private final SwipeToRefresh swipeToRefresh;
 
-    private SwipeToRefresh swipeToRefresh;
-
-    private DailyTopRecViewAdapter dailyTopAdapter;
-    private BestTracksAdapter bestTracksAdapter;
-
-    private View globView;
+    private final DailyTopRecViewAdapter dailyTopAdapter;
+    private final BestTracksAdapter bestTracksAdapter;
 
     public LibraryFragmentViewModel(@NonNull View view) {
-        globView = view;
-
         swipeToRefresh = view.findViewById(R.id.swipe);
         swipeToRefresh.setColorSchemeColors(view.getContext().getResources().getColor(R.color.red), view.getContext().getResources().getColor(R.color.purple_200));
         swipeToRefresh.offsetTopAndBottom(500);
@@ -70,7 +61,7 @@ public class LibraryFragmentViewModel extends BaseObservable {
             LibraryFragmentData.dailyTops = PlaylistSystem.getSongsFromPlaylist(LibraryFragmentData.dailyTopSongs);
         }
 
-        authorsRecView = view.findViewById(R.id.artists_rec_view);
+        RecyclerView authorsRecView = view.findViewById(R.id.artists_rec_view);
 
         ArtistsRecViewAdapter artistsAdapter = new ArtistsRecViewAdapter(view.getContext());
         artistsAdapter.setAuthors(authors);
@@ -79,7 +70,7 @@ public class LibraryFragmentViewModel extends BaseObservable {
         authorsRecView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
-        dailyTopRecView = view.findViewById(R.id.daily_top_rec_view);
+        RecyclerView dailyTopRecView = view.findViewById(R.id.daily_top_rec_view);
 
         dailyTopAdapter = new DailyTopRecViewAdapter(view.getContext(), this);
         dailyTopAdapter.setSongs(LibraryFragmentData.dailyTops);

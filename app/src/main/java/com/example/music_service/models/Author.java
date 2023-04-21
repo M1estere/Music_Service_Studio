@@ -2,7 +2,7 @@ package com.example.music_service.models;
 
 import androidx.annotation.NonNull;
 
-import com.example.music_service.models.globals.SongsProps;
+import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
 
@@ -24,12 +24,10 @@ public class Author {
     }
 
     @NonNull
-    private ArrayList<String> fillTitlesToBlock(String authorName)
-    {
-        ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<String> fillTitlesToBlock(String authorName) {
+        ArrayList<String> list = new ArrayList<>();
 
-        for (int i = 0; i < SongsProps.authors.size(); i++)
-        {
+        for (int i = 0; i < SongsProps.authors.size(); i++) {
             if (SongsProps.authors.get(i) == authorName)
                 list.add(SongsProps.songs.get(i));
         }
@@ -41,15 +39,7 @@ public class Author {
         return authorName;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
     public ArrayList<String> getTitles() {
         return titles;
-    }
-
-    public void setTitles(ArrayList<String> titles) {
-        this.titles = titles;
     }
 }
