@@ -28,7 +28,7 @@ public class Author {
         ArrayList<String> list = new ArrayList<>();
 
         for (int i = 0; i < SongsProps.authors.size(); i++) {
-            if (SongsProps.authors.get(i) == authorName)
+            if (SongsProps.authors.get(i).equals(authorName))
                 list.add(SongsProps.songs.get(i));
         }
 

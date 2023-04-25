@@ -72,4 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
         musicPlayerViewModel.updateUI();
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }

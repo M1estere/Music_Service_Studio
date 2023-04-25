@@ -1,5 +1,6 @@
 package com.example.music_service.models.globals;
 
+import com.example.music_service.models.Author;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
@@ -7,6 +8,16 @@ import com.example.music_service.models.data.SongsProps;
 import java.util.ArrayList;
 
 public class PlaylistSystem {
+
+    private static Author currentAuthor;
+
+    public static void setCurrentAuthor(Author currentAuthor) {
+        PlaylistSystem.currentAuthor = currentAuthor;
+    }
+
+    public static Author getCurrentAuthor() {
+        return currentAuthor;
+    }
 
     private static Playlist currentPlaylist;
     public static void setCurrentPlaylist(Playlist currentPlaylist) {
@@ -66,11 +77,30 @@ public class PlaylistSystem {
 
         ArrayList<String> titles = source.getSongTitles();
 
-        for (String title : titles) {
+        for (String title : titles)
             result.add(new Song(title, SongsProps.uris.get(SongsProps.songs.indexOf(title))));
-        }
 
         return result;
+    }
+
+    public static ArrayList<Song> getSongsFromTitles(ArrayList<String> source) {
+        ArrayList<Song> result = new ArrayList<>();
+
+        for (String title : source)
+            result.add(new Song(title, SongsProps.uris.get(SongsProps.songs.indexOf(title))));
+
+        return result;
+    }
+
+    public static Playlist getPlaylistOfSongs(String name, ArrayList<String> songs) {
+        Playlist playlist = new Playlist(name);
+        playlist.setSongTitles(songs);
+
+        return playlist;
+    }
+
+    public static String findArtistFirstSong(String name) {
+        return SongsProps.covers.get(SongsProps.authors.indexOf(name));
     }
 
 }

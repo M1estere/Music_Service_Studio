@@ -1,9 +1,14 @@
 package com.example.music_service.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,10 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_service.models.Author;
 import com.example.music_service.R;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
+import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.views.ArtistInfoActivity;
+import com.example.music_service.views.PlaylistInfoActivity;
 
 import java.util.ArrayList;
 
@@ -40,15 +50,29 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         holder.artistName.setText(artists.get(pos).getAuthorName());
         holder.artistName.setSelected(true);
 
+        Glide.with(holder.itemView)
+                .load(PlaylistSystem.findArtistFirstSong(artists.get(pos).getAuthorName()))
+                .thumbnail(0.05f)
+                .into(holder.image);
+
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String authorName = artists.get(pos).getAuthorName();
                 Toast.makeText(context, "(Authors) " + authorName + " chosen", Toast.LENGTH_SHORT).show();
-                startAuthorPlaylist(authorName);
+
+                goToArtistInfo(holder, pos);
             }
         });
+    }
+
+    private void goToArtistInfo(ArtistsRecViewAdapter.ViewHolder holder, int pos) {
+        PlaylistSystem.setCurrentAuthor(artists.get(pos));
+
+        Intent intent = new Intent(context, ArtistInfoActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.artistName, "name"), Pair.create(holder.artistImage, "artist_image"));
+        context.startActivity(intent, options.toBundle());
     }
 
     private void startAuthorPlaylist(String name)
@@ -60,8 +84,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         Player.updateQueue(playlistToSet.getSongTitles());
     }
 
-    private ArrayList<String> findAuthor(String name)
-    {
+    private ArrayList<String> findAuthor(String name) {
         int k = 0;
         for (int i = 0; i < artists.size(); i++)
         {
@@ -89,6 +112,9 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         private final TextView artistName;
 
         private final CardView parent;
+        private final CardView artistImage;
+
+        private ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +122,9 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
             artistName = itemView.findViewById(R.id.artist_name);
 
             parent = itemView.findViewById(R.id.parent);
+            artistImage = itemView.findViewById(R.id.artist_image);
+
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

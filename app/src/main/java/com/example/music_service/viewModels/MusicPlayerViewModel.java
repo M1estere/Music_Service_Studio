@@ -140,6 +140,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                setProgress(progress);
                 Player.goTo(progress * 1000);
                 isSeeking = false;
 

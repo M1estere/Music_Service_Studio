@@ -129,7 +129,7 @@
                 android:layout_below="@id/buttons_region"
                 android:id="@+id/songs_zone"
                 android:background="@drawable/bottom_sheet_background"
-                android:backgroundTint="@color/black">
+                android:backgroundTint="@color/darker_grey">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:requiresFadingEdge="vertical|horizontal"
