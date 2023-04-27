@@ -24,6 +24,15 @@ public class Globs {
         return returner;
     }
 
+    public static ArrayList<String> getTitlesPaths() {
+        ArrayList<String> returner = new ArrayList<>();
+
+        for (Song song : currentSongs)
+            returner.add(Convert.getPathFromTitle(song.getTitle()));
+
+        return returner;
+    }
+
     public static int getSongNumber(String path) {
         ArrayList<String> titles = getTitles();
         int index = -1;

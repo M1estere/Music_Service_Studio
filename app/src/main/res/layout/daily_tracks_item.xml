@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginBottom="15dp"
-    android:backgroundTint="@color/purple_700">
+    android:layout_height="55dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+    android:backgroundTint="@android:color/transparent"
+    android:outlineAmbientShadowColor="@android:color/transparent"
+    android:outlineSpotShadowColor="@android:color/transparent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,20 +21,45 @@
             android:layout_alignParentStart="true"
             android:orientation="horizontal">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/image_area"
+                android:layout_alignParentStart="true"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                app:cardCornerRadius="5dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@color/white"
+                    android:id="@+id/song_cover"/>
+
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:layout_toEndOf="@id/image_area"
                 android:id="@+id/song_info_area"
                 android:layout_width="wrap_content"
+                android:layout_toStartOf="@id/info_button"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/track_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Break Through It All"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -40,30 +68,28 @@
                     android:id="@+id/track_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Katy Perry"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:letterSpacing=".1"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/image_area"
+            <ImageButton
+                android:layout_gravity="center"
+                android:src="@drawable/options"
+                android:id="@+id/info_button"
                 android:layout_alignParentEnd="true"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
-                android:elevation="0dp"
-                app:cardCornerRadius="15dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/white" />
-
-            </androidx.cardview.widget.CardView>
+                android:textColor="@android:color/transparent" />
 
         </RelativeLayout>
 

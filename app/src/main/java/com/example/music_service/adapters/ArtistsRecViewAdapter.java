@@ -60,7 +60,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
             @Override
             public void onClick(View view) {
                 String authorName = artists.get(pos).getAuthorName();
-                Toast.makeText(context, "(Authors) " + authorName + " chosen", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, "(Authors) " + authorName + " chosen", Toast.LENGTH_SHORT).show();
 
                 goToArtistInfo(holder, pos);
             }
@@ -75,8 +75,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         context.startActivity(intent, options.toBundle());
     }
 
-    private void startAuthorPlaylist(String name)
-    {
+    private void startAuthorPlaylist(String name) {
         if (name == null) return;
 
         Playlist playlistToSet = new Playlist(name);

@@ -23,6 +23,7 @@ import androidx.databinding.Bindable;
 import com.bumptech.glide.Glide;
 import com.example.music_service.BR;
 import com.example.music_service.models.CreateNotification;
+import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.services.OnClearFromRecentService;
 import com.example.music_service.views.QueueActivity;
 import com.example.music_service.R;
@@ -103,6 +104,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void startElementsSetup() {
+        CustomPlaylists.loadPlaylists();
         mainSongTitle.setSelected(true);
         miniSongTitle.setSelected(true);
 
@@ -360,7 +362,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void savePlaylist() {
-
+        CustomPlaylists.savingPlaylist(activity, Globs.getTitlesPaths());
     }
 
     public void favouriteTrack() {

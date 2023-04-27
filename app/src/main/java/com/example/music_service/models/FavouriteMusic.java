@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.viewModels.UserSongsViewModel;
@@ -12,8 +13,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class FavouriteMusic {
     }
 
     public static String getFavouriteTitles() {
+        if (favouriteTitles == null) return "";
         return favouriteTitles.trim();
     }
 
@@ -45,18 +50,18 @@ public class FavouriteMusic {
         CollectionReference reference = firestore.collection(user.getUid());
 
         Map<String, Object> userData = new HashMap<>();
-        userData.put("favourite_titles", favouriteTitles);
+        userData.put("titles", favouriteTitles);
+
         reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                    documentSnapshot.getReference().update(userData);
+                    //DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    DocumentReference documentReference = reference.document("favourite_titles");
+                    documentReference.set(userData);
 
-                    if (added)
-                        Toast.makeText(activity,  "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
+                    if (added) Toast.makeText(activity,  "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
 
                     if (userSongsViewModel != null) userSongsViewModel.updateSongs();
                 }
@@ -78,11 +83,26 @@ public class FavouriteMusic {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    DocumentReference documentReference = reference.document("favourite_titles");
 
-                    favouriteTitles = documentSnapshot.getString("favourite_titles");
+                    favouriteTitles = "";
+                    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if (documentSnapshot.exists()) {
+                                    favouriteTitles = documentSnapshot.getString("titles");
+                                } else {
+                                    favouriteTitles = "";
+                                }
+                            } else {
+                                favouriteTitles = "";
+                            }
+                        }
+                    });
 
-                    if (favouriteTitles == null) favouriteTitles = "";
+                    if (favouriteTitles.isEmpty()) favouriteTitles = "";
                 }
             }
         });

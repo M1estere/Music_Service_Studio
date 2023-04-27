@@ -34,7 +34,7 @@ public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecView
     @NonNull
     @Override
     public DailyTopRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.best_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_tracks_item, parent, false);
 
         return new DailyTopRecViewAdapter.ViewHolder(view);
     }

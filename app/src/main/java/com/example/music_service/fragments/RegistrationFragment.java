@@ -18,14 +18,17 @@ import android.widget.Toast;
 
 import com.example.music_service.views.MainActivity;
 import com.example.music_service.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -135,9 +138,17 @@ public class RegistrationFragment extends Fragment {
 
                                 progressDialog.setMessage("Saving user data...");
 
-                                reference.add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(DocumentReference documentReference) {
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentReference documentReference = reference.document("personal_info");
+                                            documentReference.set(userData);
+                                        }
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         progressDialog.dismiss();
                                         Toast.makeText(getActivity(), "Completed.",
                                                 Toast.LENGTH_SHORT).show();

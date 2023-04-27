@@ -5,12 +5,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +23,10 @@ import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
+import com.example.music_service.models.globals.Globs;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -47,6 +53,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         int pos = holder.getAdapterPosition();
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
+        holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
 
         holder.trackNameTxt.setSelected(true);
 
@@ -54,13 +61,6 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
                 .load(songs.get(pos).getCover())
                 .thumbnail(0.05f)
                 .into(holder.cover);
-
-        holder.removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FavouriteMusic.removeFromFavourites(holder.trackNameTxt.getText().toString(), (Activity) context);
-            }
-        });
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +70,99 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
                 chooseTrackFromFavs(trackName);
             }
         });
+
+        holder.infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSongInfo(view);
+            }
+        });
+    }
+
+    public void openSongInfo(View view) {
+        String text = view.getTag().toString();
+        Song song = SongsProps.getSongByName(text);
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog((Activity) context, R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(((Activity)context).getApplicationContext())
+                .inflate(
+                        R.layout.layout_bottom_sheet,
+                        (RelativeLayout) ((Activity)context).findViewById(R.id.bottom_sheet_container)
+                );
+
+        TextView title = bottomSheetView.findViewById(R.id.title_song);
+        title.setSelected(true);
+        TextView artist = bottomSheetView.findViewById(R.id.author_song);
+        artist.setSelected(true);
+
+        Button playButton = bottomSheetView.findViewById(R.id.play_button);
+        Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
+        Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
+
+        CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
+        favButton.setVisibility(View.GONE);
+
+        ImageView cover = bottomSheetView.findViewById(R.id.track_cover);
+
+        Glide.with(bottomSheetView)
+                .load(song.getCover())
+                .thumbnail(0.05f).
+                into(cover);
+
+        title.setText(song.getTitle());
+        artist.setText(song.getArtist());
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseTrackFromFavs(title.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        playNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Player.addNextToQueue(title.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        playLastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Player.addToQueueEnd(title.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FavouriteMusic.removeFromFavourites(title.getText().toString(), (Activity) context);
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 
     private void chooseTrackFromFavs(String title)
     {
         int currentTrackIndex = 0;
-        for (int i = 0; i < FavouriteMusic.size(); i++)
-        {
+        for (int i = 0; i < FavouriteMusic.size(); i++) {
             String name = Convert.getTitleFromPath(FavouriteMusic.getArrayTitles().get(i));
             if (name.equals(title)) currentTrackIndex = i;
         }
@@ -104,7 +190,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         private final TextView authorNameTxt;
 
         private final CardView parent;
-        private final ImageButton removeButton;
+        private final ImageButton infoButton;
         private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
@@ -112,7 +198,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
 
             trackNameTxt = itemView.findViewById(R.id.track_title);
             authorNameTxt = itemView.findViewById(R.id.track_author);
-            removeButton = itemView.findViewById(R.id.remove_button);
+            infoButton = itemView.findViewById(R.id.info_button);
             cover = itemView.findViewById(R.id.song_cover);
 
             parent = itemView.findViewById(R.id.parent);
