@@ -5,6 +5,7 @@ import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlaylistSystem {
@@ -25,6 +26,20 @@ public class PlaylistSystem {
     }
     public static Playlist getCurrentPlaylist() {
         return currentPlaylist;
+    }
+
+    public static void removeFromCurrent(int id) {
+        currentPlaylist.removeSong(id);
+    }
+
+    public static ArrayList<String> getTitlesFromSongs(ArrayList<Song> songs) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (Song song : songs) {
+            result.add(song.getPath());
+        }
+
+        return result;
     }
 
     public static void fillPlaylistsSection(ArrayList<Playlist> section, int upBorder, int lowBorder, int startPct) {

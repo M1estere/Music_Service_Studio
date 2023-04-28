@@ -2,6 +2,8 @@ package com.example.music_service.models.data;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
+
 import com.example.music_service.models.Song;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
@@ -63,7 +65,7 @@ public class SongsProps {
         }
     }
 
-    private static String readJSONFromAsset(Activity activity) {
+    public static String readJSONFromAsset(@NonNull Activity activity) {
         String json = null;
         try {
             InputStream is = activity.getAssets().open("relations.json");

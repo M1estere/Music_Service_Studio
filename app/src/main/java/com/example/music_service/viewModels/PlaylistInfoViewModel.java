@@ -13,6 +13,7 @@ import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.views.BottomSheets;
 
 public class PlaylistInfoViewModel extends BaseObservable {
 
@@ -51,6 +52,10 @@ public class PlaylistInfoViewModel extends BaseObservable {
         }
 
         Player.updateQueue(current.getSongTitles(), currentTrackIndex);
+    }
+
+    public void openPlaylistInfo() {
+        BottomSheets.openPlaylistInfo(activity, PlaylistSystem.getCurrentPlaylist());
     }
 
     public void back() {

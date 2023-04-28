@@ -15,84 +15,73 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.music_service.R;
 import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.models.FavouriteMusic;
-import com.example.music_service.viewModels.QueueActivityViewModel;
-import com.example.music_service.R;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.globals.Globs;
+import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.viewModels.PlaylistInfoViewModel;
+import com.example.music_service.viewModels.UserPlaylistInfoViewModel;
 import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapter.ViewHolder> {
+public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylistTracksAdapter.ViewHolder> {
 
     private final Context context;
-    private final QueueActivityViewModel queueActivityViewModel;
+    private final UserPlaylistInfoViewModel playlistInfoViewModel;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public QueueRecViewAdapter(Context context, QueueActivityViewModel viewModel) {
+    public UserPlaylistTracksAdapter(Context context, UserPlaylistInfoViewModel pv) {
         this.context = context;
-        queueActivityViewModel = viewModel;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return (position == songs.size()) ? R.layout.hold_to_move_text : R.layout.queue_item;
+        playlistInfoViewModel = pv;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == R.layout.queue_item) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.queue_item, parent, false);
-        } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hold_to_move_text, parent, false);
-        }
+    public UserPlaylistTracksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.playlist_songs_item, parent, false);
 
-        return new ViewHolder(view);
+        return new UserPlaylistTracksAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (holder.trackNameTxt == null) return;
         int pos = holder.getAdapterPosition();
-
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
-        holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
 
-        Glide.with(holder.itemView)
-                .load(songs.get(pos).getCover())
-                .thumbnail(0.05f).
-                into(holder.cover);
+        holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
+        holder.trackNameTxt.setSelected(true);
+
+        Glide.with(holder.itemView).load(songs.get(pos).getCover()).thumbnail(0.05f).into(holder.cover);
 
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSongInfo(view);
+                openSongInfo(view, pos);
             }
         });
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String songName = holder.trackNameTxt.getText().toString();
-                Toast.makeText(context, "(Queue) " + songName + " selected", Toast.LENGTH_SHORT).show();
-                queueActivityViewModel.chooseTrack(songName);
+                String trackName = holder.trackNameTxt.getText().toString();
+                Toast.makeText(context, "(Playlist " + PlaylistSystem.getCurrentPlaylist().getPlaylistName() + ") " + trackName + " chosen", Toast.LENGTH_SHORT).show();
+                playlistInfoViewModel.chooseTrack(trackName);
             }
         });
     }
 
-    public void openSongInfo(View view) {
+    public void openSongInfo(View view, int position) {
         String text = view.getTag().toString();
         Song song = SongsProps.getSongByName(text);
 
@@ -111,6 +100,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         CardView playButton = bottomSheetView.findViewById(R.id.play_button);
         CardView playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
         CardView playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+
         CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
         CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
@@ -123,11 +113,11 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
                 .thumbnail(0.05f).
                 into(cover);
 
-        title.setText(song.getTitle());
-        artist.setText(song.getArtist());
-
         ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
         heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
+
+        title.setText(song.getTitle());
+        artist.setText(song.getArtist());
 
         addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +127,26 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
             }
         });
 
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String playlistName = PlaylistSystem.getCurrentPlaylist().getPlaylistName();
+                String name = title.getText().toString();
+
+                int id = CustomPlaylists.removeSongFromPlaylist(context, playlistName, name);
+                songs.remove(id);
+                PlaylistSystem.getCurrentPlaylist().setSongTitles(PlaylistSystem.getTitlesFromSongs(songs));
+
+                notifyItemRemoved(id);
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queueActivityViewModel.chooseTrack(title.getText().toString());
+                playlistInfoViewModel.chooseTrack(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
             }
@@ -149,6 +155,11 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addNextToQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
@@ -158,16 +169,12 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addToQueueEnd(title.getText().toString());
-
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Player.deleteFromQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
             }
@@ -187,7 +194,7 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
 
     @Override
     public int getItemCount() {
-        return songs.size() + 1;
+        return songs.size();
     }
 
     public void setSongs(ArrayList<Song> songs) {
@@ -197,29 +204,24 @@ public class QueueRecViewAdapter extends RecyclerView.Adapter<QueueRecViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView trackNameTxt;
         private final TextView authorNameTxt;
 
-        private final ImageButton infoButton;
-
         private final CardView parent;
+        private final ImageButton infoButton;
         private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            trackNameTxt = itemView.findViewById(R.id.track_title_txt);
-            authorNameTxt = itemView.findViewById(R.id.author_txt);
+            trackNameTxt = itemView.findViewById(R.id.track_title);
+            authorNameTxt = itemView.findViewById(R.id.track_author);
 
             infoButton = itemView.findViewById(R.id.info_button);
-
-            parent = itemView.findViewById(R.id.parent);
             cover = itemView.findViewById(R.id.song_cover);
 
-            if (trackNameTxt == null) return;
-
-            trackNameTxt.setSelected(true);
-            authorNameTxt.setSelected(true);
+            parent = itemView.findViewById(R.id.parent);
         }
     }
 }

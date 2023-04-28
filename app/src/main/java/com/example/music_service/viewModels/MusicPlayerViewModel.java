@@ -104,7 +104,6 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void startElementsSetup() {
-        CustomPlaylists.loadPlaylists();
         mainSongTitle.setSelected(true);
         miniSongTitle.setSelected(true);
 
@@ -123,6 +122,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         Player.setContext(activity);
 
         FavouriteMusic.loadCollectionFromFile();
+        CustomPlaylists.loadPlaylists();
     }
 
     private void setProgressBarFunctionality() {

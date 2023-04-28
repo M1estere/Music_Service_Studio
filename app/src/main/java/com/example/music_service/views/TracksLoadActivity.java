@@ -20,53 +20,6 @@ public class TracksLoadActivity extends AppCompatActivity {
     }
 
     private void loadTracksFromFirebaseStorage() {
-        /*
-        //Load data from firebase
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("music");
-        storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                List<StorageReference> result = listResult.getItems();
-                for (int i = 0; i < result.size(); i++) {
-                    StorageReference item = result.get(i);
-                    String path = item.getName();
-                    String artist = "Temporary";
-
-                    if (i == result.size() - 1) {
-                        item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String uriString = uri.toString();
-
-                                addSong(uriString, path, artist);
-                            }
-                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Uri> task) {
-                                progressBar.animate().alpha(0).setDuration(100);
-
-                                Collections.sort(SongsProps.songs);
-                                openMainPage();
-                            }
-                        });
-
-                        continue;
-                    }
-
-                    item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            String uriString = uri.toString();
-
-                            addSong(uriString, path, artist);
-                        }
-                    });
-                }
-            }
-        });*/
-
         DataLoader.fillSongsFromDrive(this);
         openMainPage();
     }

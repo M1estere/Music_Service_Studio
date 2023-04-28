@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.music_service.R;
+import com.example.music_service.models.globals.Convert;
 import com.example.music_service.viewModels.UserPlaylistsViewModel;
 import com.example.music_service.viewModels.UserSongsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -68,16 +72,40 @@ public class CustomPlaylists {
                 .setCancelable(true)
                 .setTitle("Save playlist")
                 .setPositiveButton("Save", null)
+                .setNegativeButton("Cancel", null)
                 .create();
 
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
 
             @Override
-            public void onShow(DialogInterface dialogInterface) {
-
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setOnClickListener(new View.OnClickListener() {
+                if (charSequence.length() < 1) {
+                    button.setEnabled(false);
+                    button.setTextColor(Color.parseColor("#6C6C6C"));
+                } else {
+                    button.setEnabled(true);
+                    button.setTextColor(Color.parseColor("#FFFFFFFF"));
+                }
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setEnabled(false);
+                button.setTextColor(Color.parseColor("#6C6C6C"));
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String title = editText.getText().toString();
@@ -99,6 +127,24 @@ public class CustomPlaylists {
         });
 
         alertDialog.show();
+    }
+
+    private static void deletePlaylist(String name) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) return;
+
+        CollectionReference reference = firestore.collection(user.getUid());
+        reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentReference documentReference = reference.document(name + " playlist");
+                    documentReference.delete();
+                }
+            }
+        });
     }
 
     private static void savePlaylist(Context context, String name, @NonNull ArrayList<String> titles) {
@@ -154,7 +200,6 @@ public class CustomPlaylists {
 
                 if (value != null && !value.getDocuments().isEmpty()) {
                     List<DocumentSnapshot> documents = value.getDocuments();
-                    System.out.printf("Documents: %d\n", documents.size());
                     for (int i = 0; i < documents.size(); i++) {
                         if (documents.get(i).exists()) {
                             String name = documents.get(i).getString("playlist_name");
@@ -176,6 +221,65 @@ public class CustomPlaylists {
                 }
             }
         });
+    }
+
+    public static int removeSongFromPlaylist(Context context, String playlistName, String songName) {
+        if (!playlistNames.contains(playlistName)) return -1;
+
+        String titles = playlistContents.get(findPlaylist(playlistName));
+        System.out.printf("Titles: %s\n", titles);
+        ArrayList<String> titlesList = fromStringsToPlaylist(titles);
+
+        String neededPath = Convert.getPathFromTitle(songName);
+        int result = titlesList.indexOf(neededPath);
+        titlesList.remove(neededPath);
+
+        savePlaylist(context, playlistName, titlesList);
+
+        return result;
+    }
+
+    public static void addSongToPlaylist(Context context, String playlistName, String songName) {
+        if (!playlistNames.contains(playlistName)) return;
+
+        String titles = playlistContents.get(findPlaylist(playlistName));
+        ArrayList<String> titlesList = fromStringsToPlaylist(titles);
+
+        String neededPath = Convert.getPathFromTitle(songName);
+        titlesList.remove(neededPath);
+        titlesList.add(neededPath);
+
+        savePlaylist(context, playlistName, titlesList);
+    }
+
+    public static ArrayList<Playlist> getPlaylists() {
+        ArrayList<Playlist> result = new ArrayList<>();
+
+        for (int i = 0; i < playlistNames.size(); i++) {
+            Playlist playlist = new Playlist(playlistNames.get(i));
+            playlist.setSongTitles(fromStringsToPlaylist(playlistContents.get(i)));
+
+            result.add(playlist);
+        }
+
+        return result;
+    }
+
+    public static boolean songInList(String playlistName, String songName) {
+        songName = Convert.getPathFromTitle(songName);
+
+        if (!playlistNames.contains(playlistName)) return false;
+
+        int id = playlistNames.indexOf(playlistName);
+        String titles = playlistContents.get(id);
+
+        if (!titles.contains(songName)) return false;
+
+        return true;
+    }
+
+    public static int findPlaylist(String name) {
+        return playlistNames.indexOf(name);
     }
 
     public static ArrayList<String> fromStringsToPlaylist(String source) {

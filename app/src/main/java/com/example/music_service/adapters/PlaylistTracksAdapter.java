@@ -26,6 +26,7 @@ import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.viewModels.PlaylistInfoViewModel;
+import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -94,11 +95,12 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
         TextView artist = bottomSheetView.findViewById(R.id.author_song);
         artist.setSelected(true);
 
-        Button playButton = bottomSheetView.findViewById(R.id.play_button);
-        Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
-        Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+        CardView playButton = bottomSheetView.findViewById(R.id.play_button);
+        CardView playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
+        CardView playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+        CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
-        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
+        CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
         removeButton.setVisibility(View.GONE);
 
         CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
@@ -115,6 +117,14 @@ public class PlaylistTracksAdapter extends RecyclerView.Adapter<PlaylistTracksAd
 
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
+
+        addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheets.openPlaylistsSection(context, song.getTitle());
+                bottomSheetDialog.dismiss();
+            }
+        });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

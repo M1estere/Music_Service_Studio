@@ -27,6 +27,7 @@ import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.viewModels.ArtistInfoViewModel;
 import com.example.music_service.viewModels.PlaylistInfoViewModel;
+import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -98,9 +99,8 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         Button playButton = bottomSheetView.findViewById(R.id.play_button);
         Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
         Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
-
         Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
-        removeButton.setVisibility(View.GONE);
+        Button addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
         CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
 
@@ -111,11 +111,19 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
                 .thumbnail(0.05f).
                 into(cover);
 
+        title.setText(song.getTitle());
+        artist.setText(song.getArtist());
+
         ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
         heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
 
-        title.setText(song.getTitle());
-        artist.setText(song.getArtist());
+        addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheets.openPlaylistsSection(context, song.getTitle());
+                bottomSheetDialog.dismiss();
+            }
+        });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,11 +137,6 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Globs.currentSongs.size() == 0) {
-                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 Player.addNextToQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
@@ -143,12 +146,16 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Globs.currentSongs.size() == 0) {
-                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 Player.addToQueueEnd(title.getText().toString());
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Player.deleteFromQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
             }

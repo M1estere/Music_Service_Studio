@@ -26,6 +26,7 @@ import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
+import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -99,9 +100,9 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
         Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
         Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
+        Button addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
         CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
-        favButton.setVisibility(View.GONE);
 
         ImageView cover = bottomSheetView.findViewById(R.id.track_cover);
 
@@ -113,10 +114,22 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
 
+        ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
+        heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
+
+        addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheets.openPlaylistsSection(context, song.getTitle());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseTrackFromFavs(title.getText().toString());
+
                 bottomSheetDialog.dismiss();
             }
         });
@@ -124,12 +137,8 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Globs.currentSongs.size() == 0) {
-                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 Player.addNextToQueue(title.getText().toString());
+
                 bottomSheetDialog.dismiss();
             }
         });
@@ -137,12 +146,8 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Globs.currentSongs.size() == 0) {
-                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 Player.addToQueueEnd(title.getText().toString());
+
                 bottomSheetDialog.dismiss();
             }
         });
@@ -150,8 +155,17 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FavouriteMusic.removeFromFavourites(title.getText().toString(), (Activity) context);
+                Player.deleteFromQueue(title.getText().toString());
+
                 bottomSheetDialog.dismiss();
+            }
+        });
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean added = FavouriteMusic.addToFavourites(title.getText().toString(), (Activity) context);
+                heart.setImageDrawable(added ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
             }
         });
 

@@ -25,6 +25,10 @@ public class Playlist {
         songUris.add(uri);
     }
 
+    public void removeSong(int id) {
+        songTitles.remove(id);
+    }
+
     public ArrayList<String> getSongTitles() {
         return songTitles;
     }

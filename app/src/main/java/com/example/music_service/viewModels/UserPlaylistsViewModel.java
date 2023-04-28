@@ -44,8 +44,6 @@ public class UserPlaylistsViewModel extends BaseObservable {
         ArrayList<String> names = CustomPlaylists.getPlaylistNames();
         ArrayList<String> contents = CustomPlaylists.getPlaylistContents();
 
-        System.out.printf("Names total amount: %d\n", names.size());
-
         for (int i = 0; i < names.size(); i++) {
             String name = names.get(i);
             ArrayList<String> content = CustomPlaylists.fromStringsToPlaylist(contents.get(i));
