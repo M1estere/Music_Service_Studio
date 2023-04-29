@@ -96,11 +96,11 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         TextView artist = bottomSheetView.findViewById(R.id.author_song);
         artist.setSelected(true);
 
-        Button playButton = bottomSheetView.findViewById(R.id.play_button);
-        Button playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
-        Button playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
-        Button removeButton = bottomSheetView.findViewById(R.id.remove_button);
-        Button addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
+        CardView playButton = bottomSheetView.findViewById(R.id.play_button);
+        CardView playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
+        CardView playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
+        CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
+        CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
         CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
 
@@ -137,6 +137,11 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addNextToQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
@@ -146,6 +151,11 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addToQueueEnd(title.getText().toString());
 
                 bottomSheetDialog.dismiss();

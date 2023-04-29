@@ -55,7 +55,7 @@ public class PlaylistInfoViewModel extends BaseObservable {
     }
 
     public void openPlaylistInfo() {
-        BottomSheets.openPlaylistInfo(activity, PlaylistSystem.getCurrentPlaylist());
+        BottomSheets.openPlaylistInfo(activity, PlaylistSystem.getCurrentPlaylist(), false);
     }
 
     public void back() {

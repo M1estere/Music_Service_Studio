@@ -72,7 +72,7 @@ public class UserPlaylistsRecViewAdapter extends RecyclerView.Adapter<UserPlayli
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheets.openPlaylistInfo(context, playlists.get(pos));
+                BottomSheets.openPlaylistInfo(context, playlists.get(pos), true);
             }
         });
     }

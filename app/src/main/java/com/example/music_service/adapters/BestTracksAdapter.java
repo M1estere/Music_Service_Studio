@@ -23,6 +23,7 @@ import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.globals.Globs;
 import com.example.music_service.viewModels.LibraryFragmentViewModel;
 import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -135,6 +136,11 @@ public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.Vi
         playNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addNextToQueue(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
@@ -144,6 +150,11 @@ public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.Vi
         playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Globs.currentSongs.size() == 0) {
+                    Toast.makeText(context, "No queue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Player.addToQueueEnd(title.getText().toString());
 
                 bottomSheetDialog.dismiss();

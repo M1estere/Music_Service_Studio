@@ -81,7 +81,8 @@
             app:tabIndicatorHeight="0dp"
             app:tabSelectedTextColor="@color/white"
             app:tabTextAppearance="@style/CustomTabText"
-            app:tabTextColor="@color/grey">
+            app:tabTextColor="@color/grey"
+            android:textAlignment="viewStart">
 
         </com.google.android.material.tabs.TabLayout>
 

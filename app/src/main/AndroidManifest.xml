@@ -65,7 +65,7 @@
                 android:value="" />
         </activity>
 
-        <service android:name=".services.OnClearFromRecentService" />
+        <service android:name=".viewModels.services.OnClearFromRecentService" />
 
         <receiver
             android:name="androidx.media.session.MediaButtonReceiver"

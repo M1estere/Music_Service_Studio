@@ -1,6 +1,7 @@
 package com.example.music_service.viewModels;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -20,8 +21,14 @@ public class UserSongsViewModel extends BaseObservable {
     private final ArrayList<Song> songs = new ArrayList<>();
     private final UserSongsRecViewAdapter adapter;
 
+    private TextView noSongsText;
+
     public UserSongsViewModel(@NonNull View view) {
         FavouriteMusic.setUserSongsViewModel(this);
+
+        noSongsText = view.findViewById(R.id.no_songs_text);
+        if (songs.size() < 1) noSongsText.setVisibility(View.VISIBLE);
+        else noSongsText.setVisibility(View.GONE);
 
         RecyclerView userSongsRecView = view.findViewById(R.id.songs_rec);
 
@@ -40,8 +47,6 @@ public class UserSongsViewModel extends BaseObservable {
         String tracks = FavouriteMusic.getFavouriteTitles();
         tracks = tracks.trim();
 
-        if (tracks.length() < 3) return;
-
         String[] trackList = tracks.split(" ");
         for (String trackName : trackList) {
             if (trackName.equals(" ") || trackName.isEmpty()) continue;
@@ -49,6 +54,8 @@ public class UserSongsViewModel extends BaseObservable {
             songs.add(new Song(trackName, SongsProps.uris.get(SongsProps.songs.indexOf(trackName))));
         }
 
+        if (songs.size() < 1) noSongsText.setVisibility(View.VISIBLE);
+        else noSongsText.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
 }

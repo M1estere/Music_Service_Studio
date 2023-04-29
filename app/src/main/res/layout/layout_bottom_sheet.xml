@@ -131,14 +131,14 @@
                 android:text="@string/play"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:letterSpacing=".1"
                 android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/queue_next_button"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -151,14 +151,14 @@
                 android:text="@string/play_next"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:letterSpacing=".1"
                 android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/queue_end_button"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -171,14 +171,14 @@
                 android:text="@string/play_last"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:letterSpacing=".1"
                 android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/add_to_list_button"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -191,14 +191,14 @@
                 android:text="@string/add_to_playlist"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:letterSpacing=".1"
                 android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/remove_button"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -211,7 +211,7 @@
                 android:text="@string/remove"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:letterSpacing=".1"
                 android:layout_gravity="center"/>
 

@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.music_service.BR;
 import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.CustomPlaylists;
-import com.example.music_service.services.OnClearFromRecentService;
+import com.example.music_service.viewModels.services.OnClearFromRecentService;
 import com.example.music_service.views.QueueActivity;
 import com.example.music_service.R;
 import com.example.music_service.models.FavouriteMusic;
@@ -218,7 +218,10 @@ public class MusicPlayerViewModel extends BaseObservable {
             }
 
             @Override
-            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {   }
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED)
+                    updateUI();
+            }
         });
     }
 

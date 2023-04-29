@@ -58,7 +58,7 @@ public class BottomSheets {
         bottomSheetDialog.show();
     }
 
-    public static void openPlaylistInfo(Context context, Playlist play) {
+    public static void openPlaylistInfo(Context context, Playlist play, boolean userList) {
         PlaylistSystem.setCurrentPlaylist(play);
         Playlist playlist = PlaylistSystem.getCurrentPlaylist();
 
@@ -80,9 +80,7 @@ public class BottomSheets {
         CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
         CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
-        removeButton.setVisibility(View.GONE);
-
-        CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
+        if (userList == false) removeButton.setVisibility(View.GONE);
 
         ImageView cover = bottomSheetView.findViewById(R.id.track_cover);
 
@@ -98,6 +96,14 @@ public class BottomSheets {
         artist.setText(playlist.getSongsAmount() + " tracks");
 
         addToPlaylistButton.setVisibility(View.GONE);
+
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomPlaylists.deletePlaylist(playlist.getPlaylistName());
+                bottomSheetDialog.dismiss();
+            }
+        });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

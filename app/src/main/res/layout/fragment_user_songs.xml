@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_songs_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No songs currently added"
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/songs_rec"
             android:layout_width="match_parent"

@@ -129,7 +129,7 @@ public class CustomPlaylists {
         alertDialog.show();
     }
 
-    private static void deletePlaylist(String name) {
+    public static void deletePlaylist(String name) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

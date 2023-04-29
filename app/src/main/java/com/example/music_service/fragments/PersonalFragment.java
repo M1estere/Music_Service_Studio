@@ -85,7 +85,7 @@ public class PersonalFragment extends Fragment implements TabLayoutMediator.TabC
         });
     }
 
-    private final String[] tabsTitles = new String[]{"Playlists", "Songs", "Albums"};
+    private final String[] tabsTitles = new String[]{"Playlists", "Songs"};
 
     @Override
     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {

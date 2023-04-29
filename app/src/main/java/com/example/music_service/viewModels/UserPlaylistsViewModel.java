@@ -1,6 +1,7 @@
 package com.example.music_service.viewModels;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -24,8 +25,14 @@ public class UserPlaylistsViewModel extends BaseObservable {
 
     private UserPlaylistsRecViewAdapter adapter;
 
+    private TextView noPlaylistsText;
+
     public UserPlaylistsViewModel(@NonNull View view) {
         CustomPlaylists.setUserPlaylistsViewModel(this);
+
+        noPlaylistsText = view.findViewById(R.id.no_playlists_text);
+        if (playlists.size() < 1) noPlaylistsText.setVisibility(View.VISIBLE);
+        else noPlaylistsText.setVisibility(View.GONE);
 
         RecyclerView userPlaylistsRecView = view.findViewById(R.id.playlists_rec);
 
@@ -53,6 +60,8 @@ public class UserPlaylistsViewModel extends BaseObservable {
             playlists.add(playlist);
         }
 
+        if (playlists.size() < 1) noPlaylistsText.setVisibility(View.VISIBLE);
+        else noPlaylistsText.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
 }
