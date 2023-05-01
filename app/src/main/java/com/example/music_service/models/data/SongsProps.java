@@ -28,6 +28,17 @@ public class SongsProps {
         return new Song(Convert.getPathFromTitle(songName));
     }
 
+    public static ArrayList<String> getDistinctAuthors() {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String name : authors) {
+            if (!result.contains(name))
+                result.add(name);
+        }
+
+        return result;
+    }
+
     public static String getCurrentCover() {
         String currentTrackTitle = Globs.currentSongs.get(Globs.currentTrackNumber).getTitle();
 

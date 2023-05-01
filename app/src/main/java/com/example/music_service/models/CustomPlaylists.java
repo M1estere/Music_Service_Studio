@@ -227,7 +227,6 @@ public class CustomPlaylists {
         if (!playlistNames.contains(playlistName)) return -1;
 
         String titles = playlistContents.get(findPlaylist(playlistName));
-        System.out.printf("Titles: %s\n", titles);
         ArrayList<String> titlesList = fromStringsToPlaylist(titles);
 
         String neededPath = Convert.getPathFromTitle(songName);

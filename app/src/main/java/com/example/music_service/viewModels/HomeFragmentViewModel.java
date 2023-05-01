@@ -1,6 +1,8 @@
 package com.example.music_service.viewModels;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,6 +16,8 @@ import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
 import com.example.music_service.models.data.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.views.QueueActivity;
+import com.example.music_service.views.SearchActivity;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -42,6 +46,15 @@ public class HomeFragmentViewModel extends BaseObservable {
         swipeRefreshLayout = globView.findViewById(R.id.swipe);
         swipeRefreshLayout.setColorSchemeColors(globView.getContext().getResources().getColor(R.color.red), globView.getContext().getResources().getColor(R.color.purple_200));
         swipeRefreshLayout.offsetTopAndBottom(500);
+
+        ImageButton searchButton = globView.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(globView.getContext(), SearchActivity.class);
+                globView.getContext().startActivity(intent);
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

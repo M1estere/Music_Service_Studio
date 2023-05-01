@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,34 +23,34 @@ import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.viewModels.LibraryFragmentViewModel;
+import com.example.music_service.viewModels.SearchViewModel;
 import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.ViewHolder> {
+public class SearchSongsAdapter extends RecyclerView.Adapter<SearchSongsAdapter.ViewHolder> {
 
     private final Context context;
-    private final LibraryFragmentViewModel libraryFragmentViewModel;
+    private SearchViewModel searchViewModel;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public BestTracksAdapter(Context context, LibraryFragmentViewModel viewModel) {
+    public SearchSongsAdapter(Context context, SearchViewModel sv) {
         this.context = context;
-        libraryFragmentViewModel = viewModel;
+        searchViewModel = sv;
     }
 
     @NonNull
     @Override
-    public BestTracksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.best_item, parent, false);
+    public SearchSongsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_song_item, parent, false);
 
-        return new BestTracksAdapter.ViewHolder(view);
+        return new SearchSongsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BestTracksAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchSongsAdapter.ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
@@ -65,9 +64,7 @@ public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.Vi
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String trackName = holder.trackNameTxt.getText().toString();
-                Toast.makeText(context, "(Best) " + trackName + " chosen", Toast.LENGTH_SHORT).show();
-                libraryFragmentViewModel.chooseFromBest(trackName);
+                searchViewModel.chooseTrack(holder.trackNameTxt.getText().toString());
             }
         });
 
@@ -128,7 +125,7 @@ public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.Vi
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                libraryFragmentViewModel.chooseTrack(title.getText().toString());
+                searchViewModel.chooseTrack(title.getText().toString());
 
                 bottomSheetDialog.dismiss();
             }

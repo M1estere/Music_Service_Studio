@@ -30,15 +30,18 @@
 
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/card_add_image"
                 android:layout_toStartOf="@id/end_plus_sign"
-                android:orientation="vertical">
+                android:orientation="vertical">-->
 
                 <TextView
+                    android:layout_toEndOf="@id/card_add_image"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/playlist_name"
@@ -49,7 +52,7 @@
                     android:textStyle="normal"
                     android:textSize="20sp"/>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/playlist_tracks_amount"
@@ -57,9 +60,9 @@
                     android:letterSpacing=".1"
                     android:textColor="@color/grey"
                     android:textStyle="normal"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"/>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/end_plus_sign"

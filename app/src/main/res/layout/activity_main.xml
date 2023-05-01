@@ -50,7 +50,8 @@
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:backgroundTint="@color/black"
-                    android:elevation="0dp">
+                    android:elevation="0dp"
+                    android:outlineSpotShadowColor="@android:color/transparent">
 
                     <ProgressBar
                         android:id="@+id/track_progress"
@@ -77,7 +78,8 @@
                             android:id="@+id/mini_track_card"
                             android:layout_centerVertical="true"
                             app:cardCornerRadius="5dp"
-                            android:backgroundTint="@android:color/transparent">
+                            android:backgroundTint="@android:color/transparent"
+                            android:outlineSpotShadowColor="@android:color/transparent">
 
                             <ImageView
                                 android:id="@+id/mini_track_cover"
@@ -205,7 +207,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="25dp"
                         android:backgroundTint="@color/purple_700"
-                        app:cardCornerRadius="25dp">
+                        app:cardCornerRadius="25dp"
+                        android:outlineSpotShadowColor="@android:color/transparent">
 
                         <ImageView
                             android:id="@+id/big_track_cover"

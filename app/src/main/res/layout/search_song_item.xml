@@ -3,80 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:layout_marginStart="15dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="5dp"
-    android:backgroundTint="@color/purple_200"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="15dp">
+    android:layout_height="90dp"
+    android:layout_marginBottom="15dp"
+    android:backgroundTint="@color/purple_700">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cover_card"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/image_area"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            app:cardCornerRadius="5dp"
-            android:outlineSpotShadowColor="@android:color/transparent">
+            android:backgroundTint="@android:color/transparent"
+            android:elevation="0dp"
+            app:cardCornerRadius="5dp">
 
             <ImageView
                 android:id="@+id/song_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@color/white" />
 
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/cover_card"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/image_area"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_gravity="start|center"
-                android:id="@+id/track_info_region"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="150"
+                android:id="@+id/song_info_area"
+                android:layout_toStartOf="@id/info_button"
+                android:layout_marginEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/track_title_txt"
+                    android:id="@+id/track_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:focusable="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="TGIF"
+                    android:text="Break Through It All"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/author_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
+                    android:text="Song"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/track_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Katy Perry"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -87,12 +83,12 @@
                 android:id="@+id/info_button"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_alignParentEnd="true"
                 android:backgroundTint="@android:color/transparent"
-                android:textColor="@android:color/transparent" />
+                android:textColor="@android:color/transparent"
+                android:layout_centerVertical="true"/>
 
-        </LinearLayout>
-
+        </RelativeLayout>
 
     </RelativeLayout>
 

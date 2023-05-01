@@ -309,7 +309,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     private void checkProgression() {
         if (!Player.checkPrepared()) return;
-        if (Player.getCurrentPos() >= Player.getDuration() - 2000)
+        if (Player.getCurrentPos() >= Player.getDuration())
             nextSong();
     }
 

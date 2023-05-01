@@ -100,6 +100,7 @@ public class ArtistTracksAdapter extends RecyclerView.Adapter<ArtistTracksAdapte
         CardView playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
         CardView playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
         CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
+        removeButton.setVisibility(View.GONE);
         CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
         CardView favButton = bottomSheetView.findViewById(R.id.fav_button_whole);
