@@ -1,8 +1,8 @@
 package com.example.music_service.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.music_service.R;
 import com.example.music_service.viewModels.AuthenticationActivityViewModel;
@@ -18,6 +18,5 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        return;
     }
 }

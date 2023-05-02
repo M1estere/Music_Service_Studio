@@ -4,20 +4,15 @@ import java.util.ArrayList;
 
 public class Playlist {
 
+    private final ArrayList<String> songUris;
+    private final String playlistName;
     private ArrayList<String> songTitles;
-    private ArrayList<String> songUris;
-
-    private String playlistName;
 
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
 
         songTitles = new ArrayList<>();
         songUris = new ArrayList<>();
-    }
-
-    public void setSongTitles(ArrayList<String> songTitles) {
-        this.songTitles = songTitles;
     }
 
     public void addSong(String title, String uri) {
@@ -31,6 +26,10 @@ public class Playlist {
 
     public ArrayList<String> getSongTitles() {
         return songTitles;
+    }
+
+    public void setSongTitles(ArrayList<String> songTitles) {
+        this.songTitles = songTitles;
     }
 
     public int getSongsAmount() {

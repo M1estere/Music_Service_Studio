@@ -3,28 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.UserSongsFragment"
-    android:background="@color/purple_700">
+    android:background="@color/purple_700"
+    tools:context=".fragments.UserSongsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/no_songs_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="No songs currently added"
             android:textColor="@color/white"
-            android:textStyle="normal"
             android:textSize="20sp"
-            android:layout_centerInParent="true"/>
+            android:textStyle="normal"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/songs_rec"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -85,10 +84,10 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         Song song = SongsProps.getSongByName(text);
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog((Activity) context, R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(((Activity)context).getApplicationContext())
+        View bottomSheetView = LayoutInflater.from(((Activity) context).getApplicationContext())
                 .inflate(
                         R.layout.layout_bottom_sheet,
-                        (RelativeLayout) ((Activity)context).findViewById(R.id.bottom_sheet_container)
+                        (RelativeLayout) ((Activity) context).findViewById(R.id.bottom_sheet_container)
                 );
 
         TextView title = bottomSheetView.findViewById(R.id.title_song);
@@ -183,8 +182,7 @@ public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecVi
         bottomSheetDialog.show();
     }
 
-    private void chooseTrackFromFavs(String title)
-    {
+    private void chooseTrackFromFavs(String title) {
         int currentTrackIndex = 0;
         for (int i = 0; i < FavouriteMusic.size(); i++) {
             String name = Convert.getTitleFromPath(FavouriteMusic.getArrayTitles().get(i));

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.viewModels.UserSongsViewModel;
@@ -15,9 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -29,6 +26,7 @@ public class FavouriteMusic {
     private static String favouriteTitles = "";
 
     private static UserSongsViewModel userSongsViewModel;
+
     public static void setUserSongsViewModel(UserSongsViewModel uvm) {
         userSongsViewModel = uvm;
     }
@@ -60,8 +58,10 @@ public class FavouriteMusic {
                     DocumentReference documentReference = reference.document("favourite_titles");
                     documentReference.set(userData);
 
-                    if (added) Toast.makeText(activity,  "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
-                    else Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
+                    if (added)
+                        Toast.makeText(activity, "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
 
                     if (userSongsViewModel != null) userSongsViewModel.updateSongs();
                 }

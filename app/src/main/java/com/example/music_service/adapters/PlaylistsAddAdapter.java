@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -22,10 +21,8 @@ import java.util.ArrayList;
 public class PlaylistsAddAdapter extends RecyclerView.Adapter<PlaylistsAddAdapter.ViewHolder> {
 
     private final Context context;
-
+    private final String songTitle;
     private ArrayList<Playlist> playlists = new ArrayList<>();
-
-    private String songTitle;
 
     public PlaylistsAddAdapter(Context context, String songName) {
         this.context = context;
@@ -91,12 +88,12 @@ public class PlaylistsAddAdapter extends RecyclerView.Adapter<PlaylistsAddAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView playlistName;
+        private final TextView playlistName;
 //        private TextView songsAmount;
 
-        private CardView parent;
+        private final CardView parent;
 
-        private ImageView status;
+        private final ImageView status;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

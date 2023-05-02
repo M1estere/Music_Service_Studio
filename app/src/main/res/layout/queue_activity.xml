@@ -9,9 +9,9 @@
     </data>
 
     <RelativeLayout
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="#020017">
 
         <RelativeLayout
@@ -21,14 +21,14 @@
             android:layout_marginTop="10dp">
 
             <ImageButton
-                android:layout_centerVertical="true"
                 android:id="@+id/button_back"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="@android:color/transparent"
                 android:onClick="@{()-> viewModel.backToPlayer()}"
-                android:src="@drawable/close_50"/>
+                android:src="@drawable/close_50" />
 
             <TextView
                 android:id="@+id/song_text"

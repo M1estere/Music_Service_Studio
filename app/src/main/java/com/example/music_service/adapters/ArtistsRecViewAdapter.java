@@ -10,21 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.music_service.models.Author;
 import com.example.music_service.R;
-import com.example.music_service.models.Player;
-import com.example.music_service.models.Playlist;
-import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.Author;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.ArtistInfoActivity;
-import com.example.music_service.views.PlaylistInfoActivity;
 
 import java.util.ArrayList;
 
@@ -59,9 +54,6 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
 
             @Override
             public void onClick(View view) {
-                String authorName = artists.get(pos).getAuthorName();
-                // Toast.makeText(context, "(Authors) " + authorName + " chosen", Toast.LENGTH_SHORT).show();
-
                 goToArtistInfo(holder, pos);
             }
         });
@@ -73,26 +65,6 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         Intent intent = new Intent(context, ArtistInfoActivity.class);
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.artistName, "name"), Pair.create(holder.artistImage, "artist_image"));
         context.startActivity(intent, options.toBundle());
-    }
-
-    private void startAuthorPlaylist(String name) {
-        if (name == null) return;
-
-        Playlist playlistToSet = new Playlist(name);
-        playlistToSet.setSongTitles(findAuthor(name));
-        Player.updateQueue(playlistToSet.getSongTitles());
-    }
-
-    private ArrayList<String> findAuthor(String name) {
-        int k = 0;
-        for (int i = 0; i < artists.size(); i++)
-        {
-            if (!artists.get(i).getAuthorName().equals(name)) continue;
-
-            k = i;
-        }
-
-        return artists.get(k).getTitles();
     }
 
     @Override
@@ -113,7 +85,7 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         private final CardView parent;
         private final CardView artistImage;
 
-        private ImageView image;
+        private final ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

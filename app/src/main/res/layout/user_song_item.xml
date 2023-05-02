@@ -37,13 +37,13 @@
 
             <LinearLayout
                 android:id="@+id/song_info_area"
-                android:layout_toStartOf="@id/info_button"
-                android:layout_marginEnd="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@id/info_button"
                 android:orientation="vertical">
 
                 <TextView
@@ -71,15 +71,15 @@
             </LinearLayout>
 
             <ImageButton
-                android:layout_gravity="center"
-                android:src="@drawable/options"
                 android:id="@+id/info_button"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:backgroundTint="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/options"
+                android:textColor="@android:color/transparent" />
 
         </RelativeLayout>
 

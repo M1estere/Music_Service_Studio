@@ -24,8 +24,8 @@
             android:clickable="false"
             android:gravity="bottom"
             app:umanoPanelHeight="60dp"
-            app:umanoShadowHeight="0dp"
-            app:umanoParallaxOffset="0dp">
+            app:umanoParallaxOffset="0dp"
+            app:umanoShadowHeight="0dp">
 
             <FrameLayout
                 android:id="@+id/frame_layout"
@@ -38,10 +38,10 @@
 
             <RelativeLayout
                 android:id="@+id/big_player"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_700">
+                android:background="@color/purple_700"
+                android:visibility="visible">
 
                 <!--Mini Player-->
                 <androidx.cardview.widget.CardView
@@ -73,13 +73,13 @@
                         android:background="@color/black">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/mini_track_card"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:id="@+id/mini_track_card"
                             android:layout_centerVertical="true"
-                            app:cardCornerRadius="5dp"
                             android:backgroundTint="@android:color/transparent"
-                            android:outlineSpotShadowColor="@android:color/transparent">
+                            android:outlineSpotShadowColor="@android:color/transparent"
+                            app:cardCornerRadius="5dp">
 
                             <ImageView
                                 android:id="@+id/mini_track_cover"
@@ -95,9 +95,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
-                            android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/mini_track_card"
                             android:orientation="vertical">
 
@@ -134,21 +134,21 @@
                             android:orientation="horizontal">
 
                             <ImageButton
-                                android:src="@drawable/pause_40"
                                 android:id="@+id/pause"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
+                                android:layout_marginEnd="5dp"
                                 android:backgroundTint="@android:color/transparent"
                                 android:onClick="@{()-> viewModel.changePlayingState()}"
-                                android:layout_marginEnd="5dp"/>
+                                android:src="@drawable/pause_40" />
 
                             <ImageButton
-                                android:src="@drawable/baseline_skip_next_24"
                                 android:id="@+id/previous"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:backgroundTint="@android:color/transparent"
-                                android:onClick="@{()-> viewModel.nextSong()}"/>
+                                android:onClick="@{()-> viewModel.nextSong()}"
+                                android:src="@drawable/baseline_skip_next_24" />
 
                         </LinearLayout>
 
@@ -169,10 +169,10 @@
                         android:layout_marginTop="10dp">
 
                         <ImageButton
-                            android:layout_centerVertical="true"
                             android:id="@+id/queue_page_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
                             android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.queuePage()}"
@@ -207,8 +207,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="25dp"
                         android:backgroundTint="@color/purple_700"
-                        app:cardCornerRadius="25dp"
-                        android:outlineSpotShadowColor="@android:color/transparent">
+                        android:outlineSpotShadowColor="@android:color/transparent"
+                        app:cardCornerRadius="25dp">
 
                         <ImageView
                             android:id="@+id/big_track_cover"
@@ -321,35 +321,35 @@
                         android:orientation="horizontal">
 
                         <ImageButton
-                            android:src="@drawable/ic_previous"
                             android:id="@+id/previous_button"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginEnd="20dp"
                             android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.previousSong()}"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:src="@drawable/ic_previous" />
 
                         <ImageButton
-                            android:src="@drawable/pause_80"
-                            android:adjustViewBounds="true"
                             android:id="@+id/pause_button"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
+                            android:adjustViewBounds="true"
                             android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.changePlayingState()}"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:src="@drawable/pause_80" />
 
                         <ImageButton
-                            android:src="@drawable/ic_next"
-                            android:adjustViewBounds="true"
                             android:id="@+id/next_button"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="20dp"
+                            android:adjustViewBounds="true"
                             android:backgroundTint="@android:color/transparent"
+                            android:onClick="@{()-> viewModel.nextSong()}"
                             android:padding="10dp"
-                            android:onClick="@{()-> viewModel.nextSong()}"/>
+                            android:src="@drawable/ic_next" />
 
 
                     </LinearLayout>
@@ -373,15 +373,15 @@
                             android:layout_gravity="center">
 
                             <ImageButton
-                                android:src="@drawable/save"
-                                android:backgroundTint="@android:color/transparent"
-                                android:layout_centerVertical="true"
                                 android:id="@+id/save_playlist_button"
                                 android:layout_width="35dp"
                                 android:layout_height="40dp"
                                 android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
                                 android:layout_marginStart="25dp"
-                                android:onClick="@{() -> viewModel.savePlaylist()}"/>
+                                android:backgroundTint="@android:color/transparent"
+                                android:onClick="@{() -> viewModel.savePlaylist()}"
+                                android:src="@drawable/save" />
 
                             <ImageButton
                                 android:id="@+id/add_track_to_favs_button"
@@ -393,15 +393,15 @@
                                 android:src="@drawable/heart_unfilled_40" />
 
                             <ImageButton
-                                android:layout_centerVertical="true"
-                                android:backgroundTint="@android:color/transparent"
-                                android:src="@drawable/repeat"
                                 android:id="@+id/change_repeat_state_button"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
                                 android:layout_marginEnd="25dp"
-                                android:onClick="@{() -> viewModel.changeRepeatingState()}" />
+                                android:backgroundTint="@android:color/transparent"
+                                android:onClick="@{() -> viewModel.changeRepeatingState()}"
+                                android:src="@drawable/repeat" />
 
                         </RelativeLayout>
 
@@ -414,21 +414,21 @@
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:shadowColor="@color/white"
             android:id="@+id/nav_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/black"
+            android:shadowColor="@color/white"
             app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu">
 
             <ImageView
-                android:layout_above="@id/nav_bar"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:src="@color/dark_grey"/>
+                android:layout_above="@id/nav_bar"
+                android:src="@color/dark_grey" />
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
 

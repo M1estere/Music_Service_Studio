@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.music_service.viewModels.AccountActivityViewModel" />
@@ -114,8 +115,8 @@
                     android:layout_width="270dp"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/purple_500"
-                    android:text="@string/log_out"
                     android:onClick="@{() -> viewModel.logOut()}"
+                    android:text="@string/log_out"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -124,8 +125,8 @@
                     android:layout_width="270dp"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/purple_500"
-                    android:text="@string/close"
                     android:onClick="@{() -> viewModel.back()}"
+                    android:text="@string/close"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 

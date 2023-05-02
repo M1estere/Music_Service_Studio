@@ -46,8 +46,8 @@
                 android:id="@+id/track_info_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
                 android:layout_weight="150"
+                android:backgroundTint="@android:color/transparent"
                 android:orientation="vertical">
 
                 <TextView
@@ -77,12 +77,12 @@
             </LinearLayout>
 
             <ImageButton
-                android:src="@drawable/options"
                 android:id="@+id/info_button"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/options"
                 android:textColor="@android:color/transparent" />
 
         </LinearLayout>

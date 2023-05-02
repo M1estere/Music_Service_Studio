@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Author {
 
-    private String authorName;
+    private final String authorName;
     private ArrayList<String> titles;
 
     public Author(String authorName) {

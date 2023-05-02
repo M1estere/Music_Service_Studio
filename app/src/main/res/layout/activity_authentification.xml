@@ -20,10 +20,10 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.tabs.TabLayout
-                android:layout_marginTop="90dp"
                 android:id="@+id/nav_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="90dp"
                 android:background="@color/purple_700"
                 app:tabIndicatorHeight="0dp"
                 app:tabSelectedTextColor="@color/white"
@@ -33,13 +33,13 @@
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager2.widget.ViewPager2
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:id="@+id/frame_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/frame_content"
-                android:layout_below="@id/nav_bar"/>
+                android:layout_below="@id/nav_bar"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp" />
 
         </RelativeLayout>
 

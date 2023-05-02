@@ -1,9 +1,9 @@
 package com.example.music_service.views;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import android.os.Bundle;
 
 import com.example.music_service.R;
 import com.example.music_service.databinding.ActivityPlaylistInfoBinding;

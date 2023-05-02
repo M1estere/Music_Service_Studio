@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_service.views.PlaylistInfoActivity;
-import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.models.Playlist;
 import com.example.music_service.R;
+import com.example.music_service.models.Playlist;
+import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.views.PlaylistInfoActivity;
 
 import java.util.ArrayList;
 

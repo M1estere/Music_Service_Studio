@@ -4,8 +4,8 @@
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LibraryFragment"
-    android:background="@color/purple_700">
+    android:background="@color/purple_700"
+    tools:context=".fragments.LibraryFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,8 +14,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/discover_txt"
@@ -30,84 +30,84 @@
                 android:id="@+id/search_button"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/search_40"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:backgroundTint="@android:color/transparent"
-                android:layout_marginEnd="20dp"/>
+                android:src="@drawable/search_40" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/best_daily_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/discover_txt"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
-                android:id="@+id/best_daily_region"
                 android:backgroundTint="@android:color/transparent">
 
                 <ImageView
                     android:layout_width="300dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/library_frame"/>
+                    android:src="@drawable/library_frame" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/best_of_the_best"
-                    android:textSize="18sp"
-                    android:letterSpacing=".1"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginTop="5dp"/>
+                    android:letterSpacing=".1"
+                    android:text="@string/best_of_the_best"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/best_rec_view"
                     android:layout_width="259dp"
                     android:layout_height="128dp"
-                    android:layout_marginTop="45dp"
-                    android:layout_gravity="end" />
+                    android:layout_gravity="end"
+                    android:layout_marginTop="45dp" />
 
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_marginTop="15dp"
                 android:id="@+id/modern_artists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/best_daily_region"
+                android:layout_marginTop="15dp"
                 android:text="@string/modern_artists"
-                android:textSize="20sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_below="@id/best_daily_region"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="15dp"
+                android:id="@+id/artists_rec_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/modern_artists"
-                android:id="@+id/artists_rec_view"/>
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp" />
 
             <TextView
+                android:id="@+id/daily_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/artists_rec_view"
                 android:layout_marginTop="15dp"
-                android:id="@+id/daily_top"
                 android:text="@string/daily_top"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_below="@id/artists_rec_view"/>
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="15dp"
+                android:id="@+id/daily_top_rec_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/daily_top"
-                android:id="@+id/daily_top_rec_view"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp" />
 
         </RelativeLayout>
 

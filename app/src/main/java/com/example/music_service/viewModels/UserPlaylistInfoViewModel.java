@@ -1,6 +1,7 @@
 package com.example.music_service.viewModels;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -14,16 +15,12 @@ import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.BottomSheets;
+import com.example.music_service.views.SearchActivity;
 
 import java.util.Objects;
 
 public class UserPlaylistInfoViewModel extends BaseObservable {
     private final Activity activity;
-
-    @Bindable
-    public String getCurrentPlaylistTitle() {
-        return PlaylistSystem.getCurrentPlaylist().getPlaylistName();
-    }
 
     public UserPlaylistInfoViewModel(Activity act) {
         activity = act;
@@ -65,10 +62,16 @@ public class UserPlaylistInfoViewModel extends BaseObservable {
 //        itemTouchHelper.attachToRecyclerView(tracksRecView);
     }
 
+    @Bindable
+    public String getCurrentPlaylistTitle() {
+        return PlaylistSystem.getCurrentPlaylist().getPlaylistName();
+    }
+
     private int findSong(String title) {
         int songIndex = 0;
         for (int i = 0; i < PlaylistSystem.getCurrentPlaylist().getSongsAmount(); i++)
-            if (Objects.equals(PlaylistSystem.getCurrentPlaylist().getSongTitles().get(i), title)) songIndex = i;
+            if (Objects.equals(PlaylistSystem.getCurrentPlaylist().getSongTitles().get(i), title))
+                songIndex = i;
 
         return songIndex;
     }
@@ -78,6 +81,11 @@ public class UserPlaylistInfoViewModel extends BaseObservable {
         Player.updateQueue(current.getSongTitles(), 0);
 
         activity.onBackPressed();
+    }
+
+    public void openSearch() {
+        Intent intent = new Intent(activity, SearchActivity.class);
+        activity.startActivity(intent);
     }
 
     public void chooseTrack(String name) {

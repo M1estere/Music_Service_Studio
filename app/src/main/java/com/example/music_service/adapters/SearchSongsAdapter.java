@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class SearchSongsAdapter extends RecyclerView.Adapter<SearchSongsAdapter.ViewHolder> {
 
     private final Context context;
-    private SearchViewModel searchViewModel;
+    private final SearchViewModel searchViewModel;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
@@ -81,10 +81,10 @@ public class SearchSongsAdapter extends RecyclerView.Adapter<SearchSongsAdapter.
         Song song = SongsProps.getSongByName(text);
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog((Activity) context, R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(((Activity)context).getApplicationContext())
+        View bottomSheetView = LayoutInflater.from(((Activity) context).getApplicationContext())
                 .inflate(
                         R.layout.layout_bottom_sheet,
-                        (RelativeLayout) ((Activity)context).findViewById(R.id.bottom_sheet_container)
+                        (RelativeLayout) ((Activity) context).findViewById(R.id.bottom_sheet_container)
                 );
 
         TextView title = bottomSheetView.findViewById(R.id.title_song);

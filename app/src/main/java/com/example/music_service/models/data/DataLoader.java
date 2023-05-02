@@ -2,8 +2,6 @@ package com.example.music_service.models.data;
 
 import android.app.Activity;
 
-import com.example.music_service.models.data.SongsProps;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

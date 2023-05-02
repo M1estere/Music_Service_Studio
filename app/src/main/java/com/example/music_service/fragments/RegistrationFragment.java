@@ -3,11 +3,6 @@ package com.example.music_service.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.music_service.views.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.music_service.R;
+import com.example.music_service.views.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +34,15 @@ import java.util.Map;
 
 public class RegistrationFragment extends Fragment {
 
+    private FirebaseAuth mAuth;
+    private EditText editTextName;
+    private EditText editTextUsername;
+    private EditText editTextMail;
+    private EditText editTextPassword;
+    //TO_DO: REMOVE THIS OUT OF HERE
+    private FirebaseFirestore firestore;
+    private CollectionReference reference;
+
     public RegistrationFragment() {
 
     }
@@ -51,7 +59,6 @@ public class RegistrationFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private FirebaseAuth mAuth;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,15 +67,6 @@ public class RegistrationFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_registration, container, false);
     }
-
-    private EditText editTextName;
-    private EditText editTextUsername;
-    private EditText editTextMail;
-    private EditText editTextPassword;
-
-    //TO_DO: REMOVE THIS OUT OF HERE
-    private FirebaseFirestore firestore;
-    private CollectionReference reference;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

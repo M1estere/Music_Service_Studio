@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_service.R;
 import com.example.music_service.adapters.QueueRecViewAdapter;
 import com.example.music_service.models.FavouriteMusic;
-import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.Player;
+import com.example.music_service.models.globals.Globs;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -59,7 +59,7 @@ public class QueueActivityViewModel extends BaseObservable {
                 String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
 
                 int position = viewHolder.getAdapterPosition();
-                if (position == Globs.currentTrackNumber) return;
+                if (position >= Globs.currentTrackNumber) return;
 
                 Globs.currentSongs.remove(position);
                 adapter.notifyDataSetChanged();

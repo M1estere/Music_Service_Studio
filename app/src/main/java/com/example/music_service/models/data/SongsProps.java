@@ -48,6 +48,7 @@ public class SongsProps {
     public static void addCover(String url) {
         covers.add(url);
     }
+
     public static void addArtist(String artistName) {
         authors.add(artistName);
     }

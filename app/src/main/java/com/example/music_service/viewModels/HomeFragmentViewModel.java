@@ -1,5 +1,6 @@
 package com.example.music_service.viewModels;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -11,12 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
-import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.adapters.MorningRecViewAdapter;
 import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
+import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.models.data.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.views.QueueActivity;
 import com.example.music_service.views.SearchActivity;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -51,8 +51,7 @@ public class HomeFragmentViewModel extends BaseObservable {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(globView.getContext(), SearchActivity.class);
-                globView.getContext().startActivity(intent);
+                openSearch(globView.getContext());
             }
         });
 
@@ -67,6 +66,11 @@ public class HomeFragmentViewModel extends BaseObservable {
         initRecs();
     }
 
+    private void openSearch(Context context) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        context.startActivity(intent);
+    }
+
     public void initRecs() {
         if (HomeFragmentData.recommendations.size() < 1)
             PlaylistSystem.fillPlaylistsSection(HomeFragmentData.recommendations, 5, 3, 60);
@@ -78,7 +82,7 @@ public class HomeFragmentViewModel extends BaseObservable {
         recommendationsAdapter.setPlaylists(HomeFragmentData.recommendations);
 
         recommendationsRec.setAdapter(recommendationsAdapter);
-        recommendationsRec.setLayoutManager(new LinearLayoutManager(globView.getContext(), LinearLayoutManager.HORIZONTAL,  false));
+        recommendationsRec.setLayoutManager(new LinearLayoutManager(globView.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         popularAdapter = new ProgramPlaylistsRecViewAdapter(globView.getContext());
         popularAdapter.setPlaylists(HomeFragmentData.popular);

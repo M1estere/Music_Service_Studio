@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,10 +22,9 @@ import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.models.data.SongsProps;
-import com.example.music_service.viewModels.PlaylistInfoViewModel;
 import com.example.music_service.viewModels.UserPlaylistInfoViewModel;
 import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -86,10 +84,10 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
         Song song = SongsProps.getSongByName(text);
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog((Activity) context, R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(((Activity)context).getApplicationContext())
+        View bottomSheetView = LayoutInflater.from(((Activity) context).getApplicationContext())
                 .inflate(
                         R.layout.layout_bottom_sheet,
-                        (RelativeLayout) ((Activity)context).findViewById(R.id.bottom_sheet_container)
+                        (RelativeLayout) ((Activity) context).findViewById(R.id.bottom_sheet_container)
                 );
 
         TextView title = bottomSheetView.findViewById(R.id.title_song);
@@ -147,7 +145,6 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
             @Override
             public void onClick(View view) {
                 playlistInfoViewModel.chooseTrack(title.getText().toString());
-
                 bottomSheetDialog.dismiss();
             }
         });

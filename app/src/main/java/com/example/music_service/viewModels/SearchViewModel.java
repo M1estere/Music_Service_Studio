@@ -20,25 +20,22 @@ import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
-import com.example.music_service.models.data.LibraryFragmentData;
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
 public class SearchViewModel extends BaseObservable {
 
-    private Activity activity;
+    private final Activity activity;
 
-    private EditText searchEditText;
+    private final EditText searchEditText;
 
-    private RecyclerView songsRecView;
-    private RecyclerView artistsRecView;
-    private RecyclerView playlistsRecView;
+    private final RecyclerView songsRecView;
+    private final RecyclerView artistsRecView;
+    private final RecyclerView playlistsRecView;
 
-    private TextView placeholder;
+    private final TextView placeholder;
 
     private ArrayList<Song> songs;
     private ArrayList<Author> artists;
@@ -123,9 +120,17 @@ public class SearchViewModel extends BaseObservable {
 
     private ArrayList<Song> searchSongs(String query) {
         ArrayList<Song> result = new ArrayList<>();
+
+        // search by song name
         for (String path : SongsProps.songs) {
             if (Convert.getTitleFromPath(path).toLowerCase().contains(query))
                 result.add(new Song(path));
+        }
+
+        // search by artist name
+        for (String name : SongsProps.getDistinctAuthors()) {
+            if (name.toLowerCase().contains(query))
+                result.add(new Song(SongsProps.songs.get(SongsProps.authors.indexOf(name))));
         }
 
         return result;
@@ -133,9 +138,14 @@ public class SearchViewModel extends BaseObservable {
 
     private ArrayList<Playlist> searchPlaylists(String query) {
         ArrayList<Playlist> result = new ArrayList<>();
+
+        // search by playlist name
         for (String name : CustomPlaylists.getPlaylistNames()) {
             if (name.toLowerCase().contains(query)) {
-                result.add(new Playlist(name));
+                Playlist playlist = new Playlist(name);
+                playlist.setSongTitles(CustomPlaylists.fillPlaylist(name));
+
+                result.add(playlist);
             }
         }
 
@@ -144,16 +154,14 @@ public class SearchViewModel extends BaseObservable {
 
     private ArrayList<Author> searchAuthors(String query) {
         ArrayList<Author> result = new ArrayList<>();
+
+        // search by author name
         for (String author : SongsProps.getDistinctAuthors()) {
             if (author.toLowerCase().contains(query))
                 result.add(new Author(author));
         }
 
         return result;
-    }
-
-    public void back() {
-        activity.onBackPressed();
     }
 
     public void chooseTrack(String name) {
@@ -172,10 +180,13 @@ public class SearchViewModel extends BaseObservable {
 
     private ArrayList<String> getTitles() {
         ArrayList<String> result = new ArrayList<>();
-        for (Song song : songs) {
+        for (Song song : songs)
             result.add(song.getPath());
-        }
 
         return result;
+    }
+
+    public void back() {
+        activity.onBackPressed();
     }
 }

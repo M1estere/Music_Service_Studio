@@ -1,16 +1,14 @@
 package com.example.music_service.models;
 
-import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.globals.Convert;
 
 public class Song {
+    private final String artist;
+    private final String coverUri;
     private String path;
     private String uri;
-
     private String title;
-    private String artist;
-
-    private String coverUri;
 
     public Song(String path, String uri) {
         this.uri = uri;

@@ -18,6 +18,7 @@
             android:layout_centerVertical="true"
             android:backgroundTint="@android:color/transparent"
             android:elevation="0dp"
+            android:transitionName="artist_image"
             app:cardCornerRadius="90dp">
 
             <ImageView
@@ -36,13 +37,13 @@
 
             <LinearLayout
                 android:id="@+id/song_info_area"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="vertical">
 
@@ -57,7 +58,8 @@
                     android:text="Katy Perry"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:transitionName="name" />
 
                 <TextView
                     android:layout_width="wrap_content"

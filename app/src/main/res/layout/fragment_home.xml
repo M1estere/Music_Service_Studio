@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.music_service.models.SwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/purple_700"
-    tools:context=".fragments.HomeFragment"
-    android:id="@+id/swipe">
+    tools:context=".fragments.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,8 +14,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp">
 
             <TextView
@@ -31,9 +31,9 @@
                 android:id="@+id/search_button"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/search_40"
                 android:layout_alignParentEnd="true"
-                android:backgroundTint="@android:color/transparent"/>
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/search_40" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/morning_region"

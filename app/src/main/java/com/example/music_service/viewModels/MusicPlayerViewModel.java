@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -14,6 +16,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -21,17 +25,19 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.music_service.BR;
+import com.example.music_service.R;
 import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.CustomPlaylists;
-import com.example.music_service.viewModels.services.OnClearFromRecentService;
-import com.example.music_service.views.QueueActivity;
-import com.example.music_service.R;
 import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.viewModels.services.OnClearFromRecentService;
+import com.example.music_service.views.QueueActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -169,11 +175,11 @@ public class MusicPlayerViewModel extends BaseObservable {
                                         miniPlayerView.setVisibility(View.VISIBLE);
                                     if (mainPlayer.getVisibility() == View.GONE)
                                         mainPlayer.setVisibility(View.VISIBLE);
-                                    if (slider.isTouchEnabled() == false)
+                                    if (!slider.isTouchEnabled())
                                         slider.setTouchEnabled(true);
 
-                                    if (Player.isPlay() == true) {
-                                        if (isSeeking == false) {
+                                    if (Player.isPlay()) {
+                                        if (!isSeeking) {
                                             setProgress(Player.getCurrentPos() / 1000);
                                             setCurrentProgress(Convert.GetTimeFromSeconds(Player.getCurrentPos()));
                                         } else {
@@ -183,7 +189,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                                         }
                                         checkProgression();
                                     } else {
-                                        if (isSeeking == true)
+                                        if (isSeeking)
                                             setCurrentProgress(Convert.GetTimeFromSeconds(
                                                     (Math.abs((progressBar.getMax() - progressBar.getProgress()) - progressBar.getMax())) * 1000L)
                                             );
@@ -251,6 +257,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public int getProgress() {
         return progress;
     }
+
     public void setProgress(int progress) {
         this.progress = progress;
 
@@ -261,6 +268,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public String getCurrentProgress() {
         return currentProgress;
     }
+
     public void setCurrentProgress(String currentProgress) {
         this.currentProgress = currentProgress;
 
@@ -271,6 +279,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public int getMaxProgress() {
         return maxProgress;
     }
+
     public void setMaxProgress(int maxProgress) {
         this.maxProgress = maxProgress;
 
@@ -281,6 +290,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public String getCurrentTrackDuration() {
         return currentTrackDuration;
     }
+
     public void setCurrentTrackDuration(String currentTrackDuration) {
         this.currentTrackDuration = currentTrackDuration;
 
@@ -291,6 +301,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public String getTrackName() {
         return trackName;
     }
+
     public void setTrackName(String trackName) {
         this.trackName = trackName;
 
@@ -301,6 +312,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     public String getAuthorName() {
         return authorName;
     }
+
     private void setAuthorName(String authorName) {
         this.authorName = authorName;
 
@@ -434,12 +446,25 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     private void createNotification() {
-        Bitmap largeIcon = Convert.getBitmapFromUri(activity, Globs.currentSongs.get(Globs.currentTrackNumber).getCover());
+        //Bitmap largeIcon = Convert.getBitmapFromUri(activity, Globs.currentSongs.get(Globs.currentTrackNumber).getCover());
 
-        CreateNotification.destroyNotification();
-        CreateNotification.setViewModel(this);
-        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
-                Globs.currentTrackNumber, Globs.currentSongs.size() - 1, largeIcon);
+        Glide.with(activity)
+                .asBitmap()
+                .load(Uri.parse(Globs.currentSongs.get(Globs.currentTrackNumber).getCover()))
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        CreateNotification.destroyNotification();
+                        CreateNotification.setViewModel(MusicPlayerViewModel.this);
+                        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
+                                Globs.currentTrackNumber, Globs.currentSongs.size() - 1, resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
+                });
+
     }
 
 }

@@ -32,7 +32,6 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:transitionName="name"
             android:id="@+id/artist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +44,8 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:transitionName="name" />
 
     </RelativeLayout>
 

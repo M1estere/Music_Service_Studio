@@ -17,39 +17,39 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
             android:layout_alignParentStart="true"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/image_area"
-                android:layout_alignParentStart="true"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:backgroundTint="@android:color/transparent"
                 android:elevation="0dp"
-                app:cardCornerRadius="5dp"
-                android:outlineSpotShadowColor="@android:color/transparent">
+                android:outlineSpotShadowColor="@android:color/transparent"
+                app:cardCornerRadius="5dp">
 
                 <ImageView
+                    android:id="@+id/song_cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@color/white"
-                    android:id="@+id/song_cover"/>
+                    android:src="@color/white" />
 
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:layout_toEndOf="@id/image_area"
                 android:id="@+id/song_info_area"
                 android:layout_width="wrap_content"
-                android:layout_toStartOf="@id/info_button"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/info_button"
+                android:layout_toEndOf="@id/image_area"
                 android:orientation="vertical">
 
                 <TextView
@@ -71,10 +71,10 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:focusable="true"
+                    android:letterSpacing=".1"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:letterSpacing=".1"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -82,14 +82,14 @@
             </LinearLayout>
 
             <ImageButton
-                android:layout_gravity="center"
-                android:src="@drawable/options"
                 android:id="@+id/info_button"
-                android:layout_alignParentEnd="true"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/options"
                 android:textColor="@android:color/transparent" />
 
         </RelativeLayout>

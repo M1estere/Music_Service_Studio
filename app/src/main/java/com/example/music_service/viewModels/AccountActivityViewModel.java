@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.music_service.models.CreateNotification;
-import com.example.music_service.views.AuthenticationActivity;
 import com.example.music_service.BR;
+import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.globals.Globs;
+import com.example.music_service.views.AuthenticationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,30 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class AccountActivityViewModel extends BaseObservable {
 
+    private final Activity activity;
     private String currentUserName;
     private String currentUserUsername;
-
-    @Bindable
-    public String getCurrentUserName() {
-        return currentUserName;
-    }
-    @Bindable
-    public String getCurrentUserUsername() {
-        return currentUserUsername;
-    }
-
-    public void setCurrentUserName(String currentUserName) {
-        this.currentUserName = currentUserName;
-
-        notifyPropertyChanged(BR.currentUserName);
-    }
-    public void setCurrentUserUsername(String currentUserUsername) {
-        this.currentUserUsername = currentUserUsername;
-
-        notifyPropertyChanged(BR.currentUserUsername);
-    }
-
-    private final Activity activity;
 
     public AccountActivityViewModel(Activity act) {
         this.activity = act;
@@ -77,6 +56,28 @@ public class AccountActivityViewModel extends BaseObservable {
                 progressDialog.dismiss();
             }
         });
+    }
+
+    @Bindable
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
+
+        notifyPropertyChanged(BR.currentUserName);
+    }
+
+    @Bindable
+    public String getCurrentUserUsername() {
+        return currentUserUsername;
+    }
+
+    public void setCurrentUserUsername(String currentUserUsername) {
+        this.currentUserUsername = currentUserUsername;
+
+        notifyPropertyChanged(BR.currentUserUsername);
     }
 
     public void logOut() {

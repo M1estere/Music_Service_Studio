@@ -16,10 +16,10 @@
             android:layout_centerInParent="true"
             android:letterSpacing=".1"
             android:text="@string/hold_to_drag_element"
+            android:textAlignment="center"
             android:textColor="@color/grey"
             android:textSize="18sp"
-            android:textStyle="normal"
-            android:textAlignment="center"/>
+            android:textStyle="normal" />
 
     </RelativeLayout>
 

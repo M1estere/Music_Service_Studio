@@ -3,10 +3,10 @@ package com.example.music_service.models;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.music_service.viewModels.MusicPlayerViewModel;
+import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.viewModels.MusicPlayerViewModel;
 import com.example.music_service.viewModels.QueueActivityViewModel;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -15,27 +15,18 @@ import java.util.ArrayList;
 
 public class Player {
 
-    public enum RepeatingState { NoRepeat, RepeatPlaylist, RepeatTrack }
-
+    public static RepeatingState playerRepeatingState = RepeatingState.NoRepeat;
     private static Context context;
     private static ExoPlayer musicPlayer = null;
-
-    public static RepeatingState playerRepeatingState = RepeatingState.NoRepeat;
-
     private static boolean musicPaused = false;
-
     private static MusicPlayerViewModel musicPlayerViewModel;
-    public static void setMusicPlayer(MusicPlayerViewModel m) {
-        musicPlayerViewModel = m;
-    }
-
     private static boolean isPrepared = false;
+    private static QueueActivityViewModel queueActivityViewModel;
 
     public static boolean checkPrepared() {
         return isPrepared;
     }
 
-    private static QueueActivityViewModel queueActivityViewModel;
     public static void setQueueActivityViewModel(QueueActivityViewModel q) {
         queueActivityViewModel = q;
     }
@@ -81,6 +72,10 @@ public class Player {
         return musicPlayer;
     }
 
+    public static void setMusicPlayer(MusicPlayerViewModel m) {
+        musicPlayerViewModel = m;
+    }
+
     public static int previousSong() {
         if (getProgress() >= 0.2f) {
             selectTrack(Globs.currentTrackNumber);
@@ -107,7 +102,8 @@ public class Player {
     }
 
     public static int nextSong() {
-        if (Globs.currentTrackNumber == Globs.currentSongs.size() - 1) Globs.currentTrackNumber = -1;
+        if (Globs.currentTrackNumber == Globs.currentSongs.size() - 1)
+            Globs.currentTrackNumber = -1;
 
         Globs.currentTrackNumber++;
 
@@ -154,8 +150,7 @@ public class Player {
         selectTrack(Globs.currentTrackNumber);
     }
 
-    public static void addToQueueEnd(String title)
-    {
+    public static void addToQueueEnd(String title) {
         String path = Convert.getPathFromTitle(title);
 
         String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
@@ -216,11 +211,9 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
-    public static RepeatingState changeRepeatingState()
-    {
+    public static RepeatingState changeRepeatingState() {
         String returner = "";
-        switch (playerRepeatingState)
-        {
+        switch (playerRepeatingState) {
             case NoRepeat: {
                 playerRepeatingState = RepeatingState.RepeatPlaylist;
                 returner = "0";
@@ -269,15 +262,17 @@ public class Player {
     }
 
     public static int getDuration() {
-        int duration = (int)musicPlayer.getDuration() - 1000;
+        int duration = (int) musicPlayer.getDuration() - 1000;
         return Math.max(duration, 2);
     }
 
     public static int getCurrentPos() {
-        return (int)musicPlayer.getCurrentPosition();
+        return (int) musicPlayer.getCurrentPosition();
     }
 
     public static boolean isPlay() {
         return !musicPaused;
     }
+
+    public enum RepeatingState {NoRepeat, RepeatPlaylist, RepeatTrack}
 }

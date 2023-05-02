@@ -11,21 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_service.R;
 import com.example.music_service.adapters.UserPlaylistsRecViewAdapter;
 import com.example.music_service.models.CustomPlaylists;
-import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Playlist;
-import com.example.music_service.models.Song;
-import com.example.music_service.models.data.SongsProps;
-import com.example.music_service.models.globals.PlaylistSystem;
 
 import java.util.ArrayList;
 
 public class UserPlaylistsViewModel extends BaseObservable {
 
-    private ArrayList<Playlist> playlists = new ArrayList<>();
+    private final ArrayList<Playlist> playlists = new ArrayList<>();
 
-    private UserPlaylistsRecViewAdapter adapter;
+    private final UserPlaylistsRecViewAdapter adapter;
 
-    private TextView noPlaylistsText;
+    private final TextView noPlaylistsText;
 
     public UserPlaylistsViewModel(@NonNull View view) {
         CustomPlaylists.setUserPlaylistsViewModel(this);

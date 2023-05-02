@@ -9,29 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.music_service.R;
-import com.example.music_service.models.FavouriteMusic;
-import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
-import com.example.music_service.models.Song;
-import com.example.music_service.models.data.SongsProps;
-import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.BottomSheets;
-import com.example.music_service.views.PlaylistInfoActivity;
 import com.example.music_service.views.UserPlaylistInfoActivity;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -101,8 +89,8 @@ public class UserPlaylistsRecViewAdapter extends RecyclerView.Adapter<UserPlayli
         private final TextView tracksAmount;
 
         private final CardView parent;
-        private CardView cover;
-        private ImageButton infoButton;
+        private final CardView cover;
+        private final ImageButton infoButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

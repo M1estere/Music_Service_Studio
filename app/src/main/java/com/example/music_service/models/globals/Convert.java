@@ -54,7 +54,7 @@ public class Convert {
         String result = title.toLowerCase();
         result = result.replace(' ', '_');
 
-        if (result.contains(".mp3") == false)
+        if (!result.contains(".mp3"))
             result += ".mp3";
 
         return result;
@@ -89,8 +89,10 @@ public class Convert {
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         result[0] = resource;
                     }
+
                     @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {  }
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
                 });
 
         return result[0];

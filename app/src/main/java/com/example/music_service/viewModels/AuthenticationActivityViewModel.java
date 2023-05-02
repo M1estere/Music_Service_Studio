@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.music_service.views.TracksLoadActivity;
-import com.example.music_service.adapters.AuthViewPageAdapter;
 import com.example.music_service.R;
+import com.example.music_service.adapters.AuthViewPageAdapter;
 import com.example.music_service.models.globals.Globs;
+import com.example.music_service.views.TracksLoadActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,20 +20,20 @@ public class AuthenticationActivityViewModel implements TabLayoutMediator.TabCon
 
     private final String[] tabsTitles = new String[]{"Sign Up", "Sign In"};
 
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
-    private AuthViewPageAdapter myViewPageAdapter;
+    private final TabLayout tabLayout;
+    private final ViewPager2 viewPager2;
+    private final AuthViewPageAdapter myViewPageAdapter;
 
-    private Activity authActivity;
+    private final Activity authActivity;
 
-    private FirebaseAuth mAuth;
+    private final FirebaseAuth mAuth;
 
     public AuthenticationActivityViewModel(Activity activity) {
         mAuth = FirebaseAuth.getInstance();
         authActivity = activity;
         if (Globs.recheckLogin) {
             FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser != null){
+            if (currentUser != null) {
                 openMainPage();
             }
         }

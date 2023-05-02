@@ -29,13 +29,13 @@
                 android:layout_height="50dp">
 
                 <ImageButton
-                    android:onClick="@{() -> viewModel.back()}"
                     android:id="@+id/search_button"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:backgroundTint="@android:color/transparent"
+                    android:onClick="@{() -> viewModel.back()}"
                     android:src="@drawable/back_40" />
 
                 <androidx.cardview.widget.CardView
@@ -75,12 +75,12 @@
                     android:id="@+id/placeholder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start typing to see results"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:textStyle="normal"
                     android:layout_centerInParent="true"
-                    android:visibility="visible"/>
+                    android:text="Start typing to see results"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -91,24 +91,24 @@
                         android:layout_height="match_parent">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:nestedScrollingEnabled="false"
                             android:id="@+id/songs_rec"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/artists_rec"
-                            android:nestedScrollingEnabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/songs_rec"/>
+                            android:layout_below="@id/songs_rec"
+                            android:nestedScrollingEnabled="false" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/playlists_rec"
-                            android:nestedScrollingEnabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/artists_rec"/>
+                            android:layout_below="@id/artists_rec"
+                            android:nestedScrollingEnabled="false" />
 
                     </RelativeLayout>
 

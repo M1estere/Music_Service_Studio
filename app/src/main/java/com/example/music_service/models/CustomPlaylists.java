@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import com.example.music_service.R;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.viewModels.UserPlaylistsViewModel;
-import com.example.music_service.viewModels.UserSongsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,23 +38,42 @@ import java.util.Map;
 
 public class CustomPlaylists {
 
-    private static ArrayList<String> playlistNames = new ArrayList<>();
+    private static final ArrayList<String> playlistNames = new ArrayList<>();
+    private static final ArrayList<String> playlistContents = new ArrayList<>();
+    private static UserPlaylistsViewModel userPlaylistsViewModel;
+
     public static ArrayList<String> getPlaylistNames() {
         return playlistNames;
     }
 
-    private static ArrayList<String> playlistContents = new ArrayList<>();
     public static ArrayList<String> getPlaylistContents() {
         return playlistContents;
     }
 
-    private static UserPlaylistsViewModel userPlaylistsViewModel;
     public static void setUserPlaylistsViewModel(UserPlaylistsViewModel uvm) {
         userPlaylistsViewModel = uvm;
     }
 
     public static void savingPlaylist(Context context, ArrayList<String> titles) {
         showDialog(context, titles);
+    }
+
+    public static ArrayList<String> fillPlaylist(String playlistName) {
+        String result = "";
+        if (!playlistNames.contains(playlistName)) return new ArrayList<>();
+
+        for (int i = 0; i < playlistNames.size(); i++) {
+            if (playlistNames.get(i).equals(playlistName))
+                result = (playlistContents.get(i));
+        }
+
+        return getTitlesFromString(result);
+    }
+
+    private static ArrayList<String> getTitlesFromString(String titles) {
+        List<String> temp = Arrays.asList(titles.split(" "));
+
+        return new ArrayList<>(temp);
     }
 
     private static void showDialog(Context context, ArrayList<String> titles) {
@@ -272,9 +289,7 @@ public class CustomPlaylists {
         int id = playlistNames.indexOf(playlistName);
         String titles = playlistContents.get(id);
 
-        if (!titles.contains(songName)) return false;
-
-        return true;
+        return titles.contains(songName);
     }
 
     public static int findPlaylist(String name) {

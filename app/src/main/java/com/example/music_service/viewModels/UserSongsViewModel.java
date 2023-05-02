@@ -21,7 +21,7 @@ public class UserSongsViewModel extends BaseObservable {
     private final ArrayList<Song> songs = new ArrayList<>();
     private final UserSongsRecViewAdapter adapter;
 
-    private TextView noSongsText;
+    private final TextView noSongsText;
 
     public UserSongsViewModel(@NonNull View view) {
         FavouriteMusic.setUserSongsViewModel(this);

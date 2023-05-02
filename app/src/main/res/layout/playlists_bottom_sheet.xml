@@ -12,8 +12,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="35dp"
         android:layout_height="4dp"
-        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/grey"
         app:cardCornerRadius="35dp">
 
@@ -30,19 +30,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Add to playlist"
-            android:textSize="20sp"
-            android:textStyle="normal"
             android:letterSpacing=".1"
-            android:textColor="@color/white"/>
+            android:text="Add to playlist"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="normal" />
 
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/new_list_button"
-        android:layout_below="@id/top"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_below="@id/top"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
@@ -66,22 +66,22 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/plus_40"/>
+                    android:src="@drawable/plus_40" />
 
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/card_add_image"
                 android:layout_alignParentEnd="true"
-                android:text="Create new playlist"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/card_add_image"
                 android:letterSpacing=".1"
+                android:text="Create new playlist"
                 android:textColor="@color/white"
-                android:textStyle="normal"
                 android:textSize="20sp"
-                android:layout_centerVertical="true"/>
+                android:textStyle="normal" />
 
 
         </RelativeLayout>
@@ -93,9 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/new_list_button"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
 </RelativeLayout>

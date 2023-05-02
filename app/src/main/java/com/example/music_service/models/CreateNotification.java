@@ -1,7 +1,6 @@
 package com.example.music_service.models;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -18,22 +17,17 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.music_service.R;
-import com.example.music_service.views.MainActivity;
 import com.example.music_service.viewModels.MusicPlayerViewModel;
+import com.example.music_service.views.MainActivity;
 
 public class CreateNotification {
 
-    private static Context context;
-
     public static final String CHANNEL_ID = "channel1";
-
     public static Notification notification;
-
-    private static MediaSessionCompat mediaSession;
-
     public static MusicPlayerViewModel viewModel;
-
     public static boolean isPlaying = true;
+    private static Context context;
+    private static MediaSessionCompat mediaSession;
 
     public static void setViewModel(MusicPlayerViewModel vm) {
         if (viewModel == null) viewModel = vm;

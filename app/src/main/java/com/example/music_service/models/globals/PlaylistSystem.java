@@ -5,27 +5,27 @@ import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlaylistSystem {
 
     private static Author currentAuthor;
-
-    public static void setCurrentAuthor(Author currentAuthor) {
-        PlaylistSystem.currentAuthor = currentAuthor;
-    }
+    private static Playlist currentPlaylist;
 
     public static Author getCurrentAuthor() {
         return currentAuthor;
     }
 
-    private static Playlist currentPlaylist;
-    public static void setCurrentPlaylist(Playlist currentPlaylist) {
-        PlaylistSystem.currentPlaylist = currentPlaylist;
+    public static void setCurrentAuthor(Author currentAuthor) {
+        PlaylistSystem.currentAuthor = currentAuthor;
     }
+
     public static Playlist getCurrentPlaylist() {
         return currentPlaylist;
+    }
+
+    public static void setCurrentPlaylist(Playlist currentPlaylist) {
+        PlaylistSystem.currentPlaylist = currentPlaylist;
     }
 
     public static void removeFromCurrent(int id) {
@@ -45,7 +45,8 @@ public class PlaylistSystem {
     public static void fillPlaylistsSection(ArrayList<Playlist> section, int upBorder, int lowBorder, int startPct) {
         int amount = 0;
 
-        if (upBorder - lowBorder > 0) amount = Globs.random.nextInt(upBorder - lowBorder) + lowBorder;
+        if (upBorder - lowBorder > 0)
+            amount = Globs.random.nextInt(upBorder - lowBorder) + lowBorder;
         else amount = lowBorder;
 
         for (int i = 0; i < amount; i++) {
@@ -111,6 +112,16 @@ public class PlaylistSystem {
         Playlist playlist = new Playlist(name);
         playlist.setSongTitles(songs);
 
+        return playlist;
+    }
+
+    public static Playlist getPlaylistOfSongsSongs(String name, ArrayList<Song> songs) {
+        Playlist playlist = new Playlist(name);
+
+        ArrayList<String> titles = new ArrayList<>();
+        for (Song song : songs) titles.add(song.getPath());
+
+        playlist.setSongTitles(titles);
         return playlist;
     }
 
