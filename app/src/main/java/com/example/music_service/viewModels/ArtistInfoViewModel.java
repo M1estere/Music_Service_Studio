@@ -1,6 +1,8 @@
 package com.example.music_service.viewModels;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.example.music_service.models.Author;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.PlaylistSystem;
+import com.example.music_service.views.SearchActivity;
 
 public class ArtistInfoViewModel extends BaseObservable {
 
@@ -62,6 +65,11 @@ public class ArtistInfoViewModel extends BaseObservable {
         Player.updateQueue(current.getSongTitles(), 0);
 
         activity.onBackPressed();
+    }
+
+    public void openSearch() {
+        Intent intent = new Intent(activity, SearchActivity.class);
+        activity.startActivity(intent);
     }
 
     public void back() {

@@ -36,7 +36,7 @@ public class QueueActivityViewModel extends BaseObservable {
         queueRecView.setLayoutManager(new LinearLayoutManager(activity));
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END,
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -59,10 +59,10 @@ public class QueueActivityViewModel extends BaseObservable {
                 String currentTitle = Globs.getTitles().get(Globs.currentTrackNumber);
 
                 int position = viewHolder.getAdapterPosition();
-                if (position >= Globs.currentTrackNumber) return;
+                if (position >= Globs.currentSongs.size()) return;
 
                 Globs.currentSongs.remove(position);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRemoved(position);
 
                 Globs.currentTrackNumber = findSong(currentTitle);
             }
