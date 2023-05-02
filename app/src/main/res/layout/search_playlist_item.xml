@@ -58,7 +58,7 @@
                     android:text="Top 2023"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:transitionName="title" />
 
                 <TextView

@@ -39,6 +39,17 @@ public class SongsProps {
         return result;
     }
 
+    public static ArrayList<String> getArtistSongs(String name) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < authors.size(); i++) {
+            if (authors.get(i).equals(name))
+                result.add(songs.get(i));
+        }
+
+        return result;
+    }
+
     public static String getCurrentCover() {
         String currentTrackTitle = Globs.currentSongs.get(Globs.currentTrackNumber).getTitle();
 

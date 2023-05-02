@@ -64,6 +64,7 @@ public class SearchSongsAdapter extends RecyclerView.Adapter<SearchSongsAdapter.
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, "(Search) " + holder.trackNameTxt.getText().toString() + " chosen", Toast.LENGTH_SHORT).show();
                 searchViewModel.chooseTrack(holder.trackNameTxt.getText().toString());
             }
         });

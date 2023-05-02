@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.databinding.BaseObservable;
@@ -44,6 +45,15 @@ public class SearchViewModel extends BaseObservable {
     public SearchViewModel(Activity act) {
         activity = act;
 
+        ImageButton delete = activity.findViewById(R.id.delete_button);
+        delete.setVisibility(View.GONE);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchEditText.setText("");
+            }
+        });
+
         placeholder = activity.findViewById(R.id.placeholder);
         placeholder.setVisibility(View.VISIBLE);
 
@@ -52,6 +62,8 @@ public class SearchViewModel extends BaseObservable {
         playlistsRecView = activity.findViewById(R.id.playlists_rec);
 
         searchEditText = activity.findViewById(R.id.search_bar);
+        searchEditText.setSelected(true);
+        searchEditText.requestFocus();
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,9 +77,11 @@ public class SearchViewModel extends BaseObservable {
 
                 System.out.printf("Current string: %s, length: %d\n", charSequence, charSequence.length());
                 if (query.isEmpty() || charSequence.length() < 1) {
+                    delete.setVisibility(View.GONE);
                     placeholder.setVisibility(View.VISIBLE);
                     resetRecs();
                 } else {
+                    delete.setVisibility(View.VISIBLE);
                     placeholder.setVisibility(View.GONE);
                     search(query);
                 }
@@ -129,8 +143,11 @@ public class SearchViewModel extends BaseObservable {
 
         // search by artist name
         for (String name : SongsProps.getDistinctAuthors()) {
-            if (name.toLowerCase().contains(query))
-                result.add(new Song(SongsProps.songs.get(SongsProps.authors.indexOf(name))));
+            if (!name.toLowerCase().contains(query)) continue;
+            ArrayList<String> titles = SongsProps.getArtistSongs(name);
+
+            for (String title : titles)
+                result.add(new Song(title));
         }
 
         return result;
