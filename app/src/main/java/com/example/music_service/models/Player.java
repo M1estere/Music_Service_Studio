@@ -190,6 +190,38 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
+    public static void insertInQueue(String title, int index) {
+        title = Convert.getTitleFromPath(title);
+        String path = Convert.getPathFromTitle(title);
+
+        String current = Globs.getTitlesPaths().get(Globs.currentTrackNumber);
+
+        if (current.equals(path)) return;
+
+        if (Globs.getTitles().contains(title)) {
+            int trackIndex = Globs.getTitles().indexOf(title);
+            deleteFromQueue(path);
+
+            index--;
+            if (trackIndex > Globs.currentTrackNumber) index++;
+        }
+
+        Globs.currentSongs.add(index, new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
+        Globs.currentTrackNumber = Globs.getTitlesPaths().indexOf(current);
+
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
+    }
+
+    public static void addNextToQueue(Playlist playlist) {
+        ArrayList<String> titles = playlist.getSongTitles();
+
+        for (int i = 0; i < titles.size(); i++) {
+            int count = Globs.currentTrackNumber + (i + 1);
+            insertInQueue(titles.get(i), count);
+        }
+    }
+
     public static void deleteFromQueue(String name) {
         String path = Convert.getPathFromTitle(name);
 

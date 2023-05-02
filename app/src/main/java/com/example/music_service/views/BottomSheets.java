@@ -126,7 +126,7 @@ public class BottomSheets {
                     return;
                 }
 
-//                Player.addNextToQueue(title.getText().toString());
+                Player.addNextToQueue(PlaylistSystem.getCurrentPlaylist());
 
                 bottomSheetDialog.dismiss();
             }
