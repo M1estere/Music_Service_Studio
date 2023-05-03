@@ -11,16 +11,23 @@ import com.example.music_service.viewModels.AccountActivityViewModel;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private AccountActivityBinding accountActivityBinding;
+    private AccountActivityViewModel activityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_activity);
 
-        accountActivityBinding = DataBindingUtil.setContentView(this, R.layout.account_activity);
-        AccountActivityViewModel activityViewModel = new AccountActivityViewModel(this);
+        AccountActivityBinding accountActivityBinding = DataBindingUtil.setContentView(this, R.layout.account_activity);
+        activityViewModel = new AccountActivityViewModel(this);
 
         accountActivityBinding.setViewModel(activityViewModel);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.printf("Restarted\n");
+        activityViewModel = new AccountActivityViewModel(this);
     }
 }

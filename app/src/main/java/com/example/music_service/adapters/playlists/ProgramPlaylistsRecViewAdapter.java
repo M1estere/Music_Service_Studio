@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.playlists;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -8,62 +8,57 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.music_service.R;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.views.UserPlaylistInfoActivity;
+import com.example.music_service.views.PlaylistInfoActivity;
 
 import java.util.ArrayList;
 
-public class SearchPlaylistsAdapter extends RecyclerView.Adapter<SearchPlaylistsAdapter.ViewHolder> {
+public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<ProgramPlaylistsRecViewAdapter.ViewHolder> {
 
     private final Context context;
-
     private ArrayList<Playlist> playlists = new ArrayList<>();
 
-    public SearchPlaylistsAdapter(Context context) {
+    public ProgramPlaylistsRecViewAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public SearchPlaylistsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_playlist_item, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.program_playlist_item, parent, false);
 
-        return new SearchPlaylistsAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchPlaylistsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
-        holder.listNameTxt.setText(playlists.get(pos).getPlaylistName());
-
-        Glide.with(holder.itemView)
-                .load(R.drawable.ic_launcher_background)
-                .thumbnail(0.05f)
-                .into(holder.cover);
+        holder.playlistTitle.setText(playlists.get(pos).getPlaylistName());
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                String name = playlists.get(pos).getPlaylistName();
+
                 goToPlaylistInfo(holder, pos);
             }
         });
     }
 
-    private void goToPlaylistInfo(SearchPlaylistsAdapter.ViewHolder holder, int pos) {
+    private void goToPlaylistInfo(ViewHolder holder, int pos) {
         PlaylistSystem.setCurrentPlaylist(playlists.get(pos));
 
-        Intent intent = new Intent(context, UserPlaylistInfoActivity.class);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.listNameTxt, "title"), Pair.create(holder.cover, "play_cover"));
+        Intent intent = new Intent(context, PlaylistInfoActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.playlistTitle, "title"), Pair.create(holder.cover, "play_cover"));
         context.startActivity(intent, options.toBundle());
     }
 
@@ -80,16 +75,16 @@ public class SearchPlaylistsAdapter extends RecyclerView.Adapter<SearchPlaylists
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView listNameTxt;
+        private final TextView playlistTitle;
 
+        private final CardView cover;
         private final CardView parent;
-        private final ImageView cover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            listNameTxt = itemView.findViewById(R.id.list_title);
-            cover = itemView.findViewById(R.id.list_cover);
+            playlistTitle = itemView.findViewById(R.id.playlist_title);
+            cover = itemView.findViewById(R.id.content);
 
             parent = itemView.findViewById(R.id.parent);
         }

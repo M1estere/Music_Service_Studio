@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.artists;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -23,35 +23,35 @@ import com.example.music_service.views.ArtistInfoActivity;
 
 import java.util.ArrayList;
 
-public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAdapter.ViewHolder> {
+public class SearchArtistsAdapter extends RecyclerView.Adapter<SearchArtistsAdapter.ViewHolder> {
+
     private final Context context;
+
     private ArrayList<Author> artists = new ArrayList<>();
 
-    public ArtistsRecViewAdapter(Context context) {
+    public SearchArtistsAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.modern_artist_block, parent, false);
+    public SearchArtistsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_artist_item, parent, false);
 
-        return new ViewHolder(view);
+        return new SearchArtistsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchArtistsAdapter.ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
-        holder.artistName.setText(artists.get(pos).getAuthorName());
-        holder.artistName.setSelected(true);
+        holder.authorNameTxt.setText(artists.get(pos).getAuthorName());
 
         Glide.with(holder.itemView)
                 .load(PlaylistSystem.findArtistFirstSong(artists.get(pos).getAuthorName()))
                 .thumbnail(0.05f)
-                .into(holder.image);
+                .into(holder.cover);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 goToArtistInfo(holder, pos);
@@ -59,11 +59,11 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         });
     }
 
-    private void goToArtistInfo(ArtistsRecViewAdapter.ViewHolder holder, int pos) {
+    private void goToArtistInfo(SearchArtistsAdapter.ViewHolder holder, int pos) {
         PlaylistSystem.setCurrentAuthor(artists.get(pos));
 
         Intent intent = new Intent(context, ArtistInfoActivity.class);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.artistName, "name"), Pair.create(holder.artistImage, "artist_image"));
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.authorNameTxt, "name"), Pair.create(holder.imageCover, "artist_image"));
         context.startActivity(intent, options.toBundle());
     }
 
@@ -72,30 +72,29 @@ public class ArtistsRecViewAdapter extends RecyclerView.Adapter<ArtistsRecViewAd
         return artists.size();
     }
 
-    public void setAuthors(ArrayList<Author> artists) {
-        this.artists = artists;
+    public void setArtists(ArrayList<Author> authors) {
+        artists = authors;
 
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView artistName;
+        private final TextView authorNameTxt;
 
         private final CardView parent;
-        private final CardView artistImage;
-
-        private final ImageView image;
+        private final ImageView cover;
+        private final CardView imageCover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            artistName = itemView.findViewById(R.id.artist_name);
+            authorNameTxt = itemView.findViewById(R.id.artist_name);
+            cover = itemView.findViewById(R.id.artist_image);
+
+            imageCover = itemView.findViewById(R.id.image_area);
 
             parent = itemView.findViewById(R.id.parent);
-            artistImage = itemView.findViewById(R.id.artist_image);
-
-            image = itemView.findViewById(R.id.image);
         }
     }
 }

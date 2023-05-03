@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.songs;
 
 import android.content.Context;
 import android.view.LayoutInflater;

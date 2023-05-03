@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.UserPlaylistsRecViewAdapter;
-import com.example.music_service.models.CustomPlaylists;
+import com.example.music_service.adapters.playlists.UserPlaylistsRecViewAdapter;
 import com.example.music_service.models.Playlist;
+import com.example.music_service.models.firebase.CustomPlaylists;
 
 import java.util.ArrayList;
 

@@ -13,6 +13,7 @@ import com.example.music_service.databinding.ActivityMainBinding;
 import com.example.music_service.fragments.HomeFragment;
 import com.example.music_service.fragments.LibraryFragment;
 import com.example.music_service.fragments.PersonalFragment;
+import com.example.music_service.models.data.DataLoader;
 import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.example.music_service.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         replaceFragment(new HomeFragment());
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+
+        DataLoader.loadCurrentUserInfo(this);
     }
 
     private void replaceFragment(Fragment fragment) {

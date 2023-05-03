@@ -42,17 +42,24 @@
                 app:cardCornerRadius="90dp">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="105dp"
-                    android:layout_height="105dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="90dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@color/teal_200" />
 
                     <ImageView
                         android:id="@+id/user_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -72,7 +79,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@={viewModel.currentUserName}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="25sp"
@@ -84,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
-                    android:text="@={viewModel.currentUserUsername}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -106,6 +111,7 @@
                     android:layout_width="270dp"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/purple_500"
+                    android:onClick="@{() -> viewModel.personalize()}"
                     android:text="@string/personalize"
                     android:textColor="@color/white"
                     android:textSize="20sp" />

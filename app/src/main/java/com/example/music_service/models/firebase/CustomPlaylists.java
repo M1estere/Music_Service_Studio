@@ -1,4 +1,4 @@
-package com.example.music_service.models;
+package com.example.music_service.models.firebase;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.music_service.R;
+import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.viewModels.UserPlaylistsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;

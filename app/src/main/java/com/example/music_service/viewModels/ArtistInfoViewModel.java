@@ -1,7 +1,6 @@
 package com.example.music_service.viewModels;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.music_service.R;
-import com.example.music_service.adapters.ArtistTracksAdapter;
+import com.example.music_service.adapters.songs.ArtistTracksAdapter;
 import com.example.music_service.models.Author;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;

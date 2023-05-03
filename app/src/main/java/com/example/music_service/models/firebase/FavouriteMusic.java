@@ -1,4 +1,4 @@
-package com.example.music_service.models;
+package com.example.music_service.models.firebase;
 
 import android.app.Activity;
 import android.widget.Toast;

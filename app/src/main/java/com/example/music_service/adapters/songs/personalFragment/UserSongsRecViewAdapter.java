@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.songs.personalFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,37 +18,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.music_service.R;
-import com.example.music_service.models.CustomPlaylists;
-import com.example.music_service.models.FavouriteMusic;
 import com.example.music_service.models.Player;
+import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.firebase.FavouriteMusic;
+import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
-import com.example.music_service.models.globals.PlaylistSystem;
-import com.example.music_service.viewModels.UserPlaylistInfoViewModel;
 import com.example.music_service.views.BottomSheets;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylistTracksAdapter.ViewHolder> {
+public class UserSongsRecViewAdapter extends RecyclerView.Adapter<UserSongsRecViewAdapter.ViewHolder> {
 
     private final Context context;
-    private final UserPlaylistInfoViewModel playlistInfoViewModel;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public UserPlaylistTracksAdapter(Context context, UserPlaylistInfoViewModel pv) {
+    public UserSongsRecViewAdapter(Context context) {
         this.context = context;
-        playlistInfoViewModel = pv;
     }
 
     @NonNull
     @Override
-    public UserPlaylistTracksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.playlist_songs_item, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_song_item, parent, false);
 
-        return new UserPlaylistTracksAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -56,30 +53,33 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
         int pos = holder.getAdapterPosition();
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
-
         holder.infoButton.setTag(holder.trackNameTxt.getText().toString());
+
         holder.trackNameTxt.setSelected(true);
 
-        Glide.with(holder.itemView).load(songs.get(pos).getCover()).thumbnail(0.05f).into(holder.cover);
-
-        holder.infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSongInfo(view, pos);
-            }
-        });
+        Glide.with(holder.itemView)
+                .load(songs.get(pos).getCover())
+                .thumbnail(0.05f)
+                .into(holder.cover);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String trackName = holder.trackNameTxt.getText().toString();
-                Toast.makeText(context, "(Playlist " + PlaylistSystem.getCurrentPlaylist().getPlaylistName() + ") " + trackName + " chosen", Toast.LENGTH_SHORT).show();
-                playlistInfoViewModel.chooseTrack(trackName);
+                Toast.makeText(context, "(Favourites) " + trackName + " chosen", Toast.LENGTH_SHORT).show();
+                chooseTrackFromFavs(trackName);
+            }
+        });
+
+        holder.infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSongInfo(view);
             }
         });
     }
 
-    public void openSongInfo(View view, int position) {
+    public void openSongInfo(View view) {
         String text = view.getTag().toString();
         Song song = SongsProps.getSongByName(text);
 
@@ -98,7 +98,6 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
         CardView playButton = bottomSheetView.findViewById(R.id.play_button);
         CardView playNextButton = bottomSheetView.findViewById(R.id.queue_next_button);
         CardView playLastButton = bottomSheetView.findViewById(R.id.queue_end_button);
-
         CardView removeButton = bottomSheetView.findViewById(R.id.remove_button);
         CardView addToPlaylistButton = bottomSheetView.findViewById(R.id.add_to_list_button);
 
@@ -111,11 +110,11 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
                 .thumbnail(0.05f).
                 into(cover);
 
-        ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
-        heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
-
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
+
+        ImageView heart = bottomSheetView.findViewById(R.id.fav_button);
+        heart.setImageDrawable(FavouriteMusic.contains(song.getTitle()) ? AppCompatResources.getDrawable(context, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(context, R.drawable.heart_unfilled_40));
 
         addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,26 +124,11 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
             }
         });
 
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String playlistName = PlaylistSystem.getCurrentPlaylist().getPlaylistName();
-                String name = title.getText().toString();
-
-                int id = CustomPlaylists.removeSongFromPlaylist(context, playlistName, name);
-                songs.remove(id);
-                PlaylistSystem.getCurrentPlaylist().setSongTitles(PlaylistSystem.getTitlesFromSongs(songs));
-
-                notifyItemRemoved(id);
-
-                bottomSheetDialog.dismiss();
-            }
-        });
-
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playlistInfoViewModel.chooseTrack(title.getText().toString());
+                chooseTrackFromFavs(title.getText().toString());
+
                 bottomSheetDialog.dismiss();
             }
         });
@@ -177,6 +161,15 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
             }
         });
 
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FavouriteMusic.removeFromFavourites(title.getText().toString(), (Activity) context);
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,6 +180,19 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
+    }
+
+    private void chooseTrackFromFavs(String title) {
+        int currentTrackIndex = 0;
+        for (int i = 0; i < FavouriteMusic.size(); i++) {
+            String name = Convert.getTitleFromPath(FavouriteMusic.getArrayTitles().get(i));
+            if (name.equals(title)) currentTrackIndex = i;
+        }
+
+        Playlist newPlaylist = new Playlist("Favourites");
+        newPlaylist.setSongTitles(FavouriteMusic.getArrayTitles());
+
+        Player.updateQueue(newPlaylist.getSongTitles(), currentTrackIndex);
     }
 
     @Override
@@ -214,7 +220,6 @@ public class UserPlaylistTracksAdapter extends RecyclerView.Adapter<UserPlaylist
 
             trackNameTxt = itemView.findViewById(R.id.track_title);
             authorNameTxt = itemView.findViewById(R.id.track_author);
-
             infoButton = itemView.findViewById(R.id.info_button);
             cover = itemView.findViewById(R.id.song_cover);
 

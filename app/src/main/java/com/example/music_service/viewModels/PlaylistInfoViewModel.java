@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.PlaylistTracksAdapter;
-import com.example.music_service.models.CustomPlaylists;
+import com.example.music_service.adapters.songs.PlaylistTracksAdapter;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
+import com.example.music_service.models.firebase.CustomPlaylists;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.BottomSheets;
 import com.example.music_service.views.SearchActivity;

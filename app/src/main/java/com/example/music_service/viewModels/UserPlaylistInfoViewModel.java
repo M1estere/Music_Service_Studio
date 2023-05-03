@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.UserPlaylistTracksAdapter;
+import com.example.music_service.adapters.songs.UserPlaylistTracksAdapter;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.globals.Convert;

@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.songs.libraryFragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,30 +17,31 @@ import com.bumptech.glide.Glide;
 import com.example.music_service.R;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.LibraryFragmentData;
+import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.BottomSheets;
 
 import java.util.ArrayList;
 
-public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecViewAdapter.ViewHolder> {
+public class BestTracksAdapter extends RecyclerView.Adapter<BestTracksAdapter.ViewHolder> {
 
     private final Context context;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public DailyTopRecViewAdapter(Context context) {
+    public BestTracksAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public DailyTopRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_tracks_item, parent, false);
+    public BestTracksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.best_item, parent, false);
 
-        return new DailyTopRecViewAdapter.ViewHolder(view);
+        return new BestTracksAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DailyTopRecViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BestTracksAdapter.ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
         holder.trackNameTxt.setText(songs.get(pos).getTitle());
         holder.authorNameTxt.setText(songs.get(pos).getArtist());
@@ -55,15 +56,15 @@ public class DailyTopRecViewAdapter extends RecyclerView.Adapter<DailyTopRecView
             @Override
             public void onClick(View view) {
                 String trackName = holder.trackNameTxt.getText().toString();
-                Toast.makeText(context, "(Daily Top) " + trackName + " chosen", Toast.LENGTH_SHORT).show();
-                BottomSheets.chooseTrackFromPlaylist(LibraryFragmentData.dailyTopSongs, trackName);
+                Toast.makeText(context, "(Best) " + trackName + " chosen", Toast.LENGTH_SHORT).show();
+                BottomSheets.chooseTrackFromPlaylist(LibraryFragmentData.bestSongs, trackName, "Best Songs");
             }
         });
 
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheets.openSongInfoNoRemoving(context, view, LibraryFragmentData.dailyTopSongs);
+                BottomSheets.openSongInfoNoRemoving(context, view, PlaylistSystem.getPlaylistOfSongsSongs("Best Songs", LibraryFragmentData.bestSongs));
             }
         });
     }

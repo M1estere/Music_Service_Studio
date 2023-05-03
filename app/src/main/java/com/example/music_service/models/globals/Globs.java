@@ -1,6 +1,8 @@
 package com.example.music_service.models.globals;
 
+import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -57,6 +59,20 @@ public class Globs {
                 index = i;
 
         currentSongs.remove(index);
+    }
+
+    public static void resetAllStatic() {
+        currentSongs.clear();
+        currentTrackNumber = 0;
+
+        PlaylistSystem.setCurrentPlaylist(null);
+        PlaylistSystem.setCurrentAuthor(null);
+
+        SongsProps.songs.clear();
+        SongsProps.covers.clear();
+        SongsProps.authors.clear();
+
+        CreateNotification.destroyNotification();
     }
 
 }

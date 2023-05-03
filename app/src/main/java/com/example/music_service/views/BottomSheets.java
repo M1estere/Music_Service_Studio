@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.music_service.R;
-import com.example.music_service.adapters.PlaylistsAddAdapter;
-import com.example.music_service.models.CustomPlaylists;
-import com.example.music_service.models.FavouriteMusic;
+import com.example.music_service.adapters.playlists.PlaylistsAddAdapter;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.firebase.CustomPlaylists;
+import com.example.music_service.models.firebase.FavouriteMusic;
 import com.example.music_service.models.globals.Convert;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.models.globals.PlaylistSystem;
@@ -140,7 +140,7 @@ public class BottomSheets {
                     return;
                 }
 
-//                Player.addToQueueEnd(title.getText().toString());
+                Player.addToQueueEnd(PlaylistSystem.getCurrentPlaylist());
 
                 bottomSheetDialog.dismiss();
             }

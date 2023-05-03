@@ -1,14 +1,11 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.playlists;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,19 +18,19 @@ import com.example.music_service.views.PlaylistInfoActivity;
 
 import java.util.ArrayList;
 
-public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<ProgramPlaylistsRecViewAdapter.ViewHolder> {
+public class MorningRecViewAdapter extends RecyclerView.Adapter<MorningRecViewAdapter.ViewHolder> {
 
     private final Context context;
     private ArrayList<Playlist> playlists = new ArrayList<>();
 
-    public ProgramPlaylistsRecViewAdapter(Context context) {
+    public MorningRecViewAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.program_playlist_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.morning_rec_item, parent, false);
 
         return new ViewHolder(view);
     }
@@ -41,25 +38,23 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
-        holder.playlistTitle.setText(playlists.get(pos).getPlaylistName());
-
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String name = playlists.get(pos).getPlaylistName();
 
-                goToPlaylistInfo(holder, pos);
+                Toast.makeText(context, "(Morning) " + name + " was chosen", Toast.LENGTH_SHORT).show();
+                goToPlaylistInfo(pos);
             }
         });
     }
 
-    private void goToPlaylistInfo(ViewHolder holder, int pos) {
+    private void goToPlaylistInfo(int pos) {
         PlaylistSystem.setCurrentPlaylist(playlists.get(pos));
 
         Intent intent = new Intent(context, PlaylistInfoActivity.class);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, Pair.create(holder.playlistTitle, "title"), Pair.create(holder.cover, "play_cover"));
-        context.startActivity(intent, options.toBundle());
+        context.startActivity(intent);
     }
 
     @Override
@@ -75,16 +70,10 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView playlistTitle;
-
-        private final CardView cover;
         private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            playlistTitle = itemView.findViewById(R.id.playlist_title);
-            cover = itemView.findViewById(R.id.content);
 
             parent = itemView.findViewById(R.id.parent);
         }

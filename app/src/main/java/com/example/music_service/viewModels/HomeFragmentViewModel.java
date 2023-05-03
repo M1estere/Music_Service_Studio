@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.MorningRecViewAdapter;
-import com.example.music_service.adapters.ProgramPlaylistsRecViewAdapter;
+import com.example.music_service.adapters.playlists.MorningRecViewAdapter;
+import com.example.music_service.adapters.playlists.ProgramPlaylistsRecViewAdapter;
 import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.models.data.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;

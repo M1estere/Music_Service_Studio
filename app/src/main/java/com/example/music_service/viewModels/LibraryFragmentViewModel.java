@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.ArtistsRecViewAdapter;
-import com.example.music_service.adapters.BestTracksAdapter;
-import com.example.music_service.adapters.DailyTopRecViewAdapter;
+import com.example.music_service.adapters.artists.ArtistsRecViewAdapter;
+import com.example.music_service.adapters.songs.libraryFragment.BestTracksAdapter;
+import com.example.music_service.adapters.songs.libraryFragment.DailyTopRecViewAdapter;
 import com.example.music_service.models.Author;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;

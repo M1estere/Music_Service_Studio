@@ -1,5 +1,6 @@
 package com.example.music_service.models;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -206,6 +207,7 @@ public class Player {
             if (trackIndex > Globs.currentTrackNumber) index++;
         }
 
+        if (index > Globs.currentSongs.size()) index = Globs.currentSongs.size();
         Globs.currentSongs.add(index, new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
         Globs.currentTrackNumber = Globs.getTitlesPaths().indexOf(current);
 
@@ -218,6 +220,16 @@ public class Player {
 
         for (int i = 0; i < titles.size(); i++) {
             int count = Globs.currentTrackNumber + (i + 1);
+            insertInQueue(titles.get(i), count);
+        }
+    }
+
+    public static void addToQueueEnd(Playlist playlist) {
+        ArrayList<String> titles = playlist.getSongTitles();
+
+        for (int i = 0; i < titles.size(); i++) {
+            int count = Globs.currentSongs.size() + i;
+
             insertInQueue(titles.get(i), count);
         }
     }
@@ -244,25 +256,20 @@ public class Player {
     }
 
     public static RepeatingState changeRepeatingState() {
-        String returner = "";
         switch (playerRepeatingState) {
             case NoRepeat: {
                 playerRepeatingState = RepeatingState.RepeatPlaylist;
-                returner = "0";
                 break;
             }
             case RepeatPlaylist: {
                 playerRepeatingState = RepeatingState.RepeatTrack;
-                returner = "1";
                 break;
             }
             case RepeatTrack: {
                 playerRepeatingState = RepeatingState.NoRepeat;
-                returner = "";
                 break;
             }
             default: {
-                returner = "WTF";
                 break;
             }
         }

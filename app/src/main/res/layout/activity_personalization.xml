@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.music_service.viewModels.PersonalizationActivityViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/purple_700">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp">
+
+            <RelativeLayout
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <TextView
+                    android:id="@+id/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:onClick="@{() -> viewModel.cancel()}"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Edit profile"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:onClick="@{() -> viewModel.save()}"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/new_photo_card"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/top_bar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="180dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@color/teal_200" />
+
+                <ImageView
+                    android:id="@+id/user_image"
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:onClick="@{() -> viewModel.openGallery()}"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/camera"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera_100" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/change_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/new_photo_card"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Change Profile Photo"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp">
+
+                <TextView
+                    android:id="@+id/change_data_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="Change account information"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <EditText
+                    android:id="@+id/name_edit_text"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/change_data_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="22dp"
+                    android:backgroundTint="@color/grey"
+                    android:hint="Start typing..."
+                    android:text="Ilya Solovyev"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name_edit_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:text="This is your name in app"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/nickname_edit_text"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/name_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="22dp"
+                    android:backgroundTint="@color/grey"
+                    android:hint="Start typing..."
+                    android:text="M1estere"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/nickname_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nickname_edit_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:text="This is your nickname"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

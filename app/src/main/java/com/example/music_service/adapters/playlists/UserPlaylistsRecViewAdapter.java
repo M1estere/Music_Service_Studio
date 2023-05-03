@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.playlists;
 
 import android.app.Activity;
 import android.app.ActivityOptions;

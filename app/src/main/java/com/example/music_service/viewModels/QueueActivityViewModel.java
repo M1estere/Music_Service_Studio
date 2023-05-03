@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.QueueRecViewAdapter;
-import com.example.music_service.models.FavouriteMusic;
+import com.example.music_service.adapters.songs.QueueRecViewAdapter;
 import com.example.music_service.models.Player;
+import com.example.music_service.models.firebase.FavouriteMusic;
 import com.example.music_service.models.globals.Globs;
 
 import java.util.Collections;

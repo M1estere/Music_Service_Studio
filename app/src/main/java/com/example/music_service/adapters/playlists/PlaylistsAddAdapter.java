@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.playlists;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.models.Playlist;
+import com.example.music_service.models.firebase.CustomPlaylists;
 
 import java.util.ArrayList;
 

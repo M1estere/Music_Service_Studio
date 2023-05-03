@@ -1,4 +1,4 @@
-package com.example.music_service.adapters;
+package com.example.music_service.adapters.viewPages;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

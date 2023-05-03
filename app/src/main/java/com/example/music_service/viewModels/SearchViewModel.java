@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_service.R;
-import com.example.music_service.adapters.SearchArtistsAdapter;
-import com.example.music_service.adapters.SearchPlaylistsAdapter;
-import com.example.music_service.adapters.SearchSongsAdapter;
+import com.example.music_service.adapters.artists.SearchArtistsAdapter;
+import com.example.music_service.adapters.playlists.SearchPlaylistsAdapter;
+import com.example.music_service.adapters.songs.SearchSongsAdapter;
 import com.example.music_service.models.Author;
-import com.example.music_service.models.CustomPlaylists;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.models.firebase.CustomPlaylists;
 import com.example.music_service.models.globals.Convert;
 
 import java.util.ArrayList;
