@@ -3,6 +3,9 @@ package com.example.music_service.models;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.text.Html;
+
+import com.example.music_service.R;
 
 public class BooleanDialog {
 
@@ -14,9 +17,9 @@ public class BooleanDialog {
         ans_true = trueProc;
         ans_false = falseProc;
 
-        AlertDialog dialog = new AlertDialog.Builder(act).create();
+        AlertDialog dialog = new AlertDialog.Builder(act, R.style.MyDialogTheme).create();
         dialog.setTitle(Title);
-        dialog.setMessage(ConfirmText);
+        dialog.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + ConfirmText + "</font"));
         dialog.setCancelable(false);
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, OkBtn,
                 new DialogInterface.OnClickListener() {
