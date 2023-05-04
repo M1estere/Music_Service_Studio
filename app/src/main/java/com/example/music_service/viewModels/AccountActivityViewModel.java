@@ -9,6 +9,7 @@ import androidx.databinding.BaseObservable;
 
 import com.example.music_service.PersonalizationActivity;
 import com.example.music_service.R;
+import com.example.music_service.models.BooleanDialog;
 import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.Player;
 import com.example.music_service.models.User;
@@ -39,14 +40,34 @@ public class AccountActivityViewModel extends BaseObservable {
 
 
     public void logOut() {
-        Globs.recheckLogin = false;
-        Globs.resetAllStatic();
-        CreateNotification.destroyNotification();
-        FirebaseAuth.getInstance().signOut();
-        Player.drop();
+        boolean logOut = BooleanDialog.ConfirmDialog(activity, "Warning",
+                "Are you sure you want to log out?", "Cancel", "Confirm",
+                logOutProcess(), empty());
+    }
 
-        Intent intent = new Intent(activity, AuthenticationActivity.class);
-        activity.startActivity(intent);
+    private Runnable logOutProcess() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                Globs.recheckLogin = false;
+                Globs.resetAllStatic();
+                CreateNotification.destroyNotification();
+                FirebaseAuth.getInstance().signOut();
+                Player.drop();
+
+                Intent intent = new Intent(activity, AuthenticationActivity.class);
+                activity.startActivity(intent);
+            }
+        };
+    }
+
+    private Runnable empty() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                return;
+            }
+        };
     }
 
     public void personalize() {

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -72,6 +73,9 @@ public class MusicPlayerViewModel extends BaseObservable {
     private ImageButton bigPause;
     private ImageButton smallPause;
 
+    private ImageButton nextTrack;
+    private ImageButton previousTrack;
+
     public MusicPlayerViewModel(Activity mainActivity) {
         activity = mainActivity;
         setIds();
@@ -107,6 +111,9 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         bigPause = activity.findViewById(R.id.pause_button);
         smallPause = activity.findViewById(R.id.pause);
+
+        nextTrack = activity.findViewById(R.id.next_button);
+        previousTrack = activity.findViewById(R.id.previous_button);
     }
 
     private void startElementsSetup() {
@@ -327,6 +334,18 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     /*Primary Song Controls*/
     public void previousSong() {
+        previousTrack.animate()
+                .scaleX(0.5f)
+                .scaleY(0.5f)
+                .setDuration(0)
+                .start();
+
+        previousTrack.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .setDuration(200)
+                .start();
+
         Globs.currentTrackNumber = Player.previousSong();
 
         updateUI();
@@ -334,6 +353,19 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void changePlayingState() {
+        bigPause.animate()
+                .scaleX(0.5f)
+                .scaleY(0.5f)
+                .setDuration(0)
+                .start();
+
+        bigPause.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .setInterpolator(new BounceInterpolator())
+                .setDuration(500)
+                .start();
+
         if (Player.isPlay()) pauseSong();
         else playSong();
 
@@ -341,6 +373,18 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void nextSong() {
+        nextTrack.animate()
+                .scaleX(0.5f)
+                .scaleY(0.5f)
+                .setDuration(0)
+                .start();
+
+        nextTrack.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .setDuration(200)
+                .start();
+
         Player.nextSong();
 
         updateUI();

@@ -1,6 +1,12 @@
 {
   "tracks": [
     {
+      "title": "after_dark.mp3",
+      "cover": "1xro_1tBXRxEdO5s-4S_Xk-VjBTprhdHB",
+      "artist": "Mr. Kitty",
+      "path": "1oCtb_lYat5u2zocGfp4zohS3-Z4dnvGu"
+    },
+    {
       "title": "alive.mp3",
       "cover": "1TBoKpU8YyN67nP-Zvi37rah4629m7izH",
       "artist": "Warbly Jets",
@@ -301,10 +307,124 @@
       "path": "1s-dVrfzoQ6kq1zzAoHme0dIPZvvRCVZ0"
     },
     {
+      "title": "whistle.mp3",
+      "cover": "1eQEbd8Z91wDT3svkpLxs_6OyJghNTjFN",
+      "artist": "Glee Cast",
+      "path": "1eQEbd8Z91wDT3svkpLxs_6OyJghNTjFN"
+    },
+    {
       "title": "world_adventure.mp3",
       "cover": "1lHi8itF0gTFq2lhWmfSA7mqe4K8VX-4S",
       "artist": "Sonic Unleashed OST",
       "path": "1EZ-5Q-XwLu1PU-u1o5vYnaKmhy_Z96Uv"
+    },
+    {
+      "title": "womanizer.mp3",
+      "cover": "1tJ0VTOhoOn0QCHcGBkZsMm-sbBYzAHiL",
+      "artist": "Glee Cast",
+      "path": "1oII-FpE07FY92KzN-IMhTFG86rNpbRuY"
+    },
+    {
+      "title": "baby_one_more_time.mp3",
+      "cover": "1tJ0VTOhoOn0QCHcGBkZsMm-sbBYzAHiL",
+      "artist": "Glee Cast",
+      "path": "1v0d9UU7gljVGmoGYO3F62cFlW4sAqKEN"
+    },
+    {
+      "title": "oops_i_did_it_again.mp3",
+      "cover": "1tJ0VTOhoOn0QCHcGBkZsMm-sbBYzAHiL",
+      "artist": "Glee Cast",
+      "path": "19zvWDm5lwFWYKyxVtLGD80ANRD-l6-f-"
+    },
+    {
+      "title": "toxic.mp3",
+      "cover": "1tJ0VTOhoOn0QCHcGBkZsMm-sbBYzAHiL",
+      "artist": "Glee Cast",
+      "path": "1tex4_QOn0fm2RZPs2D0_KbEvU0tglagY"
+    },
+    {
+      "title": "i_believe_i_can_fly.mp3",
+      "cover": "1lKdA3zlVKDH0Huk3xhoDDVOAesptpuxb",
+      "artist": "Glee Cast",
+      "path": "1yFWyEbAMr9L7exhtJoRcQ8Ob_vR6H6au"
+    },
+    {
+      "title": "moves_like_jagger_glee.mp3",
+      "cover": "1lKdA3zlVKDH0Huk3xhoDDVOAesptpuxb",
+      "artist": "Glee Cast",
+      "path": "1eIm06BT5i32xhgORyLBd7zkcxXloZZLk"
+    },
+    {
+      "title": "survivor.mp3",
+      "cover": "1lKdA3zlVKDH0Huk3xhoDDVOAesptpuxb",
+      "artist": "Glee Cast",
+      "path": "1sD7C4YLidPNzT7JsvozJyK99J9wJW7rT"
+    },
+    {
+      "title": "hurt_you.mp3",
+      "cover": "1z9JJwZ9mdr8aPxwMAWF2xIJPfM0PAwD2",
+      "artist": "The Weeknd",
+      "path": "1Pf-wsliRRWSgze2MeGxyJgRjxKDxeq1s"
+    },
+    {
+      "title": "i_was_never_there.mp3",
+      "cover": "1z9JJwZ9mdr8aPxwMAWF2xIJPfM0PAwD2",
+      "artist": "The Weeknd",
+      "path": "1ICje9_I8uBftkLZ2IBCm5_bWahvbsUT2"
+    },
+    {
+      "title": "glow.mp3",
+      "cover": "17USW0rZDAzSYsiqMGFz9e8eQfq2wDGu0",
+      "artist": "The Fall",
+      "path": "1VX4VP0-McKUHUUXOntpReC3bKQnMRF3B"
+    },
+    {
+      "title": "senorita.mp3",
+      "cover": "1D2mRDiIzMaeFvd7gfW0NxWZ83PhN3TFO",
+      "artist": "Shawn Mendes",
+      "path": "1yGZtGAGm32vP2r5gnibp1LXtyAcDimk5"
+    },
+    {
+      "title": "i_know_what_you_did_last_summer.mp3",
+      "cover": "1D2mRDiIzMaeFvd7gfW0NxWZ83PhN3TFO",
+      "artist": "Shawn Mendes",
+      "path": "1plBX_Q5R_vVlfC7_3h3k_CLx380NLrgL"
+    },
+    {
+      "title": "dont_stop_me_now.mp3",
+      "cover": "1hWuwCTJqsJeGxf5no1Qv3aUfUAxSLv4G",
+      "artist": "The Queen",
+      "path": "1DgqA97vZvUZTcKRJ1s6VRZrMEV9s9qGN"
+    },
+    {
+      "title": "another_one_bites_the_dust.mp3",
+      "cover": "1hWuwCTJqsJeGxf5no1Qv3aUfUAxSLv4G",
+      "artist": "The Queen",
+      "path": "1Ijv_XX-QMryaC-hkpadPdjzyKgCWwRKX"
+    },
+    {
+      "title": "how_do_you_sleep.mp3",
+      "cover": "11XQP010VMeM2fiin1QsHiXAIuaBdVc8V",
+      "artist": "Sam Smith",
+      "path": "14tH1bkDQWRqnALoE_ZEnbvSzNsOJC6aH"
+    },
+    {
+      "title": "dancing_with_a_stranger.mp3",
+      "cover": "1Gi5QWJylnDa7uYjhc5TcUgyblYXmM9cQ",
+      "artist": "Sam Smith",
+      "path": "1CygR9VTN8_yZB-0CSNAIrX2qjsYyrZsA"
+    },
+    {
+      "title": "ocean_drive.mp3",
+      "cover": "1yGITdx5IoYq_vLXg8X1adQWr2dS5EO98",
+      "artist": "Duke Dumont",
+      "path": "1YhmTIT2KhbmayXUFlEhyblWRYkTuKMKF"
+    },
+    {
+      "title": "enemy.mp3",
+      "cover": "134a3SVJs1pmu1ff_EYAT_2BQPEtGK97q",
+      "artist": "Imagine Dragons",
+      "path": "1iEwEzikVkOwthX8Ch0E3kehwcU-1BF9y"
     }
   ]
 }

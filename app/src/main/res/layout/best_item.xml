@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:focusable="true"
+                    android:fontFamily="@font/panton_bold"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
@@ -70,12 +71,13 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:focusable="true"
+                    android:fontFamily="@font/panton_regular"
                     android:letterSpacing=".1"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

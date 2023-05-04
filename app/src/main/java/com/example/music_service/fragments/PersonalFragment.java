@@ -24,7 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class PersonalFragment extends Fragment implements TabLayoutMediator.TabConfigurationStrategy {
 
-    private final String[] tabsTitles = new String[]{"Playlists", "Songs"};
+    private final String[] tabsTitles = new String[]{"PLAYLISTS", "SONGS"};
     private ViewPager2 viewPager2;
     private ImageView image;
     private TextView name;

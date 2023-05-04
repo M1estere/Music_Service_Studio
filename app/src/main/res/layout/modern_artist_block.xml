@@ -40,6 +40,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:ellipsize="marquee"
+            android:fontFamily="@font/panton_regular"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"

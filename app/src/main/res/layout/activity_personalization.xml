@@ -33,8 +33,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:fontFamily="@font/panton_bold"
                     android:onClick="@{() -> viewModel.cancel()}"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -44,10 +45,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Edit profile"
+                    android:fontFamily="@font/panton_extra_bold"
+                    android:letterSpacing=".05"
+                    android:text="@string/edit_profile"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="21sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -55,8 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:onClick="@{() -> viewModel.save()}"
-                    android:text="Save"
+                    android:fontFamily="@font/panton_bold"
+                    android:text="@string/save"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -103,10 +106,13 @@
                 android:layout_below="@id/new_photo_card"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:text="Change Profile Photo"
+                android:fontFamily="@font/panton_light"
+                android:letterSpacing="0.05"
+                android:text="@string/change_profile_photo"
                 android:textAlignment="center"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -114,63 +120,81 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp">
 
-                <TextView
-                    android:id="@+id/change_data_title"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="Change account information"
-                    android:textColor="@color/white"
-                    android:textSize="22sp" />
+                    android:layout_marginTop="20dp">
 
-                <EditText
-                    android:id="@+id/name_edit_text"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/change_data_title"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="22dp"
-                    android:backgroundTint="@color/grey"
-                    android:hint="Start typing..."
-                    android:text="Ilya Solovyev"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/change_data_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/panton_bold"
+                        android:text="@string/change_account_information"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
 
-                <TextView
-                    android:id="@+id/name_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name_edit_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="5dp"
-                    android:text="This is your name in app"
-                    android:textColor="@color/grey"
-                    android:textSize="18sp" />
+                    <EditText
+                        android:id="@+id/name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/change_data_title"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="22dp"
+                        android:backgroundTint="@color/grey"
+                        android:fontFamily="@font/panton_regular"
+                        android:hint="@string/start_typing"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/nickname_edit_text"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/name_title"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="22dp"
-                    android:backgroundTint="@color/grey"
-                    android:hint="Start typing..."
-                    android:text="M1estere"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/name_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name_edit_text"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/panton_light"
+                        android:text="@string/this_is_your_name_in_the_app"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/nickname_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/nickname_edit_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="5dp"
-                    android:text="This is your nickname"
-                    android:textColor="@color/grey"
-                    android:textSize="18sp" />
+                    <EditText
+                        android:id="@+id/nickname_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/name_title"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="22dp"
+                        android:backgroundTint="@color/grey"
+                        android:fontFamily="@font/panton_regular"
+                        android:hint="@string/start_typing"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/nickname_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nickname_edit_text"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/panton_light"
+                        android:text="@string/this_is_your_nickname"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
 
             </RelativeLayout>
 

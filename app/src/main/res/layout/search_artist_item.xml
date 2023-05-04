@@ -52,6 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
+                    android:fontFamily="@font/panton_bold"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
@@ -64,9 +65,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/panton_regular"
                     android:text="Artist"
                     android:textColor="@color/grey"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="normal" />
 
             </LinearLayout>

@@ -5,9 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,10 @@ public class PersonalizationActivityViewModel extends BaseObservable {
     private EditText nicknameEditText;
     private boolean changedImage = false;
 
+    private TextView saveButton;
+
+    private boolean changedSomething = false;
+
     public PersonalizationActivityViewModel(Activity act) {
         activity = act;
 
@@ -55,10 +62,82 @@ public class PersonalizationActivityViewModel extends BaseObservable {
         nameEditText = activity.findViewById(R.id.name_edit_text);
         nicknameEditText = activity.findViewById(R.id.nickname_edit_text);
 
+        saveButton = activity.findViewById(R.id.save_button);
+
         nameEditText.setText(User.getName());
         nicknameEditText.setText(User.getUserName());
 
+        update();
+
+        nameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String text = charSequence.toString();
+
+                if (!text.isEmpty() && !text.equals(User.getName())) {
+                    changedSomething = true;
+                } else {
+                    changedSomething = false;
+                }
+                update();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        nicknameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String text = charSequence.toString();
+
+                if (!text.isEmpty() && !text.equals(User.getName())) {
+                    changedSomething = true;
+                } else {
+                    changedSomething = false;
+                }
+                update();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         image.setImageBitmap(User.getBitmap());
+    }
+
+    private void update() {
+        if (changedSomething) {
+            saveButton.setTextColor(activity.getResources().getColor(R.color.white));
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    save();
+                }
+            });
+        } else {
+            saveButton.setTextColor(activity.getResources().getColor(R.color.grey));
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    return;
+                }
+            });
+        }
     }
 
     public void openGallery() {
@@ -72,11 +151,8 @@ public class PersonalizationActivityViewModel extends BaseObservable {
         changedImage = true;
         cameraTemp.setVisibility(View.GONE);
 
-        image.setImageBitmap(RoundedBitmapDrawableFactory.create(activity.getResources(), bitmap).getBitmap());
-    }
-
-    public void setStartProfileImage(Bitmap bitmap) {
-        cameraTemp.setVisibility(View.GONE);
+        changedSomething = true;
+        update();
 
         image.setImageBitmap(RoundedBitmapDrawableFactory.create(activity.getResources(), bitmap).getBitmap());
     }

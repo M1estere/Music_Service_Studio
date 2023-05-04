@@ -132,8 +132,6 @@ public class LibraryFragmentViewModel extends BaseObservable {
             int randomIndex = Globs.random.nextInt(titles.size());
             String songTitle = titles.get(randomIndex);
 
-            String songUri = SongsProps.uris.get(randomIndex);
-
             titles.remove(songTitle);
             LibraryFragmentData.bestSongs.add(new Song(songTitle, SongsProps.uris.get(SongsProps.songs.indexOf(songTitle))));
         }
@@ -146,7 +144,6 @@ public class LibraryFragmentViewModel extends BaseObservable {
             if (checked.contains(author)) continue;
 
             checked.add(author);
-
             authors.add(new Author(author));
         }
     }
