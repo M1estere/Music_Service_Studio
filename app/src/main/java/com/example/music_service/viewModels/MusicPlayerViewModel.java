@@ -11,6 +11,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -24,6 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -44,35 +46,26 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MusicPlayerViewModel extends BaseObservable {
     private final Activity activity;
-
+    Bitmap currentCover;
     private CardView cover;
-
     private View mainPlayer;
     private View miniPlayerView;
-
     private ImageView mainCoverImage;
     private ImageView miniCoverImage;
     private ImageView heartImage;
-
     private SlidingUpPanelLayout slider;
-
     private TextView mainSongTitle;
     private TextView miniSongTitle;
-
     private String trackName;
     private String authorName;
     private String currentTrackDuration;
     private String currentProgress;
-
     private int maxProgress;
     private int progress;
-
     private SeekBar progressBar;
     private boolean isSeeking = false;
-
     private ImageButton bigPause;
     private ImageButton smallPause;
-
     private ImageButton nextTrack;
     private ImageButton previousTrack;
 
@@ -84,7 +77,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         startElementsSetup();
         startPlayerThread();
 
-        if (Player.getMusicPlayer() != null) updateUI();
+        if (Player.getMusicPlayer() != null) updateUI(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
@@ -159,7 +152,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                 Player.goTo(progress * 1000);
                 isSeeking = false;
 
-                updateUI();
+                updateUI(true);
             }
         });
     }
@@ -233,7 +226,7 @@ public class MusicPlayerViewModel extends BaseObservable {
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED)
-                    updateUI();
+                    updateUI(true);
             }
         });
     }
@@ -348,7 +341,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         Globs.currentTrackNumber = Player.previousSong();
 
-        updateUI();
+        updateUI(true);
         setProgress(0);
     }
 
@@ -369,7 +362,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         if (Player.isPlay()) pauseSong();
         else playSong();
 
-        updateUI();
+        updateUI(true);
     }
 
     public void nextSong() {
@@ -387,7 +380,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         Player.nextSong();
 
-        updateUI();
+        updateUI(true);
         setProgress(0);
     }
 
@@ -400,7 +393,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                 .start();
         Player.playSong();
 
-        updateUI();
+        updateUI(true);
     }
 
     private void pauseSong() {
@@ -412,7 +405,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                 .start();
         Player.pause();
 
-        updateUI();
+        updateUI(true);
     }
 
     /*Special Song Controls*/
@@ -425,6 +418,23 @@ public class MusicPlayerViewModel extends BaseObservable {
     }
 
     public void favouriteTrack() {
+        heartImage.animate()
+                .scaleX(1.25f)
+                .scaleY(1.25f)
+                .setDuration(200)
+                .setInterpolator(new FastOutSlowInInterpolator())
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        heartImage.animate()
+                                .scaleX(1)
+                                .scaleY(1)
+                                .setDuration(150)
+                                .setInterpolator(new OvershootInterpolator())
+                                .start();
+                    }
+                }).start();
+
         boolean added = FavouriteMusic.addToFavourites(Globs.currentSongs.get(Globs.currentTrackNumber).getTitle(), activity);
         heartImage.setImageDrawable(added ? AppCompatResources.getDrawable(activity, R.drawable.heart_filled_40) : AppCompatResources.getDrawable(activity, R.drawable.heart_unfilled_40));
     }
@@ -434,7 +444,7 @@ public class MusicPlayerViewModel extends BaseObservable {
         activity.startActivity(intent);
     }
 
-    public void updateUI() {
+    public void updateUI(boolean create) {
         if (Player.getMusicPlayer() == null) return;
 
         checkPausedState();
@@ -456,19 +466,7 @@ public class MusicPlayerViewModel extends BaseObservable {
                 .thumbnail(0.05f)
                 .into(miniCoverImage);
 
-        createNotification();
-    }
-
-    public void updateUI(boolean create) {
-        if (Player.getMusicPlayer() == null) return;
-
-        checkPausedState();
-
-        setTrackName(Globs.currentSongs.get(Globs.currentTrackNumber).getTitle());
-        setAuthorName(Globs.currentSongs.get(Globs.currentTrackNumber).getArtist());
-
-        setCurrentTrackDuration(Convert.GetTimeFromSeconds(Player.getDuration() - 1000));
-        setMaxProgress(Player.getDuration() / 1000);
+        if (create) createNotificationWithoutImage();
     }
 
     private void checkPausedState() {
@@ -489,19 +487,23 @@ public class MusicPlayerViewModel extends BaseObservable {
         }
     }
 
-    private void createNotification() {
-        //Bitmap largeIcon = Convert.getBitmapFromUri(activity, Globs.currentSongs.get(Globs.currentTrackNumber).getCover());
+    private void createNotificationWithoutImage() {
+        CreateNotification.createNotification(activity, currentCover);
 
+        createNotification();
+    }
+
+    private void createNotification() {
         Glide.with(activity)
                 .asBitmap()
                 .load(Uri.parse(Globs.currentSongs.get(Globs.currentTrackNumber).getCover()))
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        CreateNotification.destroyNotification();
+                        currentCover = resource;
+
                         CreateNotification.setViewModel(MusicPlayerViewModel.this);
-                        CreateNotification.createNotification(activity, Globs.currentSongs.get(Globs.currentTrackNumber),
-                                Globs.currentTrackNumber, Globs.currentSongs.size() - 1, resource);
+                        CreateNotification.createNotification(activity, currentCover);
                     }
 
                     @Override

@@ -58,7 +58,7 @@ public class Player {
                 if (state == ExoPlayer.STATE_READY) {
                     isPrepared = true;
                     musicPlayer.setPlayWhenReady(!musicPaused);
-                    musicPlayerViewModel.updateUI();
+                    musicPlayerViewModel.updateUI(true);
 
                     Toast.makeText(context, "(Player) Live with: " + Globs.currentSongs.get(Globs.currentTrackNumber).getTitle(), Toast.LENGTH_SHORT).show();
                 }
@@ -117,9 +117,8 @@ public class Player {
         if (musicPlayer != null) musicPlayer.stop();
 
         startTrack();
-        musicPlayerViewModel.updateUI(false);
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
         if (musicPaused) musicPlayer.pause();
     }
 
@@ -137,7 +136,7 @@ public class Player {
         Globs.currentTrackNumber = 0;
         selectTrack(Globs.currentTrackNumber);
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
     }
 
     public static void updateQueue(ArrayList<String> titles, int startIndex) {
@@ -162,7 +161,7 @@ public class Player {
 
         Globs.currentSongs.add(new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
@@ -186,7 +185,7 @@ public class Player {
         Globs.currentSongs.add(index, new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
         Globs.currentTrackNumber = Globs.getTitles().indexOf(currentTitle);
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
@@ -210,7 +209,7 @@ public class Player {
         Globs.currentSongs.add(index, new Song(path, SongsProps.uris.get(SongsProps.songs.indexOf(path))));
         Globs.currentTrackNumber = Globs.getTitlesPaths().indexOf(current);
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
@@ -250,7 +249,7 @@ public class Player {
         if (deletableIndex < Globs.currentTrackNumber)
             Globs.currentTrackNumber--;
 
-        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI();
+        if (musicPlayerViewModel != null) musicPlayerViewModel.updateUI(true);
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 

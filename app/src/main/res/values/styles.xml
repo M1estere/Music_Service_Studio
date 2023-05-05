@@ -20,4 +20,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="Theme.Design.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/purple_700</item>
+    </style>
+
 </resources>

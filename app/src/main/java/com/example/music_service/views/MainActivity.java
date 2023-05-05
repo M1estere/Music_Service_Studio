@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        musicPlayerViewModel.updateUI();
+        musicPlayerViewModel.updateUI(true);
     }
 
     @Override
