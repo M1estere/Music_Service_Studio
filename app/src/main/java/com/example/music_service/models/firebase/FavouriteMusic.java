@@ -58,11 +58,6 @@ public class FavouriteMusic {
                     DocumentReference documentReference = reference.document("favourite_titles");
                     documentReference.set(userData);
 
-                    if (added)
-                        Toast.makeText(activity, "(Favourites) " + title + " was added", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(activity, "(Favourites) " + title + " was deleted", Toast.LENGTH_SHORT).show();
-
                     if (userSongsViewModel != null) userSongsViewModel.updateSongs();
                 }
             }

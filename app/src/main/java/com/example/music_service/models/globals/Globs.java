@@ -3,6 +3,7 @@ package com.example.music_service.models.globals;
 import com.example.music_service.models.CreateNotification;
 import com.example.music_service.models.Song;
 import com.example.music_service.models.data.SongsProps;
+import com.example.music_service.views.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -71,6 +72,8 @@ public class Globs {
         SongsProps.songs.clear();
         SongsProps.covers.clear();
         SongsProps.authors.clear();
+
+        MainActivity.alreadyLoaded = false;
 
         CreateNotification.destroyNotification();
     }

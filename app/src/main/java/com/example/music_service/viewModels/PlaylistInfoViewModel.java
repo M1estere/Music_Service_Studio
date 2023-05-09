@@ -35,7 +35,7 @@ public class PlaylistInfoViewModel extends BaseObservable {
 
     @Bindable
     public String getCurrentPlaylistTitle() {
-        return PlaylistSystem.getCurrentPlaylist().getPlaylistName();
+        return PlaylistSystem.getCurrentPlaylist().getPlaylistName().substring(0, PlaylistSystem.getCurrentPlaylist().getPlaylistName().lastIndexOf(" "));
     }
 
     public void savePlaylist() {

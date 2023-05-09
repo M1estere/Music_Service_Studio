@@ -255,8 +255,8 @@ public class BottomSheets {
             @Override
             public void onClick(View view) {
                 favButton.animate()
-                        .scaleX(1.15f)
-                        .scaleY(1.15f)
+                        .scaleX(0.5f)
+                        .scaleY(0.5f)
                         .setDuration(200)
                         .setInterpolator(new FastOutSlowInInterpolator())
                         .withEndAction(new Runnable() {
@@ -471,8 +471,8 @@ public class BottomSheets {
             @Override
             public void onClick(View view) {
                 favButton.animate()
-                        .scaleX(1.15f)
-                        .scaleY(1.15f)
+                        .scaleX(0.5f)
+                        .scaleY(0.5f)
                         .setDuration(200)
                         .setInterpolator(new FastOutSlowInInterpolator())
                         .withEndAction(new Runnable() {

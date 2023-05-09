@@ -32,34 +32,6 @@ public class UserPlaylistInfoViewModel extends BaseObservable {
 
         tracksRecView.setAdapter(adapter);
         tracksRecView.setLayoutManager(new LinearLayoutManager(activity));
-
-//        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
-//                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END,
-//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                int fromPosition = viewHolder.getAdapterPosition();
-//                int toPosition = target.getAdapterPosition();
-//
-//                if (toPosition >= PlaylistSystem.getCurrentPlaylist().getSongsAmount()) return false;
-//                Collections.swap(PlaylistSystem.getCurrentPlaylist().getSongTitles(), fromPosition, toPosition);
-//                adapter.notifyItemMoved(fromPosition, toPosition);
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                int position = viewHolder.getAdapterPosition();
-//                if (position == PlaylistSystem.getCurrentPlaylist().getSongsAmount()) return;
-//
-//                PlaylistSystem.getCurrentPlaylist().removeSong(position);
-//                adapter.notifyItemRemoved(position);
-//            }
-//        };
-//
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(tracksRecView);
     }
 
     @Bindable

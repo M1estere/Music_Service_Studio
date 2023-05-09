@@ -192,15 +192,17 @@ public class SearchViewModel extends BaseObservable {
             }
         }
 
-        Player.updateQueue(getTitles(), currentTrackIndex);
+        Player.updateQueue(getTitles().getSongTitles(), currentTrackIndex);
     }
 
-    private ArrayList<String> getTitles() {
+    public Playlist getTitles() {
         ArrayList<String> result = new ArrayList<>();
         for (Song song : songs)
             result.add(song.getPath());
 
-        return result;
+        Playlist playlist = new Playlist("Search Music");
+        playlist.setSongTitles(result);
+        return playlist;
     }
 
     public void back() {

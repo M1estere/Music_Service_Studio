@@ -36,6 +36,7 @@ public class HomeFragmentViewModel extends BaseObservable {
     private MorningRecViewAdapter morningRecViewAdapter;
 
     public HomeFragmentViewModel(@NonNull View view) {
+        PlaylistSystem.load();
         globView = view;
 
         recommendationsRec = globView.findViewById(R.id.recommendations_rec_view);

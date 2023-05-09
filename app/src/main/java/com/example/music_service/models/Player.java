@@ -59,8 +59,6 @@ public class Player {
                     isPrepared = true;
                     musicPlayer.setPlayWhenReady(!musicPaused);
                     musicPlayerViewModel.updateUI(true);
-
-                    Toast.makeText(context, "(Player) Live with: " + Globs.currentSongs.get(Globs.currentTrackNumber).getTitle(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -107,6 +105,28 @@ public class Player {
 
         Globs.currentTrackNumber++;
 
+        selectTrack(Globs.currentTrackNumber);
+
+        return Globs.currentTrackNumber;
+    }
+
+    public static int nextSongAfterEnd()
+    {
+        if (playerRepeatingState == RepeatingState.RepeatTrack) {
+            selectTrack(Globs.currentTrackNumber);
+            return Globs.currentTrackNumber;
+        }
+
+        if ((Globs.currentTrackNumber == Globs.currentSongs.size() - 1) && playerRepeatingState == RepeatingState.RepeatPlaylist) {
+            Globs.currentTrackNumber = -1;
+        } else if ((Globs.currentTrackNumber == Globs.currentSongs.size() - 1) && playerRepeatingState != RepeatingState.RepeatPlaylist) {
+            Globs.currentTrackNumber = 0;
+            selectTrack(Globs.currentTrackNumber);
+
+            return -5;
+        }
+
+        Globs.currentTrackNumber++;
         selectTrack(Globs.currentTrackNumber);
 
         return Globs.currentTrackNumber;
@@ -253,26 +273,28 @@ public class Player {
         if (queueActivityViewModel != null) queueActivityViewModel.updateQueue();
     }
 
-    public static RepeatingState changeRepeatingState() {
-        switch (playerRepeatingState) {
-            case NoRepeat: {
+    public static String changeRepeatingState() {
+        String returner = "";
+        switch (playerRepeatingState)
+        {
+            case NoRepeat:
                 playerRepeatingState = RepeatingState.RepeatPlaylist;
+                returner = "Repeating playlist";
                 break;
-            }
-            case RepeatPlaylist: {
+            case RepeatPlaylist:
                 playerRepeatingState = RepeatingState.RepeatTrack;
+                returner = "Repeating track";
                 break;
-            }
-            case RepeatTrack: {
+            case RepeatTrack:
                 playerRepeatingState = RepeatingState.NoRepeat;
+                returner = "No repeat";
                 break;
-            }
-            default: {
+            default:
+                returner = "Error occured";
                 break;
-            }
         }
 
-        return playerRepeatingState;
+        return returner;
     }
 
     public static void drop() {

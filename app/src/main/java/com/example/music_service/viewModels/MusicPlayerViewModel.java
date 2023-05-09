@@ -322,7 +322,7 @@ public class MusicPlayerViewModel extends BaseObservable {
     private void checkProgression() {
         if (!Player.checkPrepared()) return;
         if (Player.getCurrentPos() >= Player.getDuration())
-            nextSong();
+            nextSong("Special");
     }
 
     /*Primary Song Controls*/
@@ -384,6 +384,13 @@ public class MusicPlayerViewModel extends BaseObservable {
         setProgress(0);
     }
 
+    public void nextSong(String keyWord) {
+        int t = Player.nextSongAfterEnd();
+        if (t == -5) pauseSong();
+
+        updateUI(true);
+    }
+
     private void playSong() {
         setChangeStateButtonGfxId(R.drawable.pause_80);
 
@@ -410,7 +417,7 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     /*Special Song Controls*/
     public void changeRepeatingState() {
-        Toast.makeText(activity, "Current repeating state: " + Player.changeRepeatingState(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, Player.changeRepeatingState(), Toast.LENGTH_SHORT).show();
     }
 
     public void savePlaylist() {
@@ -419,8 +426,8 @@ public class MusicPlayerViewModel extends BaseObservable {
 
     public void favouriteTrack() {
         heartImage.animate()
-                .scaleX(1.25f)
-                .scaleY(1.25f)
+                .scaleX(0.5f)
+                .scaleY(0.5f)
                 .setDuration(200)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {

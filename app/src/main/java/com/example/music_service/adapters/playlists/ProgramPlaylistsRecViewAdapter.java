@@ -41,7 +41,7 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
-        holder.playlistTitle.setText(playlists.get(pos).getPlaylistName());
+        holder.playlistTitle.setText(playlists.get(pos).getPlaylistName().substring(0, playlists.get(pos).getPlaylistName().lastIndexOf(" ")));
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 

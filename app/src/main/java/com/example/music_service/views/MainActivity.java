@@ -18,6 +18,8 @@ import com.example.music_service.viewModels.MusicPlayerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static boolean alreadyLoaded = false;
+
     private MusicPlayerViewModel musicPlayerViewModel;
     private int currentFragment = 0;
 
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        DataLoader.loadCurrentUserInfo(this);
+        if (!alreadyLoaded) DataLoader.loadCurrentUserInfo(this);
+        alreadyLoaded = true;
     }
 
     private void replaceFragment(Fragment fragment) {

@@ -3,9 +3,11 @@ package com.example.music_service.models.globals;
 import com.example.music_service.models.Author;
 import com.example.music_service.models.Playlist;
 import com.example.music_service.models.Song;
+import com.example.music_service.models.data.PlaylistsData;
 import com.example.music_service.models.data.SongsProps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlaylistSystem {
 
@@ -42,15 +44,27 @@ public class PlaylistSystem {
         return result;
     }
 
+    public static ArrayList<Integer> localCounts = new ArrayList<>();
+    public static void load() {
+        localCounts.clear();
+        for (int i = 0; i < PlaylistsData.playlistNames.length; i++) localCounts.add(0);
+    }
+
     public static void fillPlaylistsSection(ArrayList<Playlist> section, int upBorder, int lowBorder, int startPct) {
         int amount = 0;
+
+        ArrayList<String> localNames = new ArrayList<>( Arrays.asList(PlaylistsData.playlistNames) );
 
         if (upBorder - lowBorder > 0)
             amount = Globs.random.nextInt(upBorder - lowBorder) + lowBorder;
         else amount = lowBorder;
 
         for (int i = 0; i < amount; i++) {
-            section.add(new Playlist("Top " + Globs.random.nextInt(500)));
+            int index = Globs.random.nextInt(localNames.size());
+            String name = String.format("%s %d", localNames.get(index), localCounts.get(index) + 1);
+            localCounts.set(index, localCounts.get(index) + 1);
+
+            section.add(new Playlist(name));
 
             fillOnePlaylist(startPct, section.get(i));
         }
