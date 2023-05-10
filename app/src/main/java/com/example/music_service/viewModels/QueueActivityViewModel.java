@@ -35,6 +35,8 @@ public class QueueActivityViewModel extends BaseObservable {
         queueRecView.setAdapter(adapter);
         queueRecView.setLayoutManager(new LinearLayoutManager(activity));
 
+        queueRecView.scrollToPosition(Globs.currentTrackNumber);
+
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
