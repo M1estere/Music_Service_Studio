@@ -113,6 +113,8 @@ public class CreateNotification {
         notification.contentIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
+        context.startForegroundService(new Intent(context, Player.class));
+
         notificationManagerCompat.notify(1, notification);
     }
 

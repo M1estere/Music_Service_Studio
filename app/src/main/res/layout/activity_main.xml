@@ -135,6 +135,14 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
+                            <ProgressBar
+                                android:id="@+id/small_progress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:indeterminate="true"
+                                android:visibility="gone" />
+
                             <ImageButton
                                 android:id="@+id/pause"
                                 android:layout_width="40dp"
@@ -341,6 +349,14 @@
                             android:padding="10dp"
                             android:src="@drawable/ic_previous" />
 
+                        <ProgressBar
+                            android:id="@+id/pause_progress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="true"
+                            android:padding="10dp"
+                            android:visibility="gone" />
+
                         <ImageButton
                             android:id="@+id/pause_button"
                             android:layout_width="80dp"
@@ -349,7 +365,8 @@
                             android:backgroundTint="@android:color/transparent"
                             android:onClick="@{()-> viewModel.changePlayingState()}"
                             android:padding="10dp"
-                            android:src="@drawable/pause_80" />
+                            android:src="@drawable/pause_80"
+                            android:visibility="visible" />
 
                         <ImageButton
                             android:id="@+id/next_button"

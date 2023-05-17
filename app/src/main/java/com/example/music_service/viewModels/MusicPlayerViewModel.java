@@ -14,6 +14,7 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +70,9 @@ public class MusicPlayerViewModel extends BaseObservable {
     private ImageButton nextTrack;
     private ImageButton previousTrack;
 
+    private ProgressBar pauseProgressBar;
+    private ProgressBar pauseSmallProgressBar;
+
     public MusicPlayerViewModel(Activity mainActivity) {
         activity = mainActivity;
         setIds();
@@ -107,6 +111,9 @@ public class MusicPlayerViewModel extends BaseObservable {
 
         nextTrack = activity.findViewById(R.id.next_button);
         previousTrack = activity.findViewById(R.id.previous_button);
+
+        pauseProgressBar = activity.findViewById(R.id.pause_progress);
+        pauseSmallProgressBar = activity.findViewById(R.id.small_progress);
     }
 
     private void startElementsSetup() {
@@ -251,6 +258,14 @@ public class MusicPlayerViewModel extends BaseObservable {
             bigPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.pause_80));
             smallPause.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.pause_40));
         }
+    }
+
+    public void togglePauseLoading() {
+        pauseProgressBar.setVisibility(pauseProgressBar.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        pauseSmallProgressBar.setVisibility(pauseSmallProgressBar.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+
+        bigPause.setVisibility(bigPause.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        smallPause.setVisibility(smallPause.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
     @Bindable
@@ -472,6 +487,12 @@ public class MusicPlayerViewModel extends BaseObservable {
                 .load(SongsProps.getCurrentCover())
                 .thumbnail(0.05f)
                 .into(miniCoverImage);
+
+        pauseProgressBar.setVisibility(Player.isIsPrepared() ? View.GONE : View.VISIBLE);
+        pauseSmallProgressBar.setVisibility(Player.isIsPrepared() ? View.GONE : View.VISIBLE);
+
+        bigPause.setVisibility(Player.isIsPrepared() ? View.VISIBLE : View.GONE);
+        smallPause.setVisibility(Player.isIsPrepared() ? View.VISIBLE : View.GONE);
 
         if (create) createNotificationWithoutImage();
     }

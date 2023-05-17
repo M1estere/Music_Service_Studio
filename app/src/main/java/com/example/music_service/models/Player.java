@@ -22,6 +22,10 @@ public class Player {
     private static boolean isPrepared = false;
     private static QueueActivityViewModel queueActivityViewModel;
 
+    public static boolean isIsPrepared() {
+        return isPrepared;
+    }
+
     public static boolean checkPrepared() {
         return isPrepared;
     }
@@ -57,6 +61,8 @@ public class Player {
                 if (state == ExoPlayer.STATE_READY) {
                     isPrepared = true;
                     musicPlayer.setPlayWhenReady(!musicPaused);
+
+                    musicPlayerViewModel.togglePauseLoading();
                     musicPlayerViewModel.updateUI(true);
                 }
             }
@@ -131,6 +137,8 @@ public class Player {
     }
 
     public static void selectTrack(int index) {
+        musicPlayerViewModel.togglePauseLoading();
+
         Globs.currentTrackNumber = index;
         if (musicPlayer != null) musicPlayer.stop();
 
