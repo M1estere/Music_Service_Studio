@@ -8,6 +8,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,8 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos = holder.getAdapterPosition();
         holder.playlistTitle.setText(playlists.get(pos).getPlaylistName().substring(0, playlists.get(pos).getPlaylistName().lastIndexOf(" ")));
+
+        holder.imageCover.setImageResource(playlists.get(pos).getPlaylistCoverImage());
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
 
@@ -78,6 +81,7 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
         private final TextView playlistTitle;
 
         private final CardView cover;
+        private final ImageView imageCover;
         private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,6 +89,8 @@ public class ProgramPlaylistsRecViewAdapter extends RecyclerView.Adapter<Program
 
             playlistTitle = itemView.findViewById(R.id.playlist_title);
             cover = itemView.findViewById(R.id.content);
+
+            imageCover = itemView.findViewById(R.id.image_cover);
 
             parent = itemView.findViewById(R.id.parent);
         }

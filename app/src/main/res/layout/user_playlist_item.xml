@@ -25,6 +25,8 @@
                 android:layout_gravity="bottom|start"
                 android:backgroundTint="@android:color/transparent"
                 android:elevation="0dp"
+                android:outlineAmbientShadowColor="@android:color/transparent"
+                android:outlineSpotShadowColor="@android:color/transparent"
                 android:transitionName="play_cover"
                 app:cardCornerRadius="15dp">
 

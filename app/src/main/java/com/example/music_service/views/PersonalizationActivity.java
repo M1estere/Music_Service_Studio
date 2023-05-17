@@ -1,4 +1,4 @@
-package com.example.music_service;
+package com.example.music_service.views;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.music_service.R;
 import com.example.music_service.databinding.ActivityPersonalizationBinding;
 import com.example.music_service.viewModels.PersonalizationActivityViewModel;
 

@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 public class PlaylistSystem {
 
+    public static ArrayList<Integer> localCounts = new ArrayList<>();
     private static Author currentAuthor;
     private static Playlist currentPlaylist;
 
@@ -44,7 +45,6 @@ public class PlaylistSystem {
         return result;
     }
 
-    public static ArrayList<Integer> localCounts = new ArrayList<>();
     public static void load() {
         localCounts.clear();
         for (int i = 0; i < PlaylistsData.playlistNames.length; i++) localCounts.add(0);
@@ -53,7 +53,7 @@ public class PlaylistSystem {
     public static void fillPlaylistsSection(ArrayList<Playlist> section, int upBorder, int lowBorder, int startPct) {
         int amount = 0;
 
-        ArrayList<String> localNames = new ArrayList<>( Arrays.asList(PlaylistsData.playlistNames) );
+        ArrayList<String> localNames = new ArrayList<>(Arrays.asList(PlaylistsData.playlistNames));
 
         if (upBorder - lowBorder > 0)
             amount = Globs.random.nextInt(upBorder - lowBorder) + lowBorder;

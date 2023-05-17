@@ -1,7 +1,6 @@
 package com.example.music_service.models;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.music_service.models.data.SongsProps;
 import com.example.music_service.models.globals.Convert;
@@ -110,8 +109,7 @@ public class Player {
         return Globs.currentTrackNumber;
     }
 
-    public static int nextSongAfterEnd()
-    {
+    public static int nextSongAfterEnd() {
         if (playerRepeatingState == RepeatingState.RepeatTrack) {
             selectTrack(Globs.currentTrackNumber);
             return Globs.currentTrackNumber;
@@ -275,8 +273,7 @@ public class Player {
 
     public static String changeRepeatingState() {
         String returner = "";
-        switch (playerRepeatingState)
-        {
+        switch (playerRepeatingState) {
             case NoRepeat:
                 playerRepeatingState = RepeatingState.RepeatPlaylist;
                 returner = "Repeating playlist";

@@ -19,7 +19,6 @@ public class UserPlaylistsFragment extends Fragment {
 
     }
 
-    // TODO: Rename and change types and number of parameters
     public static UserPlaylistsFragment newInstance(String param1, String param2) {
         UserPlaylistsFragment fragment = new UserPlaylistsFragment();
         Bundle args = new Bundle();

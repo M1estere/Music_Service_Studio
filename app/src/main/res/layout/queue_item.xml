@@ -22,6 +22,7 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
+            android:outlineAmbientShadowColor="@android:color/transparent"
             android:outlineSpotShadowColor="@android:color/transparent"
             app:cardCornerRadius="5dp">
 

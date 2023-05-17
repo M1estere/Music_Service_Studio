@@ -114,7 +114,7 @@
                 android:layout_below="@id/daily_top"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp" />
 
         </RelativeLayout>
 

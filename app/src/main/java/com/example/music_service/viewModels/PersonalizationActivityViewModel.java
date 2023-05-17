@@ -17,9 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.databinding.BaseObservable;
 
-import com.example.music_service.PersonalizationActivity;
 import com.example.music_service.R;
 import com.example.music_service.models.User;
+import com.example.music_service.views.PersonalizationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

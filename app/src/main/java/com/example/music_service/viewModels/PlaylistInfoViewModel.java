@@ -2,6 +2,7 @@ package com.example.music_service.viewModels;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.ImageView;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -21,8 +22,13 @@ public class PlaylistInfoViewModel extends BaseObservable {
 
     private final Activity activity;
 
+    private ImageView cover;
+
     public PlaylistInfoViewModel(Activity act) {
         activity = act;
+
+        cover = activity.findViewById(R.id.cover_image);
+        cover.setImageResource(PlaylistSystem.getCurrentPlaylist().getPlaylistCoverImage());
 
         RecyclerView tracksRecView = activity.findViewById(R.id.songs_rec_view);
 

@@ -1,31 +1,23 @@
 package com.example.music_service.adapters.songs;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.music_service.R;
-import com.example.music_service.models.Player;
 import com.example.music_service.models.Song;
-import com.example.music_service.models.data.SongsProps;
-import com.example.music_service.models.firebase.FavouriteMusic;
-import com.example.music_service.models.globals.Globs;
 import com.example.music_service.viewModels.SearchViewModel;
 import com.example.music_service.views.BottomSheets;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 

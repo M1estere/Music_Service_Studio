@@ -18,7 +18,6 @@ public class LibraryFragment extends Fragment {
 
     }
 
-    // TODO: Rename and change types and number of parameters
     public static LibraryFragment newInstance(String param1, String param2) {
         LibraryFragment fragment = new LibraryFragment();
         Bundle args = new Bundle();

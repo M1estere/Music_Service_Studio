@@ -121,7 +121,7 @@
                 android:layout_marginBottom="60dp">
 
                 <RelativeLayout
-                    android:layout_width="280dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp">
@@ -133,6 +133,7 @@
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/panton_bold"
                         android:text="@string/change_account_information"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="22sp" />
 

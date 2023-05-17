@@ -20,40 +20,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.TracksLoadActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".PersonalizationActivity"
+            android:name=".views.PersonalizationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.SearchActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.UserPlaylistInfoActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.ArtistInfoActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.PlaylistInfoActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.AuthenticationActivity"
             android:exported="true"
             android:noHistory="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -93,10 +93,10 @@
         </receiver>
 
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.QueueActivity"
             android:exported="true"
             android:noHistory="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -109,10 +109,10 @@
                 android:value="" />
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".views.AccountActivity"
             android:exported="true"
             android:noHistory="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

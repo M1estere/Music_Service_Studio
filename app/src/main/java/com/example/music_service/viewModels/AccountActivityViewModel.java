@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.databinding.BaseObservable;
 
-import com.example.music_service.PersonalizationActivity;
 import com.example.music_service.R;
 import com.example.music_service.models.BooleanDialog;
 import com.example.music_service.models.CreateNotification;
@@ -15,6 +14,7 @@ import com.example.music_service.models.Player;
 import com.example.music_service.models.User;
 import com.example.music_service.models.globals.Globs;
 import com.example.music_service.views.AuthenticationActivity;
+import com.example.music_service.views.PersonalizationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountActivityViewModel extends BaseObservable {

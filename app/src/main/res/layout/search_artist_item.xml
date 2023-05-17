@@ -18,6 +18,8 @@
             android:layout_centerVertical="true"
             android:backgroundTint="@android:color/transparent"
             android:elevation="0dp"
+            android:outlineAmbientShadowColor="@android:color/transparent"
+            android:outlineSpotShadowColor="@android:color/transparent"
             android:transitionName="artist_image"
             app:cardCornerRadius="90dp">
 

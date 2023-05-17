@@ -20,6 +20,8 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@android:color/transparent"
             android:elevation="150dp"
+            android:outlineAmbientShadowColor="@android:color/transparent"
+            android:outlineSpotShadowColor="@android:color/transparent"
             app:cardCornerRadius="100dp">
 
             <ImageView
