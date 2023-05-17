@@ -97,7 +97,7 @@ public class DataLoader {
         StorageReference storageReference = firebaseStorage.getReference();
         StorageReference imageReference = storageReference.child("users_images/" + userId + ".jpg");
 
-        final long ONE_MEGABYTE = 1024 * 1024;
+        final long ONE_MEGABYTE = 1024 * 1024 *5;
 
         ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Getting data...");
