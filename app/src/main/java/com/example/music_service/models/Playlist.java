@@ -31,6 +31,10 @@ public class Playlist {
         songTitles.add(title);
     }
 
+    public void addSong(String title) {
+        songTitles.add(title);
+    }
+
     public void removeSong(int id) {
         songTitles.remove(id);
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +19,6 @@ import com.example.music_service.models.SwipeToRefresh;
 import com.example.music_service.models.data.HomeFragmentData;
 import com.example.music_service.models.globals.PlaylistSystem;
 import com.example.music_service.views.SearchActivity;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class HomeFragmentViewModel extends BaseObservable {
 

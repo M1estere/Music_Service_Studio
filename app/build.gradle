@@ -46,8 +46,8 @@ dependencies {
     implementation 'com.github.mohammadatif:Animatoo:master'
     implementation 'com.google.firebase:firebase-auth:22.0.0'
     implementation 'com.google.firebase:firebase-firestore:24.6.0'
-    implementation platform('com.google.firebase:firebase-bom:31.4.0')
-    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-bom:32.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.2.0'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'androidx.media:media:1.6.0'
 

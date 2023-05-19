@@ -76,6 +76,11 @@ public class PlaylistSystem {
         ArrayList<String> titles = new ArrayList<>();
         titles = (ArrayList<String>) SongsProps.songs.clone();
 
+//        titles.add("moves_like_jagger.mp3");
+//        titles.add("moves_like_jagger.mp3");
+//        titles.add("moves_like_jagger.mp3");
+//        titles.add("moves_like_jagger.mp3");
+
         int startSongsAmount = (int) (titles.size() * startSongsPercentage);
 
         int length = Globs.random.nextInt(titles.size() - startSongsAmount) + startSongsAmount;
@@ -83,10 +88,11 @@ public class PlaylistSystem {
         for (int i = 0; i < length; i++) {
             int randomIndex = Globs.random.nextInt(titles.size());
             String songTitle = titles.get(randomIndex);
-            String songUri = SongsProps.uris.get(randomIndex);
+            //String songUri = SongsProps.uris.get(randomIndex);
 
             titles.remove(songTitle);
-            listToFill.addSong(songTitle, songUri);
+//            listToFill.addSong(songTitle, songUri);
+            listToFill.addSong(songTitle);
         }
     }
 
