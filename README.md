@@ -1,5 +1,8 @@
 # Tune Studio
-## Music Service app for Android platform made using Android Studio and Java as a programming language
+## Music Service app for Android platform (Android Studio, Java)
+In this app you can create your account and organise different playlists of music based on your taste,\
+you can also listen to the ones that system has created for you. Furthermore,\
+you are able to control your playing queueu, remove any tracks and add new (you can add only one track or a whole playlist)
 
 <p float="center">
   <img src="https://github.com/M1estere/Music_Service_Studio/assets/58213582/9c17ec4a-193c-4525-a7ee-5434269d6391.jpg" height="500" />
